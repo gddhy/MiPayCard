@@ -186,5 +186,9 @@
     {
         "CardName":"招商银行 YOUNG卡",
         "CardFile":"fe5e6bbbb6eb34f4d80039adf6ec769650b559aa556dda549331314f9ca15809.0"
+    },
+    {
+        "CardName":"招商银行 滴滴联名一卡通M+",
+        "CardFile":"5b9ee508a3f7725e8328f445e2198ab04f7113f103b30ac89ac6b91105775741.0"
     }
 ]
