@@ -166,5 +166,25 @@
     {
         "CardName":"中国银行 长城借记卡",
         "CardFile":"bd33fd5fc6cd60d2e731acd0b2e68dd04dc6a07ea6cb045f665b5beab5b316aa.0"
+    },
+    {
+        "CardName":"中信银行 小米联名信用卡",
+        "CardFile":"7302cb24c899d5ff7d5637a8d4a5d18077690f47c4becaab066025d0d3c313b1.0"
+    },
+    {
+        "CardName":"中国银行 长城借记卡",
+        "CardFile":"889bf27cca32f812d57e603ac7a423c941c042f4e4c9d63207cf3fbe8e41ed0a.0"
+    },
+    {
+        "CardName":"中银赞卡有志青年",
+        "CardFile":"d6494a67fb7e39e8074c14df94231d484c336ddaa632bf86c4893910de324f9c.0"
+    },
+    {
+        "CardName":"招商银行 王者荣耀凯联名卡",
+        "CardFile":"ef4be5c14b07877bdd80907aa0b1e72474b799777c5ac3880203c068c2736457.0"
+    },
+    {
+        "CardName":"招商银行 YOUNG卡",
+        "CardFile":"fe5e6bbbb6eb34f4d80039adf6ec769650b559aa556dda549331314f9ca15809.0"
     }
 ]
