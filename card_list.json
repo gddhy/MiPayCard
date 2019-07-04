@@ -192,7 +192,7 @@
         "CardFile":"5b9ee508a3f7725e8328f445e2198ab04f7113f103b30ac89ac6b91105775741.0"
     },
     {
-        "CardName":"招商银行 愤怒的小鸟联名借记卡",
+        "CardName":"招商银行 小小鸟借记卡 公主baby",
         "CardFile":"3bfeebd89217c1116d8e99734b40f2fd31fa42070e43dedf1d4129391c30aad1.0"
     },
     {
@@ -202,5 +202,13 @@
     {
         "CardName":"模拟门禁卡",
         "CardFile":"efb10b02fad049ed6d5a596f6ac67133eaa9cf7333cd4d271c9d2ab9fb8c3553.0"
+    },
+    {
+        "CardName":"中国工商银行 工银灵通卡",
+        "CardFile":"78341ffa7088b9fc865cf1236d75c22092814b537c1518fc5d2142240f13b769.0"
+    },
+    {
+        "CardName":"中国建设银行 储蓄卡",
+        "CardFile":"1a730da5b29f466314512f16e090e8c5e19f883a419dd6ef1cc4ff0dab93dcf1.0"
     }
 ]
