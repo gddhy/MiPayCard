@@ -198,5 +198,9 @@
     {
         "CardName":"中国工商银行 福卡",
         "CardFile":"a6645ee4106b9a7cfefbb248c61db1ea6d55a51a092db6248b63de9c197117b9.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"efb10b02fad049ed6d5a596f6ac67133eaa9cf7333cd4d271c9d2ab9fb8c3553.0"
     }
 ]
