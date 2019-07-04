@@ -190,5 +190,13 @@
     {
         "CardName":"招商银行 滴滴联名一卡通M+",
         "CardFile":"5b9ee508a3f7725e8328f445e2198ab04f7113f103b30ac89ac6b91105775741.0"
+    },
+    {
+        "CardName":"招商银行 愤怒的小鸟联名借记卡",
+        "CardFile":"3bfeebd89217c1116d8e99734b40f2fd31fa42070e43dedf1d4129391c30aad1.0"
+    },
+    {
+        "CardName":"中国工商银行 福卡",
+        "CardFile":"a6645ee4106b9a7cfefbb248c61db1ea6d55a51a092db6248b63de9c197117b9.0"
     }
 ]
