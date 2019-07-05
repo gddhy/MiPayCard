@@ -210,5 +210,9 @@
     {
         "CardName":"中国建设银行 储蓄卡",
         "CardFile":"1a730da5b29f466314512f16e090e8c5e19f883a419dd6ef1cc4ff0dab93dcf1.0"
+    },
+    {
+        "CardName":"中信银行 小米联名信用卡白金卡(黑科技版)",
+        "CardFile":"60e846e06bf2e87c77d658a6bce3837b1450c7f91a865d3fddc4551b4a6bcc70.0"
     }
 ]
