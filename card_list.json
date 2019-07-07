@@ -214,5 +214,25 @@
     {
         "CardName":"中信银行 小米联名信用卡白金卡(黑科技版)",
         "CardFile":"60e846e06bf2e87c77d658a6bce3837b1450c7f91a865d3fddc4551b4a6bcc70.0"
+    },
+    {
+        "CardName":"中国民生银行 信用卡金卡",
+        "CardFile":"2b579487c889a894886d2ccf7815bb3b40c3026cbaddceace230a57cf793ddf8.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"58957207f45ca723cbc30c3c5fc16bd8bdc6a9c154111b7e2483154ba80d99c9.0"
+    },
+    {
+        "CardName":"中国光大银行 银联高尔夫信用卡",
+        "CardFile":"5d8fe72dadeb03c4405379807294cb69b71f06ce5d7daf31201869efd802a583.0"
+    },
+    {
+        "CardName":"中国光大银行 小米联名信用卡",
+        "CardFile":"6ddbbbbc2c16df922a15532a5f0255363801921718822db552faac3a9f05f7f6.0"
+    },
+    {
+        "CardName":"交通银行 太平洋卡",
+        "CardFile":"bd6ac84af64a29658ba7e7e5cbacfcb0291f2f8afce2bd3ed1c8e48fd8c32b79.0"
     }
 ]
