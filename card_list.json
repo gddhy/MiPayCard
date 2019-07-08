@@ -234,5 +234,21 @@
     {
         "CardName":"交通银行 太平洋卡",
         "CardFile":"bd6ac84af64a29658ba7e7e5cbacfcb0291f2f8afce2bd3ed1c8e48fd8c32b79.0"
+    },
+    {
+        "CardName":"中国民生银行 民生WILL卡",
+        "CardFile":"1064bfa59556c56a06eacf424d458fd1666d4e3725e755e16c2feed3979a6f08.0"
+    },
+    {
+        "CardName":"中国农业银行 STUDENT",
+        "CardFile":"356a0e75d7e61dd331370e1bb2386bbd49c1c05212b524c59f595f43456a81c9.0"
+    },
+    {
+        "CardName":"招商银行 YOUNG信用卡",
+        "CardFile":"821ecaf2e4b44bc1f16c6fb428cb8e80f3dbdba8b6e1836c203a2eeba85b16d9.0"
+    },
+    {
+        "CardName":"中国光大银行",
+        "CardFile":"dbf04159332382ef7adf94937712d1670922a5cc6520314cdb2399e4688f91e8.0"
     }
 ]
