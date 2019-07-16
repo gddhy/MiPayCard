@@ -8,7 +8,7 @@
         "CardFile":"1c84fec32f266437ac84f37f50fa43c0fe00778418ca34c84d79c76aa7e6e08c.0"
     },
     {
-        "CardName":"农业银行 金穗网购卡",
+        "CardName":"中国农业银行 金穗网购卡",
         "CardFile":"de065f3e623d4abde6c7333ce4ba098aa4ae86c2a73f5ab1280cccf87252b524.0"
     },
     {
@@ -72,11 +72,11 @@
         "CardFile":"643b9ae1eb600554cca26d70413a3636336a2b06ada0a815b7007b35dcdf00ef.0"
     },
     {
-        "CardName":"招商银行人民币信用卡",
+        "CardName":"招商银行 人民币信用卡",
         "CardFile":"b82e248a973ff5ece1e724a7f089a52220fe035794b3460a1f6d2503d7baea8a.0"
     },
     {
-        "CardName":"招商银行人民币信用卡 AR CARD",
+        "CardName":"招商银行 人民币信用卡 AR CARD",
         "CardFile":"802fc06944d38e512769a435af935956091ae3662b813e38d07b7c8caef15398.0"
     },
     {
@@ -140,7 +140,7 @@
         "CardFile":"e43c6e56bc933f8a272c5917cd6ee94fda2cbd30f22fa864171ece6c2930c177.0"
     },
     {
-        "CardName":"广发银行借记卡",
+        "CardName":"广发银行 借记卡",
         "CardFile":"2b5bff045bd79f97b43727a777a3fb23703fc8dab9fa81049e0647598074fa84.0"
     },
     {
@@ -250,5 +250,9 @@
     {
         "CardName":"中国光大银行 淘票票联名信用卡",
         "CardFile":"dbf04159332382ef7adf94937712d1670922a5cc6520314cdb2399e4688f91e8.0"
+    },
+    {
+        "CardName":"招商银行 小小鸟借记卡 高能baby",
+        "CardFile":"99509b874195303996375d41ad9f1bb45bf5dc6d47443704d038f496c267fce7.0"
     }
 ]
