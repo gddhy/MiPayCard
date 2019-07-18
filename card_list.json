@@ -254,5 +254,9 @@
     {
         "CardName":"招商银行 小小鸟借记卡 高能baby",
         "CardFile":"99509b874195303996375d41ad9f1bb45bf5dc6d47443704d038f496c267fce7.0"
+    },
+    {
+        "CardName":"中国工商银行",
+        "CardFile":"1eb3c0ac8388cc66c86cf9f0f11309dae1fd7192f370d40741ce9cfdbf897488.0"
     }
 ]
