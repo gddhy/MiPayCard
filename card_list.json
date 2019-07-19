@@ -258,5 +258,25 @@
     {
         "CardName":"中国工商银行",
         "CardFile":"1eb3c0ac8388cc66c86cf9f0f11309dae1fd7192f370d40741ce9cfdbf897488.0"
+    },
+    {
+        "CardName":"中国农业银行 储蓄卡",
+        "CardFile":"4ce7b83c04d1fa94126983da75a93727b2f2fc133e62e98ac575a7a82b1a497c.0"
+    },
+    {
+        "CardName":"吉林通",
+        "CardFile":"a455ebeac18b6ae1dcc60e6d5ba68abb2d75edb5dd5b3e7cd9845262d84e275c.0"
+    },
+    {
+        "CardName":"中国建设银行 储蓄卡",
+        "CardFile":"af2be751c86c4f64bca40f6469297910ef094de0f83eba0879146256229446f1.0"
+    },
+    {
+        "CardName":"中国银行 天依小柠檬联名卡",
+        "CardFile":"f5ab612d4bceda6468eef422cb18568869486948efcbbea02688414ed67dd3a5.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"fb28d1858525dfba5ba4cd4c5046b7f4409ec50dc94be36d3e473ec4555f7fd9.0"
     }
 ]
