@@ -286,5 +286,9 @@
     {
         "CardName":"交通银行 太平洋卡",
         "CardFile":"0bff14d00fc2eb105a1eb6a28128c7384091d53cca3f0a568f70d3789dafa136.0"
+    },
+    {
+        "CardName":"合肥通",
+        "CardFile":"7d8349e4e866102532f5f295ad5f7259b51ef1896608638e09d7582a527aa7a7.0"
     }
 ]
