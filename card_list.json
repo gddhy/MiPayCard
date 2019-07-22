@@ -278,5 +278,9 @@
     {
         "CardName":"京东闪付",
         "CardFile":"fb28d1858525dfba5ba4cd4c5046b7f4409ec50dc94be36d3e473ec4555f7fd9.0"
+    },
+    {
+        "CardName":"东莞银行 万顺通借记卡",
+        "CardFile":"3d760ab5a8aeb9adad05f3b8c4219125c9a5947b1fa62b31d6060cc573bedb92.0"
     }
 ]
