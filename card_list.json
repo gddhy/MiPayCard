@@ -282,5 +282,9 @@
     {
         "CardName":"东莞银行 万顺通借记卡",
         "CardFile":"3d760ab5a8aeb9adad05f3b8c4219125c9a5947b1fa62b31d6060cc573bedb92.0"
+    },
+    {
+        "CardName":"交通银行 太平洋卡",
+        "CardFile":"0bff14d00fc2eb105a1eb6a28128c7384091d53cca3f0a568f70d3789dafa136.0"
     }
 ]
