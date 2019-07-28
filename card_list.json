@@ -294,5 +294,13 @@
     {
         "CardName":"美团闪付",
         "CardFile":"5b1e0e430b50e11a06f39386e7e6febb2c62daae64b3370a6cb2caf61b1e9642.0"
+    },
+    {
+        "CardName":"中国农业银行 储蓄卡",
+        "CardFile":"09e96b321d189d84aa797f27083264ca5c8b5532b04bf21b987e7b4d849823de.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"eb4266479a9cc95e42c0e66b778b3ca3a32c03956a9eb8fd50044a56f2a5ae3f.0"
     }
 ]
