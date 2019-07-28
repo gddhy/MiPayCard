@@ -290,5 +290,9 @@
     {
         "CardName":"合肥通",
         "CardFile":"7d8349e4e866102532f5f295ad5f7259b51ef1896608638e09d7582a527aa7a7.0"
+    },
+    {
+        "CardName":"美团闪付",
+        "CardFile":"5b1e0e430b50e11a06f39386e7e6febb2c62daae64b3370a6cb2caf61b1e9642.0"
     }
 ]
