@@ -302,5 +302,9 @@
     {
         "CardName":"模拟门禁卡",
         "CardFile":"eb4266479a9cc95e42c0e66b778b3ca3a32c03956a9eb8fd50044a56f2a5ae3f.0"
+    },
+    {
+        "CardName":"兴业银行 储蓄卡",
+        "CardFile":"5b8f9bf6ca6491174749f9927820304d93f519e2e2977d666c092924dd252a8b.0"
     }
 ]
