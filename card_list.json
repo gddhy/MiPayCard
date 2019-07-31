@@ -310,5 +310,9 @@
     {
         "CardName":"中国邮政储蓄银行 青年卡",
         "CardFile":"f21f1505598fb1ece9f3d74c8ec7d857c4a0d0ed1a4aad99f8afe49213ef1440.0"
+    },
+    {
+        "CardName":"招商银行 一网通",
+        "CardFile":"e1a921a7639d8e66c1970303575012b62d613208585fac05811cbcbe6c8ab6aa.0"
     }
 ]
