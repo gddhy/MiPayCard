@@ -306,5 +306,9 @@
     {
         "CardName":"兴业银行 储蓄卡",
         "CardFile":"5b8f9bf6ca6491174749f9927820304d93f519e2e2977d666c092924dd252a8b.0"
+    },
+    {
+        "CardName":"中国邮政储蓄银行 青年卡",
+        "CardFile":"f21f1505598fb1ece9f3d74c8ec7d857c4a0d0ed1a4aad99f8afe49213ef1440.0"
     }
 ]
