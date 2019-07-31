@@ -314,5 +314,33 @@
     {
         "CardName":"招商银行 一网通",
         "CardFile":"e1a921a7639d8e66c1970303575012b62d613208585fac05811cbcbe6c8ab6aa.0"
+    },
+    {
+        "CardName":"中国银行 长城借记卡",
+        "CardFile":"44e64cba769c04352bc84a5c8c15215509a13aa5ce81c965d3e4fc5e2e30e494.0"
+    },
+    {
+        "CardName":"上海交通卡",
+        "CardFile":"47f29c19f14ef6121fd664d688a686f7e415496fd09f6f4e1da6c24af6758e96.0"
+    },
+    {
+        "CardName":"上海交通卡",
+        "CardFile":"4b3799af185d08ba7f3bfb7f75eff1d01ca748c2e49822dc35d68ddab70d2b7e.0"
+    },
+    {
+        "CardName":"中国建设银行 天府畅行龙卡（信用卡，金卡）",
+        "CardFile":"77c4cc1694560a1e63b3e7e68b18398b20c9df571ba892e458edbcff2e39e572.0"
+    },
+    {
+        "CardName":"中国工商银行 工银灵通卡",
+        "CardFile":"b0abefdc9b7a22425b6ffd7ba0fc83d2fa54cf4588b216bbb3c097aeb0aad098.0"
+    },
+    {
+        "CardName":"交通银行 太平洋信用卡金卡",
+        "CardFile":"b7f53a142ae776e89e3b2559834e65911837ddd54d63e00dc9813456400ac748.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"cfc75a0f950c19e9b227a936e5966871dcb9a15683cc133566cb68b8c94f3d06.0"
     }
 ]
