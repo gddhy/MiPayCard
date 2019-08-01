@@ -348,11 +348,19 @@
         "CardFile":"46de31467021bd4879c526d78c3a2ea1acb9e5d5c426274f16c8d8e6c70f072e.0"
     },
     {
-        "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
-        "CardFile":"关于信息"
+        "CardName":"中国工商银行 环球旅行卡",
+        "CardFile":"849c51f89a9af27481ee939f09090818182eceb7eb732844b35361c680d099eb.0 "
     },
     {
-        "CardName":"中国银行 洛天依小柠檬卡",
-        "CardFile":"46de31467021bd4879c526d78c3a2ea1acb9e5d5c426274f16c8d8e6c70f072e.0"
+        "CardName":"模拟门禁卡",
+        "CardFile":"87472ad0a6c11b6bac288ea13cc65991c44e61cf44084db5c55c3e451a7768cc.0 "
+    },
+    {
+        "CardName":"中信银行 百度金融联名信用卡",
+        "CardFile":"be10dd5a8baf6cfc5f7949abaa615095c28b6300eccf50fe8c60a964aa3958f1.0 "
+    },
+    {
+        "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
+        "CardFile":"关于信息"
     }
 ]
