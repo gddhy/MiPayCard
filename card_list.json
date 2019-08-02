@@ -364,6 +364,14 @@
         "CardFile":"55779bed4cf51441acab23d36f4badf96aa441f95bae0a81ea2179d635bba934.0"
     },
     {
+        "CardName":"光大银行 信用卡",
+        "CardFile":"b85e7f0bbbf386d4a2df9bce4f65679ae5ac6d9c0b569280e6fc5b153221c5cb.0"
+    },
+    {
+        "CardName":"广发银行 信用卡",
+        "CardFile":"b8e5ac48954e75a1db4648f447135df9c3541207f8d39dd8bdbef2f0e58e83f5.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
