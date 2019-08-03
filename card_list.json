@@ -372,6 +372,10 @@
         "CardFile":"b8e5ac48954e75a1db4648f447135df9c3541207f8d39dd8bdbef2f0e58e83f5.0"
     },
     {
+        "CardName":"琴岛通",
+        "CardFile":"f454e706234e19b21953737b7e05112a2fdd49f37dcaccacd8a51c132e53abff.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
