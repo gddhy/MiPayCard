@@ -388,6 +388,18 @@
         "CardFile":"65899eb0ecdce1da2d19d67fe185cc8df1339d74356fc25ccedac8a6429c52bc.0"
     },
     {
+        "CardName":"招商银行 小小鸟借记卡 好奇baby",
+        "CardFile":"2d588bb88930d977eb397342fa5b80fa923bc0d10efc711d33f6b3f3d26d8cf5.0"
+    },
+    {
+        "CardName":"中国工商银行 储蓄卡",
+        "CardFile":"7dd9e1a2a3a1bab2b32d1f425600ee5b2120f2231d27366b1c1d4c38e1f7d38a.0"
+    },
+    {
+        "CardName":"招商银行 哆啦A梦信用卡",
+        "CardFile":"f27c3793c5ec6b67ff973b08f090850474e1d7543173b1d5ed81eff2e31ff21d.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
