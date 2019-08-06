@@ -400,6 +400,10 @@
         "CardFile":"f27c3793c5ec6b67ff973b08f090850474e1d7543173b1d5ed81eff2e31ff21d.0"
     },
     {
+        "CardName":"深圳农村商业银行 信通卡",
+        "CardFile":"9212874f4a986f438d7f7d41b6912909c5fcb2d025f8663de0244db4a06e57f2.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
