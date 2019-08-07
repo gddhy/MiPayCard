@@ -404,6 +404,22 @@
         "CardFile":"9212874f4a986f438d7f7d41b6912909c5fcb2d025f8663de0244db4a06e57f2.0"
     },
     {
+        "CardName":"米家门禁卡",
+        "CardFile":"1b6ec41079a0e78c4355c2db2215811f811fe7e53963fe67e24810a9266e774d.0"
+    },
+    {
+        "CardName":"平安银行",
+        "CardFile":"c8b3c87851168e54095400a451ab67ccab4cb511942b7ebce930aac5d1583a97.0"
+    },
+    {
+        "CardName":"中信银行 小米联名信用卡",
+        "CardFile":"403ee86d55a45bedd9dc9e3e6b513dfcd45c7838a4cccf173eac74f7d31aea23.0"
+    },
+    {
+        "CardName":"招商银行 海绵宝宝卡 哈哈款",
+        "CardFile":"32c33de354a52f94b6e4b9654acfd7ba485dc4a66af7bf87b439a99b53395f26.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
