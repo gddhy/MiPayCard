@@ -444,6 +444,14 @@
         "CardFile":"e7a1142b0fb7de3de867b25238b2d825227a14171424bd5ea5e4bfc10ff6a0df.0"
     },
     {
+        "CardName":"模拟门禁卡",
+        "CardFile":"87472ad0a6c11b6bac288ea13cc65991c44e61cf44084db5c55c3e451a7768cc.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"eb4266479a9cc95e42c0e66b778b3ca3a32c03956a9eb8fd50044a56f2a5ae3f.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
