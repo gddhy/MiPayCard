@@ -16,7 +16,7 @@
         "CardFile":"3835c5c966673dfc2394e9345d54d5e1ae54777e334be51f7969730ab4303407.0"
     },
     {
-        "CardName":"中国银行 社区卡",
+        "CardName":"中国银行 长城E社区智能借记IC卡",
         "CardFile":"c545587ae788b542fed1583bbf43c920fa6d1ed6ef04b5dd499fa116b84e1442.0"
     },
     {
@@ -434,6 +434,14 @@
     {
         "CardName":"京东闪付",
         "CardFile":"65899eb0ecdce1da2d19d67fe185cc8df1339d74356fc25ccedac8a6429c52bc.0"
+    },
+    {
+        "CardName":"中国工商银行 储蓄卡",
+        "CardFile":"b55c596a4ac059ce65d125aac3bef525cbd1a1e0701777e7f887f5097bccde8e.0"
+    },
+    {
+        "CardName":"中国建设银行 储蓄卡",
+        "CardFile":"e7a1142b0fb7de3de867b25238b2d825227a14171424bd5ea5e4bfc10ff6a0df.0"
     },
     {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
