@@ -452,6 +452,42 @@
         "CardFile":"eb4266479a9cc95e42c0e66b778b3ca3a32c03956a9eb8fd50044a56f2a5ae3f.0"
     },
     {
+        "CardName":"京津冀互联互通卡 春节",
+        "CardFile":"fb58b554d5912e33670b33fa36c5db651b1533a9a8cc78c80d99eae1740d8fd3.0"
+    },
+    {
+        "CardName":"招商银行 初音未来联名卡",
+        "CardFile":"0d60b9bbc4d1eca0c30c453c4ee64cfc2c5baaa1c39ec929d5127cf0e412fd89.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"76cebf12f94e13ee818880b0a4901b78af232fbd149160017692335b5b2ba99b.0"
+    },
+    {
+        "CardName":"中国民生银行 信用卡金卡",
+        "CardFile":"f309507fe220d7e5b1cfc3c92440547c714a861f954d2f60070dc5d9f8cca2f9.0"
+    },
+    {
+        "CardName":"中国民生银行 信用卡金卡",
+        "CardFile":"9ff84aef3322bcc163e8b8002de23077587649f6d2672ed086192bf04d0a4b9b.0"
+    },
+    {
+        "CardName":"中国银行 天依小柠檬卡",
+        "CardFile":"ba39a4c7204c03ab0450d7316d293a2f9b4d652ef57488ba1470201f165511ab.0"
+    },
+    {
+        "CardName":"武汉通",
+        "CardFile":"2536a3bf220733e8bc243107ede584356d836002c7e9a1b8ea12dd76c5724dfa.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡 节日卡面",
+        "CardFile":"f826e51c943e80ceea3a639d46d4026904278c116742e284fedc139a4792831c.0"
+    },
+    {
+        "CardName":"武汉通",
+        "CardFile":"f3f917e35a0500c60a8de202a3d67270c11f39804136bba464b1a2c6e1f278c5.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
