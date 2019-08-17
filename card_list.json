@@ -524,6 +524,18 @@
         "CardFile":"0623aaeb3d08c558357b229243e62a582110c029ea9a8cfbe5fc583c083c0132.0"
     },
     {
+        "CardName":"美团闪付 上海银行",
+        "CardFile":"53d6a8697d8725dd01c2430e6d2f1c8496fbdeef4fc782d1a95409aabd4be5ad.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"5116851794a6bb0c8522bcd6579de5600ede33204e4d980c483e5517dc134105.0"
+    },
+    {
+        "CardName":"中国光大银行 正道花园•炎黄信用卡",
+        "CardFile":"207f81a482ad41e5a761211df4d79b43c3a33f938c5510810c31561f392b55d4.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
