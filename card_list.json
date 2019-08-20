@@ -536,6 +536,30 @@
         "CardFile":"207f81a482ad41e5a761211df4d79b43c3a33f938c5510810c31561f392b55d4.0"
     },
     {
+        "CardName":"京东闪付",
+        "CardFile":"b9eb037bd0e9b7bc1772d588a39aa2a064515f94542a0e9e67540477c10922df.0"
+    },
+    {
+        "CardName":"白条闪付 上海银行",
+        "CardFile":"e9009cb6e23f51ca7bd43d36e262ada1e94ba08fbafdd5c5217a19d07a28e408.0"
+    },
+    {
+        "CardName":"白条闪付 上海银行",
+        "CardFile":"f7d167c7e7ea8c9c999e79b136783957fcb8dda73f164bad0323e418c432adb0.0"
+    },
+    {
+        "CardName":"中国建设银行 储蓄卡",
+        "CardFile":"ca64f6cda9ab022137697d52ec8e2b81823848574532b16383ff7499857f3d06.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"2074aaf43ea15dd7ae8ab687deef46e506f9e727946a4a032feae8c02d56d9a0.0"
+    },
+    {
+        "CardName":"中国建设银行 储蓄卡",
+        "CardFile":"0fd31bdfab6969676bc57873d6882037a118a9d4c5553fd7e05e0e8da25c2af3.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
