@@ -588,6 +588,10 @@
         "CardFile":"a05a4b9af1d8ba587dd7da07a572effa92945793d630d8e55c88bfcb0df32f13.0"
     },
     {
+        "CardName":"哈尔滨城市通",
+        "CardFile":"823c0c7c7bfc152fe5a2c31259189cb2bf0fe5e07b36f5ec55c284050d0f185d.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
