@@ -592,6 +592,22 @@
         "CardFile":"823c0c7c7bfc152fe5a2c31259189cb2bf0fe5e07b36f5ec55c284050d0f185d.0"
     },
     {
+        "CardName":"招商银行 一卡通M+",
+        "CardFile":"3c38cc2345388ab7339988dac2619bdc626788835e4bfc90dd307a530e9f48ec.0"
+    },
+    {
+        "CardName":"上海公共交通卡",
+        "CardFile":"e2a6546c5c8838e0b02e33a49c7c5812265ba56593c7f1e914ea4d44f2a816ec.0"
+    },
+    {
+        "CardName":"招商银行 初音未来联名信用卡",
+        "CardFile":"0e97901f06db22dd7b86d35b7f1a62398236bd4505917609f87c3f88a9866ec1.0"
+    },
+    {
+        "CardName":"上海公共交通卡",
+        "CardFile":"d11255dd168ac3c168bb20dea5bd76af38af13c2fda3a3aeabfc14d784bf90d4.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
