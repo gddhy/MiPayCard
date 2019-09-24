@@ -624,6 +624,10 @@
         "CardFile":"3904c75d93f93cbda11e50b0bdf7da28da8fdb5fa6529880c1b69ecde0e83255.0"
     },
     {
+        "CardName":"中国工商银行 宇宙星座金卡·双子座",
+        "CardFile":"7151f496c409432ee5c13f061b51c2c876e241ce1363a65d2b1539ca66fbbccc.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
