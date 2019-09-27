@@ -628,6 +628,46 @@
         "CardFile":"7151f496c409432ee5c13f061b51c2c876e241ce1363a65d2b1539ca66fbbccc.0"
     },
     {
+        "CardName":"中国工商银行 故宫卡",
+        "CardFile":"131d3a62ddfd64008b1f212288abd962a7883f0e953df9c28be0d78004c9f311.0"
+    },
+    {
+        "CardName":"中国建设银行",
+        "CardFile":"189d0b27d113662475250e4ae07f17fb9fd9378f102e728df98feebd48eb5967.0"
+    },
+    {
+        "CardName":"招商银行 小小鸟联名卡",
+        "CardFile":"19dc3d2d51320ee3e29f2565aded7270020318243ef0faa8c9921a726b50122f.0"
+    },
+    {
+        "CardName":"中国工商银行",
+        "CardFile":"1bb389524d009e58cce0e454885b81cbcd9299c65a5dc412e264c53af64b23d2.0"
+    },
+    {
+        "CardName":"浦发银行",
+        "CardFile":"1cf60508deba388b29855389b2587f932f431b0bf6fe995bd5ff15ad9a09bc8e.0"
+    },
+    {
+        "CardName":"招商银行 人民币信用卡",
+        "CardFile":"3d4b47c9d17f27003eb7c2a36007496ac7eb71f91c77558fa7fa75c0d771218a.0"
+    },
+    {
+        "CardName":"重庆农村商业银行 江渝IC借记卡",
+        "CardFile":"595f90f321c7bb1ac6e65fc88229665f734ef9b6769f1483f4e3963b2ab4511a.0"
+    },
+    {
+        "CardName":"重庆畅通卡",
+        "CardFile":"8c20c9f15dc8a996dcd5fa2371af655f3fd8808bb60cce1d8a7af0e987de2106.0"
+    },
+    {
+        "CardName":"中国工商银行 战略支援部队",
+        "CardFile":"aceca804d25dda7a2a8e47d82fcd67dfa1549448e27717ee235427a4d842a3a3.0"
+    },
+    {
+        "CardName":"交通银行 太平洋卡",
+        "CardFile":"b4390a20325d68d26b6e7c43f28ff39eeaefdd3de04b4179e1eb2929a3456732.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
