@@ -720,6 +720,10 @@
         "CardFile":"f5c2933683eea8e27ca2f46ba8d8fece92f63c537c2db4739884975f82aaf9d4.0"
     },
     {
+        "CardName":"招商银行 哔哩哔哩花嫁联名借记卡",
+        "CardFile":"17a1d2d1b07da88488bf7075c9685e2c5d1bc658733263ed37cc037261e150ed.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
