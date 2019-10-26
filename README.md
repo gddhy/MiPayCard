@@ -99,7 +99,7 @@
 | 模块 zip 名         | 模块作用                                            | 下载                                                         |
 | ------------------- | --------------------------------------------------- | ------------------------------------------------------------ |
 | hide_mipay_logo     | 屏蔽 Mi Pay 界面卡面右上角的 Mi Pay Logo            | [下载](https://github.com/gddhy/MiPayCard/raw/master/hide_mipay_logo.zip) |
-| hide_miwallet_mipay | 屏蔽 小米钱包 - 银行卡 界面卡面右上角的 Mi Pay Logo | [下载](https://github.com/Skimige/MiPayCard/raw/master/hide_miwallet_mipay.zip) |
+| hide_miwallet_mipay | 屏蔽 小米钱包 - 银行卡 界面卡面右上角的 Mi Pay Logo | [下载](https://github.com/gddhy/MiPayCard/raw/master/hide_miwallet_mipay.zip) |
 
 ## 常见问题
 
