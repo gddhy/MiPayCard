@@ -1,6 +1,6 @@
 # MiPay 卡面工具
 
-![下载](https://img.shields.io/badge/%E4%B8%8B%E8%BD%BD-%E9%85%B7%E5%AE%89-blue)
+[![下载](https://img.shields.io/badge/%E4%B8%8B%E8%BD%BD-%E9%85%B7%E5%AE%89-blue)](https://www.coolapk.com/apk/com.hy.mipaycard)
 
 这是一个小工具，可以帮助你替换自己的 Mi Pay 卡面为自己想要的图片。
 
