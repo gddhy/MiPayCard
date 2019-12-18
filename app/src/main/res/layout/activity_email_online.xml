@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".online_card.EmailOnlineActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <EditText
+            android:id="@+id/card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="图片名称"
+            android:maxLines="2" />
+
+        <EditText
+            android:id="@+id/pic_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="图片直链"
+            android:maxLines="2" />
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="您的昵称"
+            android:maxLines="2" />
+
+        <EditText
+            android:id="@+id/about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="图片简介"
+            android:maxLines="2" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="联系方式"
+            android:maxLines="2" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onEmailClick"
+            android:text="提交信息" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:onClick="onimgchrClick"
+                android:text="路过图床" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:textAllCaps="false"
+                android:onClick="onImgBoxClick"
+                android:text="图床" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:textAllCaps="false"
+                android:onClick="onImgBedClick"
+                android:text="图床集合" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:onClick="onGetClipClick"
+                android:text="获取粘贴板" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/bmp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxWidth="288dp"
+            android:maxHeight="181.5dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

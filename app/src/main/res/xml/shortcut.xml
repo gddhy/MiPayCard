@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="open_mi_pay"
+        android:enabled="true"
+        android:icon="@drawable/mi_pay"
+        android:shortcutShortLabel="@string/shortcut_mi_pay"
+        android:shortcutLongLabel="@string/shortcut_mi_pay"
+        android:shortcutDisabledMessage="@string/shortcut_mi_pay"
+        tools:targetApi="n_mr1">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.hy.mipaycard"
+            android:targetClass="com.hy.mipaycard.shortcuts.OpenMiPayActivity" />
+        <!--android.shortcut.conversation   描述当前的intent的执行环境 目前google官方提供的只有这个-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="open_online"
+        android:enabled="true"
+        android:icon="@drawable/online"
+        android:shortcutShortLabel="@string/card_online"
+        android:shortcutLongLabel="@string/card_online"
+        android:shortcutDisabledMessage="@string/card_online"
+        tools:targetApi="n_mr1">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.hy.mipaycard"
+            android:targetClass="com.hy.mipaycard.online_card.OnlineCardActivity" />
+        <!--android.shortcut.conversation   描述当前的intent的执行环境 目前google官方提供的只有这个-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_prevent"
+        android:enabled="true"
+        android:icon="@drawable/prevent_icon"
+        android:shortcutShortLabel="@string/shortcut_prevent"
+        android:shortcutLongLabel="@string/shortcut_prevent"
+        android:shortcutDisabledMessage="@string/shortcut_prevent"
+        tools:targetApi="n_mr1">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.hy.mipaycard"
+            android:targetClass="com.hy.mipaycard.shortcuts.SetMenuPermissionActivity" />
+        <!--android.shortcut.conversation   描述当前的intent的执行环境 目前google官方提供的只有这个-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="set_default"
+        android:enabled="true"
+        android:icon="@drawable/default_icon"
+        android:shortcutShortLabel="@string/shortcut_default"
+        android:shortcutLongLabel="@string/shortcut_default"
+        android:shortcutDisabledMessage="@string/shortcut_default"
+        tools:targetApi="n_mr1">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.hy.mipaycard"
+            android:targetClass="com.hy.mipaycard.shortcuts.CardDefaultActivity" />
+        <!--android.shortcut.conversation   描述当前的intent的执行环境 目前google官方提供的只有这个-->
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

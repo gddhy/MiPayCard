@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_toolbar"
+                android:layout_width="match_parent"
+                android:background="?attr/colorPrimary"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_scrollFlags="scroll|snap|enterAlways" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.CardView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="8dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:onClick="onChoosePicClick"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:text="选择图片" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|end"
+
+        android:layout_margin="16dp"
+        android:paddingBottom="10dp"
+        app:layout_anchorGravity="right|top"
+        app:menu_colorNormal="@color/colorLty"
+        app:menu_colorPressed="@color/colorLty"
+        tools:ignore="UnusedAttribute">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_exp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_directions"
+            app:fab_colorNormal="@color/colorLty"
+            app:fab_colorPressed="@color/colorLty"
+            app:fab_label="打开MiPay"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_gallery"
+            app:fab_colorNormal="@color/colorLty"
+            app:fab_colorPressed="@color/colorLty"
+            app:fab_label="在线卡面"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_exp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_delete"
+            app:fab_colorNormal="@color/colorLty"
+            app:fab_colorPressed="@color/colorLty"
+            app:fab_label="恢复默认卡面"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_exp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_upload"
+            app:fab_colorNormal="@color/colorLty"
+            app:fab_colorPressed="@color/colorLty"
+            app:fab_label="提取卡面"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_exp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_rotate"
+            app:fab_colorNormal="@color/colorLty"
+            app:fab_colorPressed="@color/colorLty"
+            app:fab_label="@string/shortcut_prevent"
+            app:fab_size="mini" />
+
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</android.support.constraint.ConstraintLayout>

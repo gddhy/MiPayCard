@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/dialog_bmp"
+        android:adjustViewBounds="true"
+        android:maxWidth="288dp"
+        android:maxHeight="181.5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:text="保存到列表"
+        android:id="@+id/dialog_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:text="裁剪后自动添加水印"
+        android:id="@+id/dialog_checkbox_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/dialog_edit"
+        android:hint="请输入文件名称"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

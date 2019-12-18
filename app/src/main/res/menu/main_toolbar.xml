@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/main_menu_online_card"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="在线卡面"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/main_menu_set"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="卡面设置方式"
+        app:showAsAction="always" />
+</menu>
