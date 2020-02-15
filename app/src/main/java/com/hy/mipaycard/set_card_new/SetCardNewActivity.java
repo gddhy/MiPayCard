@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.getTempFile;
 import static com.hy.mipaycard.Config.mi_wallet;
 import static com.hy.mipaycard.Config.pay_pic;
@@ -35,11 +36,13 @@ import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
 import static com.hy.mipaycard.Utils.CardList.getCardName;
 import static com.hy.mipaycard.Utils.cmdUtil.getMiWallet;
 import static com.hy.mipaycard.Utils.cmdUtil.getTsmclient;
+import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
 import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
 public class SetCardNewActivity extends AppCompatActivity {
     private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     private boolean isSetMipay;
     private List<List_card> cardList = new ArrayList<>();
 
@@ -51,7 +54,7 @@ public class SetCardNewActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         String filePath = intent.getStringExtra(Config.file_Path);
         final boolean isAuto = intent.getBooleanExtra(Config.is_Auto,false);
-        isSetMipay = pref.getInt("isUseNew",0)==1;
+        isSetMipay = pref.getInt("isUseNew",defaultSet)==1;
         CardList.initLocalCardList(SetCardNewActivity.this);
         if (!new File(filePath).exists()) {
             Toast.makeText(SetCardNewActivity.this, "图片不存在", Toast.LENGTH_LONG).show();
@@ -91,8 +94,12 @@ public class SetCardNewActivity extends AppCompatActivity {
         }
         File[] listFiles = file.listFiles();
         if(listFiles.length==0){
-            Toast.makeText(this,"请授予软件root权限后再使用该功能",Toast.LENGTH_LONG).show();
-            finish();
+            if(!isRooted()) {
+                Toast.makeText(this, "请授予软件root权限后再使用该功能", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                Toast.makeText(this, "未读到卡面列表或您的设备不支持", Toast.LENGTH_LONG).show();
+            }
         }
         final String finalPath = filePath;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,6 +148,7 @@ public class SetCardNewActivity extends AppCompatActivity {
                         if (tempPath.equals(tmpFile.getPath())){
                             tmpFile.delete();
                         }*/
+                pKillServer(pref);
                 finish();
             }
         });
@@ -153,6 +161,7 @@ public class SetCardNewActivity extends AppCompatActivity {
                 //contextMenu.add(Menu.NONE, 1, 0, "恢复默认");
             }
         });//https://blog.csdn.net/hello_1s/article/details/51837394
+        invalidateOptionsMenu();//通知系统刷新Menu
     }
 
     //选中菜单Item后触发
@@ -190,5 +199,41 @@ public class SetCardNewActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_set,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.menu_set_pkill:
+                boolean isChecked = !pref.getBoolean("pkill",false);
+                //Toast.makeText(this,"checked="+isChecked,Toast.LENGTH_LONG).show();
+                editor = pref.edit();
+                editor.putBoolean("pkill",isChecked);
+                editor.apply();
+                pKillServer(pref);
+            default:
+        }
+        return true;
+    }
+
+    //刷新menu
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_set_pkill).setChecked(pref.getBoolean("pkill",false));
+        return true;
+    }
+
+    public static void pKillServer(SharedPreferences pref){
+        boolean isSetMiWallet = pref.getInt("isUseNew",defaultSet)==2;
+        boolean isChecked = pref.getBoolean("pkill",false);
+        if(isChecked){
+            runRootShell(new String[]{"pkill -f "+(isSetMiWallet?"com.mipay.wallet":"com.miui.tsmclient")});
+        }
     }
 }

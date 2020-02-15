@@ -4,14 +4,20 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.by_syk.lib.uri.UriAnalyser;
+
+import java.io.File;
+
+import static com.hy.mipaycard.Config.debug_Api;
 
 public class OpenActivity extends AppCompatActivity {
 
@@ -19,10 +25,38 @@ public class OpenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (ContextCompat.checkSelfPermission(OpenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(OpenActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+        if(Build.VERSION.SDK_INT>=debug_Api){
+            //TODO
+            //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
+            String str = null;
+            Intent intent = getIntent();
+            if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+                Uri uri = intent.getData();
+                String data = intent.getDataString();
+                try {
+                    if(!data.contains("file://")){
+                        File f = MainActivity.saveFileFromSAF(this, uri);
+                        if(f!=null)
+                            str = f.getPath();
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            if (str==null){
+                Toast.makeText(OpenActivity.this,"文件读取失败",Toast.LENGTH_LONG).show();
+            } else {
+                Intent i = new Intent(OpenActivity.this, BitmapCropActivity.class);
+                i.putExtra(Config.open_Crop, str);
+                startActivity(i);
+            }
+            finish();
         } else {
-            getFile();
+            if (ContextCompat.checkSelfPermission(OpenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(OpenActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                getFile();
+            }
         }
     }
 

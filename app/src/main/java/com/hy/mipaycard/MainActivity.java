@@ -9,17 +9,22 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +41,19 @@ import com.hy.mipaycard.shortcuts.CardDefaultActivity;
 import com.hy.mipaycard.shortcuts.SetMenuPermissionActivity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hy.mipaycard.Config.debug_Api;
+import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.EmailActivity.joinQQGroup;
 import static com.hy.mipaycard.MainUtils.getCard;
+import static com.hy.mipaycard.MainUtils.getMiWalletVersion;
 import static com.hy.mipaycard.MainUtils.getTsm;
 import static com.hy.mipaycard.MainUtils.initOther;
 import static com.hy.mipaycard.MainUtils.showAboutDialog;
@@ -58,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefresh;
 
     private LocalBroadcast localBroadcast;
+
+    final private int REQUEST_CODE_OPEN_DIRECTORY = 100;
+    final private int NEW_SAF_CHOOSE_IMG = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +112,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fab_menu.close(true);
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 2);
-                } else {
+                if(Build.VERSION.SDK_INT>=debug_Api){
                     getCard(MainActivity.this);
+                } else {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                    } else {
+                        getCard(MainActivity.this);
+                    }
                 }
             }
         });
@@ -140,11 +159,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class LocalBroadcast extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
-                initCardList();
-                adapter.notifyDataSetChanged();
+            initCardList();
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -155,10 +173,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChoosePicClick(View view) {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+        if(Build.VERSION.SDK_INT>=debug_Api){
+            //todo new choose
+            //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
+
+            //SAF
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            // 只显示可以打开的文件
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            // 可选择所有文件类型
+            intent.setType("image/*");
+            startActivityForResult(intent, NEW_SAF_CHOOSE_IMG);
         } else {
-            openAlbum();
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                openAlbum();
+            }
         }
     }
 
@@ -166,17 +197,47 @@ public class MainActivity extends AppCompatActivity {
         cardList.clear();
         cardList.add(new Card("招行初音卡",new File(getFilesDir(),"miku.png")));
         cardList.add(new Card("天依柠檬卡",new File(getFilesDir(),"luotianyi.png")));
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 3);
+        if(Build.VERSION.SDK_INT>=debug_Api) {
+            initItems();
         } else {
-            if (!fileWork.exists()) {
-                fileWork.mkdirs();
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                refSAFList();
+            } else {
+                initItems();
             }
-            String[] userList = fileWork.list();
-            if (userList != null && userList.length != 0) {
-                for (int i = 0; i < userList.length; i++) {
-                    cardList.add(new Card(new File(fileWork, userList[i])));
+        }
+    }
+
+    private void initItems(){
+        if (!fileWork(MainActivity.this).exists()) {
+            fileWork(MainActivity.this).mkdirs();
+        }
+        String[] userList = fileWork(MainActivity.this).list();
+        if (userList != null && userList.length != 0) {
+            for (int i = 0; i < userList.length; i++) {
+                cardList.add(new Card(new File(fileWork(MainActivity.this), userList[i])));
+            }
+        }
+
+        refSAFList();
+    }
+
+    private void refSAFList(){
+        if(hasSAFPermission()){
+            SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+            String uriStr = sharedPreferences.getString("uri", "");
+            DocumentFile documentFile = DocumentFile.fromTreeUri(this,Uri.parse(uriStr));
+            try {
+                DocumentFile[] documentFiles = documentFile.listFiles();
+                if (documentFiles != null && documentFiles.length != 0) {
+                    for (int i = 0; i < documentFiles.length; i++) {
+                        if (documentFiles[i].isFile() && documentFiles[i].getType().contains("image"))
+                            cardList.add(new Card(documentFiles[i]));
+                    }
                 }
+            } catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
@@ -222,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //TODO
         if (resultCode == RESULT_OK ) {
             switch (requestCode) {
                 case 0:
@@ -229,6 +292,24 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, BitmapCropActivity.class);
                     i.putExtra(Config.open_Crop, UriAnalyser.getRealPath(this, uri));
                     startActivity(i);
+                    break;
+                case REQUEST_CODE_OPEN_DIRECTORY:
+                    Log.d("SAF", String.format("Open Directory result Uri : %s", data.getData()));
+                    Uri uriTree = data.getData();
+                    SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("uri", uriTree.toString());
+                    editor.apply();
+                    final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    getContentResolver().takePersistableUriPermission(uriTree, takeFlags);
+                    LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(Config.localAction));
+                    //updateDatas(uriTree);
+                    break;
+                case NEW_SAF_CHOOSE_IMG:
+                    //TODO
+                    Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
+                    i_saf.putExtra(Config.open_Crop, saveFileFromSAF(MainActivity.this,data.getData()).getPath());
+                    startActivity(i_saf);
                     break;
                 default:
             }
@@ -266,6 +347,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, 5 , 5, "卡面设置方式");
         menu.add(0, 6, 6,"使用帮助");
         menu.add(0, 7, 7,"圆角图片");
+        menu.add(0, 8, 8,"选择外部卡面目录");
         return true;
     }
 
@@ -315,7 +397,36 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.main_menu_set:
             case 5:
-                final String[] items = {"默认","新-MiPay","新-小米钱包"};
+                //todo dialog
+                final int version = getMiWalletVersion(this);
+                int choose ;
+                final String[] items ;
+                if( version >= 2){
+                    items = new String[]{"默认","新-MiPay"};
+                    int t = pref.getInt("isUseNew", defaultSet);
+                    if(t>=2){
+                        choose = defaultSet;
+                    } else {
+                        choose = t;
+                    }
+                } else {
+                    items = new String[]{"默认","新-MiPay","新-小米钱包"};
+                    choose = pref.getInt("isUseNew", defaultSet);
+                }
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("选择设置方式")
+                        .setSingleChoiceItems(items, choose, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                editor = pref.edit();
+                                editor.putInt("isUseNew",i);
+                                editor.apply();
+                                Toast.makeText(MainActivity.this,"已选择："+items[i],Toast.LENGTH_LONG).show();
+                            }
+                        });
+/*
                 new AlertDialog.Builder(this)
                         .setTitle("选择设置方式")
                         .setItems(items, new DialogInterface.OnClickListener() {
@@ -326,18 +437,18 @@ public class MainActivity extends AppCompatActivity {
                                 editor.apply();
                                 Toast.makeText(MainActivity.this,"已选择："+items[i],Toast.LENGTH_LONG).show();
                             }
-                        })
-                        .setPositiveButton("说明", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                new AlertDialog.Builder(MainActivity.this)
-                                        .setTitle("说明")
-                                        .setMessage(".修改小米钱包卡面为实验性功能（仅支持小米钱包1.0），请仔细对着图片按需修改\n.卡面修改界面长按对应条目可恢复默认卡面\n.用户自行修改造成的设备问题与软件开发者无关")
-                                        .setPositiveButton("知道了",null)
-                                        .show();
-                            }
-                        })
-                        .show();
+                        })*/
+                        builder.setNegativeButton("说明", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    new AlertDialog.Builder(MainActivity.this)
+                                            .setTitle("说明")
+                                            .setMessage((version<2?".修改小米钱包卡面为实验性功能（仅支持小米钱包1.0），请仔细对着图片按需修改\n":"")+".卡面修改界面长按对应条目可恢复默认卡面\n.用户自行修改造成的设备问题与软件开发者无关")
+                                            .setPositiveButton("知道了", null)
+                                            .show();
+                                }
+                            });
+                        builder.show();
                 break;
             case R.id.main_menu_online_card:
                 openOnlineCard();
@@ -346,10 +457,25 @@ public class MainActivity extends AppCompatActivity {
                 openBrowser(MainActivity.this,"https://github.com/gddhy/MiPayCard/blob/master/README.md",0xff24292d,false);
                 break;
             case 7:
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 4);
-                } else {
+                if(Build.VERSION.SDK_INT>=debug_Api){
+                    //TODO
+                    //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, RoundImageActivity.class));
+                } else {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 4);
+                    } else {
+                        startActivity(new Intent(MainActivity.this, RoundImageActivity.class));
+                    }
+                }
+                break;
+            case 8:
+                //TODO
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
+                } else {
+                    Toast.makeText(this,"该功能暂不支持当前安卓版本",Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
@@ -385,6 +511,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void ref_media(Context context,File file){
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+        if(Build.VERSION.SDK_INT<debug_Api)
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+    }
+
+
+    private boolean hasSAFPermission(){
+        SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        String uriStr = sharedPreferences.getString("uri", "");
+        if (!TextUtils.isEmpty(uriStr)) {
+            try {
+                Uri uri = Uri.parse(uriStr);
+                final int takeFlags = getIntent().getFlags() &
+                        (Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                // Check for the freshest data.
+                getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                //updateDatas(uri);
+                return true;
+            } catch (SecurityException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static File saveFileFromSAF(Context context,Uri safUri){
+        DocumentFile documentFile = DocumentFile.fromSingleUri(context,safUri);
+        File dir = new File(context.getExternalCacheDir(),"SAF");
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        try {
+            File save = new File(dir,documentFile.getName());
+            if(save.exists()){
+                save.delete();
+            }
+            if(!save.exists()){
+                save.createNewFile();
+            }
+            InputStream in  = context.getContentResolver().openInputStream(documentFile.getUri());
+            FileOutputStream out = new FileOutputStream(save);
+            int n = 0;// 每次读取的字节长度
+            byte[] bb = new byte[1024];// 存储每次读取的内容
+            while ((n = in.read(bb)) != -1) {
+                out.write(bb, 0, n);// 将读取的内容，写入到输出流当中
+            }
+            in.close();
+            out.close();
+            return save;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

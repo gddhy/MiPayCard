@@ -7,8 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import java.io.File;
 
 import static com.by_syk.lib.uri.UriAnalyser.getRealPath;
+import static com.hy.mipaycard.Config.debug_Api;
+import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
 import static com.hy.mipaycard.MainUtils.toRoundCorner;
@@ -77,19 +80,47 @@ public class RoundImageActivity extends AppCompatActivity {
             }
         });
 
+
+        //todo
         Intent intent = getIntent();
         String action = intent.getAction();
         if (Intent.ACTION_VIEW.equals(action)) {
             Uri uri = intent.getData();
-            filePath=getRealPath(this,uri);
-            displayImage(filePath);
+            String data = intent.getDataString();
+            String str = null;
+            try {
+                if(!data.contains("file://")){
+                    File f = MainActivity.saveFileFromSAF(this, uri);
+                    if(f!=null)
+                        str = f.getPath();
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this,"文件读取失败",Toast.LENGTH_LONG).show();
+            }
+
+
+            if (str!=null){
+                filePath =str;
+                displayImage(filePath);
+            }
+            //Uri uri = intent.getData();
+            //filePath=getRealPath(this,uri);
+            //displayImage(filePath);
         }
     }
 
     public void onClick(View v){
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
+        if(Build.VERSION.SDK_INT>=debug_Api){
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, 2);
+        } else {
+            Intent intent = new Intent("android.intent.action.GET_CONTENT");
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -141,15 +172,24 @@ public class RoundImageActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    filePath = getRealPath(RoundImageActivity.this,data.getData());
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    filePath = getRealPath(RoundImageActivity.this, data.getData());
                     displayImage(filePath);
-                }
-                break;
-            default:
-                break;
+                    break;
+                case 2:
+                    File f = MainActivity.saveFileFromSAF(this,data.getData());
+                    if(f!=null){
+                        filePath = f.getPath();
+                        displayImage(filePath);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            Toast.makeText(this,"未选择文件",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -169,7 +209,12 @@ public class RoundImageActivity extends AppCompatActivity {
     public static void makeRoundBitmapFile(Context context, String filePath, SharedPreferences pref){
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         bitmap = toRoundCorner(bitmap,pref.getInt("pixels",40));
-        File file = new File(filePath+"_round.png");
+        File file ;
+        if(Build.VERSION.SDK_INT>=debug_Api){
+            file = new File(fileWork(context),new File(filePath).getName()+"_round.png");
+        } else {
+            file = new File(filePath+"_round.png");
+        }
         saveBitmapAsPng(bitmap,file);
         ref_media(context,file);
         Toast.makeText(context,"已保存到\n"+file.getPath(),Toast.LENGTH_LONG).show();

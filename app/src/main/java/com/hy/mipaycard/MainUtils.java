@@ -1,7 +1,10 @@
 package com.hy.mipaycard;
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,8 +18,12 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.net.Uri;
+
+import androidx.appcompat.app.AlertDialog;
+
+import android.os.Build;
 import android.os.Environment;
-import android.support.v7.app.AlertDialog;
+import android.provider.MediaStore;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +34,12 @@ import com.hy.mipaycard.Utils.UnzipFromAssets;
 import com.hy.mipaycard.Utils.cmdUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +48,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.Config.git_url;
 import static com.hy.mipaycard.Config.pay_pic;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
@@ -55,7 +66,7 @@ public class MainUtils {
         String[] cardName = CardList.getCardName(cardList);
         StringBuilder info = new StringBuilder();
         String filePath;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"MiPayCard");
+        File file = fileWork(context).getParentFile();
         if(!file.exists()){
             file.mkdirs();
         }
@@ -66,7 +77,7 @@ public class MainUtils {
             info.append("CardFile: ").append(cardList[i]).append("\nCardName: ").append(cardName[i]).append("\nFileName: ").append(filePath.substring(filePath.lastIndexOf("/")+1)).append("\n\n");
         }
         String log = runRootShell(cmdList.toArray(new String[cmdList.size()]));
-        CardList.save(info.toString());
+        CardList.save(context,info.toString());
         Toast.makeText(context,"已提取，储存在\n"+file.getPath(),Toast.LENGTH_LONG).show();
     }
 
@@ -270,4 +281,71 @@ public class MainUtils {
         mIntent.setData(Uri.fromParts("package", context.getPackageName(), null));
         context.startActivity(mIntent);
     }
+
+    public static int getMiWalletVersion(Context context){
+            String verName = "0";
+            try {
+                verName = context.getPackageManager().
+                        getPackageInfo("com.mipay.wallet", 0).versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            if(verName.contains(".")){
+                verName = verName.substring(0,verName.indexOf("."));
+            }
+            return Integer.parseInt(verName);
+    }
+
+    //https://developer.huawei.com/consumer/cn/doc/50127#h1-2-
+    public static void saveBitmapToFile(Context context, Bitmap bitmap, String title, String discription) {
+        MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, title, discription);
+    }
+
+    //复制沙盒私有文件到公共目录下，来自csdn
+    @TargetApi(Build.VERSION_CODES.Q)
+    public static void copyPrivateToPictures(Context context, File orgFile, String displayName){
+        ContentValues values = new ContentValues();
+        //values.put(MediaStore.Images.Media.DESCRIPTION, "This is a file");
+        values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, displayName);
+        values.put(MediaStore.Files.FileColumns.MIME_TYPE, "image/*");//MediaStore对应类型名
+        values.put(MediaStore.Files.FileColumns.TITLE, displayName);
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES +"/MiPayCard");//公共目录下目录名
+
+        Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI; //内部存储的Pictures路径
+        ContentResolver resolver = context.getContentResolver();
+
+        Uri insertUri = resolver.insert(external, values);//使用ContentResolver创建需要操作的文件
+        //Log.i("Test--","insertUri: " + insertUri);
+
+        InputStream ist=null;
+        OutputStream ost = null;
+        try {
+            ist=new FileInputStream(orgFile);
+            if (insertUri != null) {
+                ost = resolver.openOutputStream(insertUri);
+            }
+            if (ost != null) {
+                byte[] buffer = new byte[4096];
+                int byteCount = 0;
+                while ((byteCount = ist.read(buffer)) != -1) {  // 循环从输入流读取 buffer字节
+                    ost.write(buffer, 0, byteCount);        // 将读取的输入流写入到输出流
+                }
+                // write what you want
+            }
+        } catch (IOException e) {
+            //Log.i("copyPrivateToDownload--","fail: " + e.getCause());
+        } finally {
+            try {
+                if (ist != null) {
+                    ist.close();
+                }
+                if (ost != null) {
+                    ost.close();
+                }
+            } catch (IOException e) {
+                //Log.i("copyPrivateToDownload--","fail in close: " + e.getCause());
+            }
+        }
+    }
+
 }

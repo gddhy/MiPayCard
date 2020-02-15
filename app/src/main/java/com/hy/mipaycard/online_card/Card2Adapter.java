@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Build;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.hy.mipaycard.BitmapCropActivity;
 import com.hy.mipaycard.Config;
+import com.hy.mipaycard.MainUtils;
 import com.hy.mipaycard.R;
 import com.hy.mipaycard.Utils.CardList;
 
@@ -29,6 +33,7 @@ import java.io.File;
 import java.util.List;
 
 
+import static com.hy.mipaycard.Config.debug_Api;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.copyToClipboard;
@@ -73,7 +78,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                 int position = holder.getAdapterPosition();
                 final Card2 card2 = mCard2List.get(position);
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
-                popupMenu.getMenuInflater().inflate(R.menu.online_popup_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(Build.VERSION.SDK_INT>=debug_Api?R.menu.online_popup_menu_q:R.menu.online_popup_menu, popupMenu.getMenu());
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -83,11 +88,15 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                                 getCard(card2,false);
                                 break;
                             case R.id.online_menu_add:
-                                if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                    toSelfSetting(mContext);
-                                    Toast.makeText(mContext,"请授予储存空间权限",Toast.LENGTH_LONG).show();
-                                } else {
+                                if(Build.VERSION.SDK_INT>=debug_Api){
                                     getCard(card2,true);
+                                } else {
+                                    if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        toSelfSetting(mContext);
+                                        Toast.makeText(mContext, "请授予储存空间权限", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        getCard(card2, true);
+                                    }
                                 }
                                 break;
                             case R.id.online_menu_info:
@@ -103,6 +112,11 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                                             }
                                         })
                                         .show();
+                                break;
+                            case R.id.online_menu_save:
+                                //todo save card
+                                MainUtils.copyPrivateToPictures(mContext,getGlideCacheFile(mContext,card2.getLink()),card2.getFileName());
+                                Toast.makeText(mContext,"已保存到\n"+Environment.DIRECTORY_PICTURES+"/MiPayCard",Toast.LENGTH_LONG).show();
                                 break;
                             default:
                         }
@@ -124,44 +138,6 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                 int position = holder.getAdapterPosition();
                 final Card2 card2 = mCard2List.get(position);
                 getCard(card2,false);
-                /*
-                String[] list = {"设为卡面","添加到卡面列表","图片信息"};
-                new AlertDialog.Builder(mContext)
-                        .setTitle(card2.getCardName())
-                        .setItems(list, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                switch (i){
-                                    case 0:
-                                        getCard(card2,false);
-                                        break;
-                                    case 1:
-                                        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                            toSelfSetting(mContext);
-                                            Toast.makeText(mContext,"请授予储存空间权限",Toast.LENGTH_LONG).show();
-                                        } else {
-                                            getCard(card2,true);
-                                        }
-                                        break;
-                                    case 2:
-                                        new AlertDialog.Builder(mContext)
-                                                .setTitle("图片信息")
-                                                .setMessage("图片名称："+ card2.getCardName()+"\n图片链接："+ card2.getLink()+"\n图片说明："+ card2.getAbout()+"\n上传者："+ card2.getUserName()+"\n联系方式："+ card2.getEmail())
-                                                .setPositiveButton("确定",null)
-                                                .setNegativeButton("复制链接", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        copyToClipboard(mContext,card2.getLink());
-                                                        Toast.makeText(mContext,"已复制",Toast.LENGTH_LONG).show();
-                                                    }
-                                                })
-                                                .show();
-                                        break;
-                                    default:
-                                }
-                            }
-                        })
-                        .show();*/
             }
         });
         return holder;
@@ -185,11 +161,11 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
 
     private void getCard(final Card2 card2 , final boolean isSaveToFile){
         if (isSaveToFile){
-            if (!fileWork.exists()){
-                fileWork.mkdirs();
+            if (!fileWork(mContext).exists()){
+                fileWork(mContext).mkdirs();
             }
         }
-        File file = new File((isSaveToFile?fileWork:mContext.getExternalCacheDir()),card2.getFileName());
+        File file = new File((isSaveToFile?fileWork(mContext):mContext.getExternalCacheDir()),card2.getFileName());
         File tmpFile = getGlideCacheFile(mContext,card2.getLink());
         if(tmpFile!=null&&tmpFile.exists()) {
             CardList.copyFile(tmpFile.getPath(),file.getPath());

@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.hy.mipaycard.Config.fileWork;
+
 public class CardList {
     private static String[] CardName;
     private static String[] CardFile;
@@ -68,9 +70,9 @@ public class CardList {
         return strList.toArray(new String[strList.size()]);
     }
 
-    public static void save(String data) {
+    public static void save(Context context,String data) {
         BufferedWriter writer = null;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"MiPayCard/CardInfo.txt");
+        File file = new File(fileWork(context).getParentFile(),"CardInfo.txt");//new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"MiPayCard/CardInfo.txt");
         if(!file.exists()){
             try {
                 file.createNewFile();

@@ -53,11 +53,11 @@
             android:name=".OpenActivity"
             android:label="@string/set_card"
             android:theme="@style/AppTheme">
-            <intent-filter tools:ignore="AppLinkUrlError">
+
+            <intent-filter
+                tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
@@ -95,8 +95,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".shortcuts.OpenMiPayActivity"
-            android:theme="@android:style/Theme.NoDisplay" />
-        <activity android:name=".MainDialogActivity">
+            android:theme="@android:style/Theme.NoDisplay" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -105,7 +104,7 @@
         </activity>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

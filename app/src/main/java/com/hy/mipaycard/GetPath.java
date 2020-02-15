@@ -3,14 +3,18 @@ package com.hy.mipaycard;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.File;
+
+import static com.hy.mipaycard.Config.debug_Api;
 
 public class GetPath extends AppCompatActivity {
 
@@ -18,10 +22,16 @@ public class GetPath extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (ContextCompat.checkSelfPermission(GetPath.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GetPath.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+        if(Build.VERSION.SDK_INT>=debug_Api){
+            //TODO
+            Toast.makeText(this,"该功能暂不支持Q及以上系统",Toast.LENGTH_LONG).show();
+            finish();
         } else {
-            get();
+            if (ContextCompat.checkSelfPermission(GetPath.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(GetPath.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                get();
+            }
         }
     }
     @Override

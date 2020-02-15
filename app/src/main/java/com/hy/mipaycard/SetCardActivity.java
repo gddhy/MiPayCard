@@ -7,8 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -21,11 +21,14 @@ import com.hy.mipaycard.set_card_new.SetCardNewActivity;
 
 import java.io.File;
 
+import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.getTempFile;
 import static com.hy.mipaycard.Config.pay_pic;
 import static com.hy.mipaycard.MainUtils.AddTextToBitmap;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
+import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
+import static com.hy.mipaycard.set_card_new.SetCardNewActivity.pKillServer;
 import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
 public class SetCardActivity extends AppCompatActivity {
@@ -39,7 +42,7 @@ public class SetCardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String filePath = intent.getStringExtra(Config.file_Path);
         boolean isAuto = intent.getBooleanExtra(Config.is_Auto,false);
-        int isUseNew = pref.getInt("isUseNew",1);
+        int isUseNew = pref.getInt("isUseNew",defaultSet);
         if(isUseNew != 0){
             Intent intent2 = new Intent(SetCardActivity.this, SetCardNewActivity.class);
             intent2.putExtra(Config.file_Path, filePath);
@@ -65,8 +68,12 @@ public class SetCardActivity extends AppCompatActivity {
         final String[] cardList = cmdUtil.getTsmclient();
         final String[] cardName = CardList.getCardName(cardList);
         if(cardName.length==0){
-            Toast.makeText(this,"请授予软件root权限后再使用该功能",Toast.LENGTH_LONG).show();
-            finish();
+            if(!isRooted()) {
+                Toast.makeText(this, "请授予软件root权限后再使用该功能", Toast.LENGTH_LONG).show();
+                finish();
+            }  else {
+                Toast.makeText(this, "未读到卡面列表或您的设备不支持", Toast.LENGTH_LONG).show();
+            }
         }
         final String finalPath = path;
         new AlertDialog.Builder(SetCardActivity.this)
@@ -115,6 +122,7 @@ public class SetCardActivity extends AppCompatActivity {
                         if (tempPath.equals(tmpFile.getPath())){
                             tmpFile.delete();
                         }*/
+                        pKillServer(pref);
                         finish();
                     }
                 })

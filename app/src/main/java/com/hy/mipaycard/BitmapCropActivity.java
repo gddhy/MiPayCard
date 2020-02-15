@@ -7,10 +7,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.content.FileProvider;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,10 +116,10 @@ public class BitmapCropActivity extends AppCompatActivity {
                     bmp = toRoundCorner(bmp, 40);
                     saveBitmapAsPng(bmp, file);
                     if (pref.getBoolean("CropAutoSave",false)) {
-                        if (!fileWork.exists()) {
-                            fileWork.mkdirs();
+                        if (!fileWork(BitmapCropActivity.this).exists()) {
+                            fileWork(BitmapCropActivity.this).mkdirs();
                         }
-                        File f = new File(fileWork, saveName);
+                        File f = new File(fileWork(BitmapCropActivity.this), saveName);
                         CardList.copyFile(file.getPath(), f.getPath());
                         ref_media(BitmapCropActivity.this,f);
                         LocalBroadcastManager.getInstance(BitmapCropActivity.this).sendBroadcast(new Intent(Config.localAction));//发送本地广播
@@ -146,7 +146,7 @@ public class BitmapCropActivity extends AppCompatActivity {
     }
 
     private void checkSave(CheckBox checkBox,File file){
-        File listFile = new File(fileWork, saveName);
+        File listFile = new File(fileWork(BitmapCropActivity.this), saveName);
         if (checkBox.isChecked()) {
             if(!listFile.exists()){
                 saveToList(file);
@@ -161,10 +161,10 @@ public class BitmapCropActivity extends AppCompatActivity {
     }
 
     private void saveToList(File file){
-        if (!fileWork.exists()) {
-            fileWork.mkdirs();
+        if (!fileWork(BitmapCropActivity.this).exists()) {
+            fileWork(BitmapCropActivity.this).mkdirs();
         }
-        File f = new File(fileWork, saveName);
+        File f = new File(fileWork(BitmapCropActivity.this), saveName);
         if(!f.exists())
             CardList.copyFile(file.getPath(),f.getPath());
         ref_media(BitmapCropActivity.this,f);
