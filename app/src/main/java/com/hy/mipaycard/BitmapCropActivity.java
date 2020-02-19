@@ -108,25 +108,26 @@ public class BitmapCropActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK ) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1:
                     File file = getTempFile(BitmapCropActivity.this);
                     Bitmap bmp = PhotoUtils.getBitmapFromUri(Uri.fromFile(file), BitmapCropActivity.this);
                     bmp = toRoundCorner(bmp, 40);
                     saveBitmapAsPng(bmp, file);
-                    if (pref.getBoolean("CropAutoSave",false)) {
+                    if (pref.getBoolean("CropAutoSave", false)) {
                         if (!fileWork(BitmapCropActivity.this).exists()) {
                             fileWork(BitmapCropActivity.this).mkdirs();
                         }
                         File f = new File(fileWork(BitmapCropActivity.this), saveName);
                         CardList.copyFile(file.getPath(), f.getPath());
-                        ref_media(BitmapCropActivity.this,f);
+                        ref_media(BitmapCropActivity.this, f);
                         LocalBroadcastManager.getInstance(BitmapCropActivity.this).sendBroadcast(new Intent(Config.localAction));//发送本地广播
                     }
                     Intent intent = new Intent(BitmapCropActivity.this, SetCardActivity.class);
                     intent.putExtra(Config.file_Path, file.getPath());
-                    intent.putExtra(Config.is_Auto, pref.getBoolean("isAuto",false));
+                    intent.putExtra(Config.is_Auto, pref.getBoolean("isAuto", false));
                     startActivity(intent);
                     finish();
                     break;

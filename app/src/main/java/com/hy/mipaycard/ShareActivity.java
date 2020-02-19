@@ -1,11 +1,8 @@
 package com.hy.mipaycard;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,17 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.by_syk.lib.uri.UriAnalyser;
-import com.hy.mipaycard.Utils.CardList;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
 
 import static com.hy.mipaycard.Config.debug_Api;
 
@@ -110,14 +103,5 @@ public class ShareActivity extends AppCompatActivity {
             }
         }
         finish();
-    }
-
-    public static Bitmap getBitmapFromUri(Context context, Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor =
-                context.getContentResolver().openFileDescriptor(uri, "r");
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
-        return image;
     }
 }

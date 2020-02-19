@@ -81,6 +81,12 @@
             android:text="保存"
             android:onClick="on3Click" />
 
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"/>
+
         <ImageView
             android:id="@+id/mainImageView"
             android:layout_width="match_parent"

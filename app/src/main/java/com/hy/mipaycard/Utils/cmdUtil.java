@@ -68,7 +68,6 @@ public class cmdUtil
             resultOutStream.close();
             resultOutStream=null;
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }

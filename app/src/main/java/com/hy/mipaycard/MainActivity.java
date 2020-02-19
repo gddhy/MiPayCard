@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,6 +44,7 @@ import com.hy.mipaycard.shortcuts.CardDefaultActivity;
 import com.hy.mipaycard.shortcuts.SetMenuPermissionActivity;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -176,14 +180,24 @@ public class MainActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT>=debug_Api){
             //todo new choose
             //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
-
-            //SAF
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            // 只显示可以打开的文件
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            // 可选择所有文件类型
-            intent.setType("image/*");
-            startActivityForResult(intent, NEW_SAF_CHOOSE_IMG);
+            openAlbum(NEW_SAF_CHOOSE_IMG);
+            /*
+            部分设备SAF可能闪退
+            try {
+                //SAF
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                // 只显示可以打开的文件
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                // 可选择所有文件类型
+                intent.setType("image/*");
+                startActivityForResult(intent, NEW_SAF_CHOOSE_IMG);
+            } catch (Exception e){
+                e.printStackTrace();
+                //若不支持SAF，尝试使用旧方法，并改换文件解析方式
+                Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                intent.setType("image/*");
+                startActivityForResult(intent,NEW_SAF_CHOOSE_IMG);
+            }*/
         } else {
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -242,10 +256,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void openAlbum(){
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+    private void  openAlbum(){
+        openAlbum(0);
+    }
+
+    private void openAlbum(int requestCode){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        startActivityForResult(intent,0);
+        startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -296,20 +314,30 @@ public class MainActivity extends AppCompatActivity {
                 case REQUEST_CODE_OPEN_DIRECTORY:
                     Log.d("SAF", String.format("Open Directory result Uri : %s", data.getData()));
                     Uri uriTree = data.getData();
-                    SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("uri", uriTree.toString());
-                    editor.apply();
-                    final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    getContentResolver().takePersistableUriPermission(uriTree, takeFlags);
-                    LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(Config.localAction));
+                    try {
+                        SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("uri", uriTree.toString());
+                        editor.apply();
+                        final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        getContentResolver().takePersistableUriPermission(uriTree, takeFlags);
+                        LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(new Intent(Config.localAction));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(this,"当前设备不支持",Toast.LENGTH_LONG).show();
+                    }
                     //updateDatas(uriTree);
                     break;
                 case NEW_SAF_CHOOSE_IMG:
                     //TODO
-                    Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
-                    i_saf.putExtra(Config.open_Crop, saveFileFromSAF(MainActivity.this,data.getData()).getPath());
-                    startActivity(i_saf);
+                    try {
+                        Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
+                        i_saf.putExtra(Config.open_Crop, saveFileFromSAF(MainActivity.this, data.getData()).getPath());
+                        startActivity(i_saf);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(this,"文件获取失败",Toast.LENGTH_LONG).show();
+                    }
                     break;
                 default:
             }
@@ -471,9 +499,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 8:
                 //TODO
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                    startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    try {
+                        //部分官改ROM可能不支持
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                        startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(this,"当前设备不支持",Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(this,"该功能暂不支持当前安卓版本",Toast.LENGTH_LONG).show();
                 }
@@ -568,5 +602,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Bitmap getBitmapFromUri(Context context, Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                context.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 }

@@ -66,9 +66,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
                 if (position > 1){
                     final String[] list;
                     if(card.isFile()){
-                        list = new String[]{"设为卡面","设为卡面并添加水印","重命名","删除"};
+                        list = new String[]{"设为卡面","设为卡面并添加水印","裁切圆角","重命名","删除"};
                     } else {
-                        list = new String[]{"设为卡面","设为卡面并添加水印","删除"};
+                        list = new String[]{"设为卡面","设为卡面并添加水印","裁切圆角","删除"};
                     }
                     new AlertDialog.Builder(mContext)
                             .setTitle(card.getName())
@@ -104,7 +104,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
                                             }
                                             //setCard(file.getPath(),true);
                                             break;
+                                        //裁切圆角
                                         case 2:
+                                            if(card.isFile()){
+                                                RoundImageActivity.openRoundImage(mContext,card.getImageFile().getPath());
+                                            } else {
+                                                File file = MainActivity.saveFileFromSAF(mContext,card.getUri());
+                                                if(file!=null)
+                                                    RoundImageActivity.openRoundImage(mContext,file.getPath());
+                                            }
+                                            break;
+                                        case 3:
                                             View view = setView(card,true);
                                             final EditText editText = (EditText)view.findViewById(R.id.dialog_edit);
                                             new AlertDialog.Builder(mContext)

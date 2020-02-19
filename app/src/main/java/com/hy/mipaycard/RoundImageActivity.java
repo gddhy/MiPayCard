@@ -10,16 +10,23 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.by_syk.lib.uri.UriAnalyser;
+
 import java.io.File;
+import java.util.Objects;
 
 import static com.by_syk.lib.uri.UriAnalyser.getRealPath;
 import static com.hy.mipaycard.Config.debug_Api;
@@ -35,6 +42,7 @@ public class RoundImageActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     String filePath = null;
     TextView textView;
+    ProgressBar progressBar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -45,6 +53,7 @@ public class RoundImageActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.mainImageView);
         editText = (EditText)findViewById(R.id.mainEditText);
         textView = (TextView)findViewById(R.id.mainTextView);
+        progressBar =  findViewById(R.id.progress_bar);
         editText.setText(""+pref.getInt("pixels",40));
         editText.addTextChangedListener(new TextWatcher() {
 
@@ -88,37 +97,82 @@ public class RoundImageActivity extends AppCompatActivity {
             Uri uri = intent.getData();
             String data = intent.getDataString();
             String str = null;
-            try {
-                if(!data.contains("file://")){
-                    File f = MainActivity.saveFileFromSAF(this, uri);
-                    if(f!=null)
-                        str = f.getPath();
+            if(Build.VERSION.SDK_INT>=debug_Api) {
+                try {
+                    if (!data.contains("file://")) {
+                        File f = MainActivity.saveFileFromSAF(this, uri);
+                        if (f != null)
+                            str = f.getPath();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "文件读取失败", Toast.LENGTH_LONG).show();
                 }
-            } catch (Exception e){
-                e.printStackTrace();
-                Toast.makeText(this,"文件读取失败",Toast.LENGTH_LONG).show();
+            } else{
+                filePath=getRealPath(this,uri);
+                displayImage(filePath);
             }
-
 
             if (str!=null){
                 filePath =str;
                 displayImage(filePath);
             }
-            //Uri uri = intent.getData();
-            //filePath=getRealPath(this,uri);
-            //displayImage(filePath);
+        } else if(Objects.equals(action, "Round_Image")){
+            String path = null;
+            try {
+                path = intent.getExtras().getString("path");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            if(path!=null){
+                filePath =path;
+                displayImage(filePath);
+            }
+        } else if(Intent.ACTION_SEND.equals(action)){
+            String path = null;
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                Uri uri = (Uri) bundle.get(Intent.EXTRA_STREAM);
+                if (uri != null) {
+                    if (Build.VERSION.SDK_INT >= debug_Api) {
+                        String u = uri.toString();
+                        Log.d("URI: ", "" + u);
+                        try {
+                            if (!u.contains("file://")) {
+                                File f = MainActivity.saveFileFromSAF(this, uri);
+                                if (f != null) {
+                                    path = f.getPath();
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        path = UriAnalyser.getRealPath(this, uri);
+                    }
+                }
+            }
+
+            if(path!=null){
+                filePath =path;
+                displayImage(filePath);
+            }
         }
     }
 
+    public static void openRoundImage(Context context,String file_Path){
+        Intent intent = new Intent(context,RoundImageActivity.class);
+        intent.setAction("Round_Image");
+        intent.putExtra("path",file_Path);
+        context.startActivity(intent);
+    }
+
     public void onClick(View v){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         if(Build.VERSION.SDK_INT>=debug_Api){
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*");
             startActivityForResult(intent, 2);
         } else {
-            Intent intent = new Intent("android.intent.action.GET_CONTENT");
-            intent.setType("image/*");
             startActivityForResult(intent, 1);
         }
     }
@@ -165,13 +219,29 @@ public class RoundImageActivity extends AppCompatActivity {
         if(filePath==null){
             Toast.makeText(this,"未选择文件",Toast.LENGTH_LONG).show();
         } else {
-            makeRoundBitmapFile(this,filePath,pref);
+            //imageView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final String savePath = makeRoundBitmapFile(RoundImageActivity.this,filePath,pref);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //imageView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(RoundImageActivity.this,"已保存到\n"+savePath,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }).start();
         }
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1:
@@ -179,8 +249,8 @@ public class RoundImageActivity extends AppCompatActivity {
                     displayImage(filePath);
                     break;
                 case 2:
-                    File f = MainActivity.saveFileFromSAF(this,data.getData());
-                    if(f!=null){
+                    File f = MainActivity.saveFileFromSAF(this, data.getData());
+                    if (f != null) {
                         filePath = f.getPath();
                         displayImage(filePath);
                     }
@@ -189,7 +259,7 @@ public class RoundImageActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(this,"未选择文件",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "未选择文件", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -206,17 +276,27 @@ public class RoundImageActivity extends AppCompatActivity {
         }
     }
 
-    public static void makeRoundBitmapFile(Context context, String filePath, SharedPreferences pref){
+    public static String makeRoundBitmapFile(Context context, String filePath, SharedPreferences pref){
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         bitmap = toRoundCorner(bitmap,pref.getInt("pixels",40));
+        String fileName = new File(filePath).getName();
+        if(fileName.contains(".")){
+            fileName = fileName.substring(0,fileName.lastIndexOf("."));
+        }
         File file ;
         if(Build.VERSION.SDK_INT>=debug_Api){
-            file = new File(fileWork(context),new File(filePath).getName()+"_round.png");
+            file = new File(fileWork(context),fileName+"_round.png");
+        } else if(filePath.contains(new File(context.getExternalCacheDir(),"SAF").getPath())) {
+            file = new File(fileWork(context),fileName+"_round.png");
         } else {
-            file = new File(filePath+"_round.png");
+            file = new File(new File( filePath).getParentFile(),fileName+"_round.png");
         }
         saveBitmapAsPng(bitmap,file);
         ref_media(context,file);
-        Toast.makeText(context,"已保存到\n"+file.getPath(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,"已保存到\n"+file.getPath(),Toast.LENGTH_LONG).show();
+        if(fileWork(context).getPath().equals(file.getParent())){
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Config.localAction));
+        }
+        return file.getPath();
     }
 }

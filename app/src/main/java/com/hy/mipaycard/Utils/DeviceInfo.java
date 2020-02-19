@@ -9,6 +9,8 @@ import android.os.Build;
 import java.lang.reflect.Method;
 
 public class DeviceInfo {
+    //应酷安App收集个人隐私信息要求，不再收集设备基础信息
+
     public static String getBaseInfo(Context context){
         return  "设备信息：\n"+getPropInfo()+getMiWalletInfo(context)+getMiPayInfo(context);
     }

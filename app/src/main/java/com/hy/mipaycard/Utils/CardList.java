@@ -3,7 +3,6 @@ package com.hy.mipaycard.Utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
