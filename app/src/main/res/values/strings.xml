@@ -13,4 +13,11 @@
 
     <string name="about_text">.本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试</string>
     <string name="about_text2">\n声明:本软件仅供学习、技术交流使用，严禁用于非法行为，使用此软件所造成的一切后果由用户自行承担！</string>
+
+    <string name="menu_card_set_tool">卡面设置方式</string>
+    <string name="menu_card_set">立即生效</string>
+    <string name="online_card_set">设为卡面</string>
+    <string name="online_add_list">添加到卡面列表</string>
+    <string name="online_card_info">图片信息</string>
+    <string name="online_card_save">保存到相册</string>
 </resources>

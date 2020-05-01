@@ -38,6 +38,7 @@ import com.by_syk.lib.uri.UriAnalyser;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hy.mipaycard.Utils.DataCleanManager;
+import com.hy.mipaycard.new_set.NewSetActivity;
 import com.hy.mipaycard.online_card.EmailOnlineActivity;
 import com.hy.mipaycard.online_card.OnlineCardActivity;
 import com.hy.mipaycard.shortcuts.CardDefaultActivity;
@@ -52,7 +53,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hy.mipaycard.Config.debug_Api;
 import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.EmailActivity.joinQQGroup;
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fab_menu.close(true);
-                if(Build.VERSION.SDK_INT>=debug_Api){
+                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
                     getCard(MainActivity.this);
                 } else {
                     if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChoosePicClick(View view) {
-        if(Build.VERSION.SDK_INT>=debug_Api){
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             //todo new choose
             //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
             openAlbum(NEW_SAF_CHOOSE_IMG);
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         cardList.clear();
         cardList.add(new Card("招行初音卡",new File(getFilesDir(),"miku.png")));
         cardList.add(new Card("天依柠檬卡",new File(getFilesDir(),"luotianyi.png")));
-        if(Build.VERSION.SDK_INT>=debug_Api) {
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api) {
             initItems();
         } else {
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -307,9 +307,19 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0:
                     Uri uri = data.getData();
-                    Intent i = new Intent(MainActivity.this, BitmapCropActivity.class);
-                    i.putExtra(Config.open_Crop, UriAnalyser.getRealPath(this, uri));
-                    startActivity(i);
+                    String path = UriAnalyser.getRealPath(this, uri);
+                    int type = pref.getInt("isUseNew", defaultSet);
+                    if(type != 2) {
+                        Intent i = new Intent(MainActivity.this, BitmapCropActivity.class);
+                        i.putExtra(Config.open_Crop, path);
+                        startActivity(i);
+                    } else {
+                        Intent intent = new Intent(this, NewSetActivity.class);
+                        intent.putExtra(Config.file_Path, path);
+                        intent.putExtra(Config.is_Auto, false);
+                        startActivity(intent);
+                    }
+
                     break;
                 case REQUEST_CODE_OPEN_DIRECTORY:
                     Log.d("SAF", String.format("Open Directory result Uri : %s", data.getData()));
@@ -331,9 +341,18 @@ public class MainActivity extends AppCompatActivity {
                 case NEW_SAF_CHOOSE_IMG:
                     //TODO
                     try {
-                        Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
-                        i_saf.putExtra(Config.open_Crop, saveFileFromSAF(MainActivity.this, data.getData()).getPath());
-                        startActivity(i_saf);
+                        String path2 = saveFileFromSAF(MainActivity.this, data.getData()).getPath();
+                        int type2 = pref.getInt("isUseNew", defaultSet);
+                        if(type2 != 2) {
+                            Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
+                            i_saf.putExtra(Config.open_Crop, path2);
+                            startActivity(i_saf);
+                        } else {
+                            Intent intent = new Intent(this, NewSetActivity.class);
+                            intent.putExtra(Config.file_Path, path2);
+                            intent.putExtra(Config.is_Auto, false);
+                            startActivity(intent);
+                        }
                     } catch (Exception e){
                         e.printStackTrace();
                         Toast.makeText(this,"文件获取失败",Toast.LENGTH_LONG).show();
@@ -429,43 +448,42 @@ public class MainActivity extends AppCompatActivity {
                 final int version = getMiWalletVersion(this);
                 int choose ;
                 final String[] items ;
+                final boolean isShow;
                 if( version >= 2){
-                    items = new String[]{"默认","新-MiPay"};
+                    items = new String[]{"默认","MiPay","新-MiPay"};
                     int t = pref.getInt("isUseNew", defaultSet);
-                    if(t>=2){
+                    isShow = false;
+                    if(t>2){
                         choose = defaultSet;
                     } else {
                         choose = t;
                     }
                 } else {
-                    items = new String[]{"默认","新-MiPay","新-小米钱包"};
+                    items = new String[]{"默认","MiPay","新-MiPay","新-小米钱包"};
                     choose = pref.getInt("isUseNew", defaultSet);
+                    isShow = true;
+                    if(choose == -1){
+                        choose = items.length -1;
+                    }
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this)
                         .setTitle("选择设置方式")
-                        .setSingleChoiceItems(items, choose, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(items, choose
+                                , new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                int tmp = i;
                                 dialogInterface.dismiss();
+                                if(i == items.length-1 && isShow){
+                                    tmp = -1;
+                                }
                                 editor = pref.edit();
-                                editor.putInt("isUseNew",i);
+                                editor.putInt("isUseNew",tmp);
                                 editor.apply();
                                 Toast.makeText(MainActivity.this,"已选择："+items[i],Toast.LENGTH_LONG).show();
                             }
                         });
-/*
-                new AlertDialog.Builder(this)
-                        .setTitle("选择设置方式")
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                editor = pref.edit();
-                                editor.putInt("isUseNew",i);
-                                editor.apply();
-                                Toast.makeText(MainActivity.this,"已选择："+items[i],Toast.LENGTH_LONG).show();
-                            }
-                        })*/
                         builder.setNegativeButton("说明", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -485,7 +503,7 @@ public class MainActivity extends AppCompatActivity {
                 openBrowser(MainActivity.this,"https://github.com/gddhy/MiPayCard/blob/master/README.md",0xff24292d,false);
                 break;
             case 7:
-                if(Build.VERSION.SDK_INT>=debug_Api){
+                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
                     //TODO
                     //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, RoundImageActivity.class));
@@ -545,7 +563,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void ref_media(Context context,File file){
-        if(Build.VERSION.SDK_INT<debug_Api)
+        if(Build.VERSION.SDK_INT<Config.AndroidQ_Api)
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
     }
 

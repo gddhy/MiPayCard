@@ -6,6 +6,6 @@
         android:id="@+id/menu_set_pkill"
         android:checkable="true"
         android:checked="false"
-        android:title="立即生效"
+        android:title="@string/menu_card_set"
         app:showAsAction="never" />
 </menu>

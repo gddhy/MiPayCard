@@ -10,6 +10,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.hy.mipaycard.new_set.NewSetActivity;
 
 import java.io.File;
 import java.util.List;
 
+import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainActivity.saveFileFromSAF;
 
@@ -249,7 +253,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
     }
 
     private void setCard(String path,boolean isAutoLogo){
-        Intent intent = new Intent(mContext, SetCardActivity.class);
+        int type = PreferenceManager.getDefaultSharedPreferences(mContext).getInt("isUseNew", defaultSet);
+        Intent intent = new Intent(mContext,type==2? NewSetActivity.class:  SetCardActivity.class);
         intent.putExtra(Config.file_Path, path);
         intent.putExtra(Config.is_Auto, isAutoLogo);
         mContext.startActivity(intent);

@@ -23,7 +23,9 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.Config.git_url;
 import static com.hy.mipaycard.Config.pay_pic;
@@ -162,7 +165,7 @@ public class MainUtils {
     }
 
     public static boolean isInstallApp(Context context, String packageName) {
-        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();// 获取package manager
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {
@@ -347,5 +350,61 @@ public class MainUtils {
             }
         }
     }
+
+
+    /* *
+     * 保存多媒体文件到公共集合目录
+     * @param uri：多媒体数据库的Uri
+     * @param context
+     * @param mimeType：需要保存文件的mimeType
+     * @param displayName：显示的文件名字
+     * @param description：文件描述信息
+     * @param saveFileName：需要保存的文件名字
+     * @param saveSecondaryDir：保存的二级目录
+     * @param savePrimaryDir：保存的一级目录
+     * @return 返回插入数据对应的uri
+     * /
+    /*
+    public static String insertMediaFile(Uri uri, Context context, String mimeType,
+                                         String displayName, String description, String saveFileName, String saveSecondaryDir, String savePrimaryDir) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, displayName);
+        values.put(MediaStore.Images.Media.DESCRIPTION, description);
+        values.put(MediaStore.Images.Media.MIME_TYPE, mimeType);
+        values.put(MediaStore.Images.Media.PRIMARY_DIRECTORY, savePrimaryDir);
+        values.put(MediaStore.Images.Media.SECONDARY_DIRECTORY, saveSecondaryDir);
+        Uri url = null;
+        String stringUrl = null;    / * value to be returned * /
+        ContentResolver cr = context.getContentResolver();
+        try {
+            url = cr.insert(uri, values);
+            if (url == null) {
+                return null;
+            }
+            byte[] buffer = new byte[4096];
+            ParcelFileDescriptor parcelFileDescriptor = cr.openFileDescriptor(url, "w");
+            FileOutputStream fileOutputStream =
+                    new FileOutputStream(parcelFileDescriptor.getFileDescriptor());
+            InputStream inputStream = context.getResources().getAssets().open(saveFileName);
+            while (true) {
+                int numRead = inputStream.read(buffer);
+                if (numRead == -1) {
+                    break;
+                }
+                fileOutputStream.write(buffer, 0, numRead);
+            }
+            fileOutputStream.flush();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to insert media file", e);
+            if (url != null) {
+                cr.delete(url, null, null);
+                url = null;
+            }
+        }
+        if (url != null) {
+            stringUrl = url.toString();
+        }
+        return stringUrl;
+    }*/
 
 }

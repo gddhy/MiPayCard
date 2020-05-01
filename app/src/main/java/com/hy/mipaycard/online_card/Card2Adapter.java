@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +29,14 @@ import com.hy.mipaycard.BitmapCropActivity;
 import com.hy.mipaycard.Config;
 import com.hy.mipaycard.MainUtils;
 import com.hy.mipaycard.R;
+import com.hy.mipaycard.SetCardActivity;
 import com.hy.mipaycard.Utils.CardList;
+import com.hy.mipaycard.new_set.NewSetActivity;
 
 import java.io.File;
 import java.util.List;
 
-
-import static com.hy.mipaycard.Config.debug_Api;
+import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.copyToClipboard;
@@ -78,7 +81,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                 int position = holder.getAdapterPosition();
                 final Card2 card2 = mCard2List.get(position);
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
-                popupMenu.getMenuInflater().inflate(Build.VERSION.SDK_INT>=debug_Api?R.menu.online_popup_menu_q:R.menu.online_popup_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.online_popup_menu, popupMenu.getMenu());
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -88,7 +91,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                                 getCard(card2,false);
                                 break;
                             case R.id.online_menu_add:
-                                if(Build.VERSION.SDK_INT>=debug_Api){
+                                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
                                     getCard(card2,true);
                                 } else {
                                     if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -114,9 +117,15 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                                         .show();
                                 break;
                             case R.id.online_menu_save:
-                                //todo save card
-                                MainUtils.copyPrivateToPictures(mContext,getGlideCacheFile(mContext,card2.getLink()),card2.getFileName());
-                                Toast.makeText(mContext,"已保存到\n"+Environment.DIRECTORY_PICTURES+"/MiPayCard",Toast.LENGTH_LONG).show();
+                                //todo 安卓Q图片保存
+                                try {
+                                    MainUtils.copyPrivateToPictures(mContext, getGlideCacheFile(mContext, card2.getLink()), card2.getFileName());
+                                    Toast.makeText(mContext, "已保存到\n" + Environment.DIRECTORY_PICTURES + "/MiPayCard", Toast.LENGTH_LONG).show();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                    Toast.makeText(mContext, "保存失败", Toast.LENGTH_LONG).show();
+                                    Log.d("SAVE ERROR",e.toString());
+                                }
                                 break;
                             default:
                         }
@@ -182,13 +191,21 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
     }
 
     private void setCard(String path){
-        //Intent intent = new Intent(mContext, SetCardActivity.class);
-        //intent.putExtra(Config.file_Path, path);
-        //intent.putExtra(Config.is_Auto, isAutoLogo);
-        //mContext.startActivity(intent);
+        int type = PreferenceManager.getDefaultSharedPreferences(mContext).getInt("isUseNew", defaultSet);
+        if(type==2) {
+            Intent intent = new Intent(mContext, NewSetActivity.class);
+            intent.putExtra(Config.file_Path, path);
+            intent.putExtra(Config.is_Auto, false);
+            mContext.startActivity(intent);
+        } else {
+            //Intent intent = new Intent(mContext, SetCardActivity.class);
+            //intent.putExtra(Config.file_Path, path);
+            //intent.putExtra(Config.is_Auto, isAutoLogo);
+            //mContext.startActivity(intent);
 
-        Intent i = new Intent(mContext, BitmapCropActivity.class);
-        i.putExtra(Config.open_Crop, path);
-        mContext.startActivity(i);
+            Intent i = new Intent(mContext, BitmapCropActivity.class);
+            i.putExtra(Config.open_Crop, path);
+            mContext.startActivity(i);
+        }
     }
 }

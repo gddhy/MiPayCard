@@ -34,11 +34,11 @@ public class WebBrowserActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        webView = findViewById(R.id.webview);
+        webView = findViewById(R.id.webView);
         progressBar = findViewById(R.id.progressBar);
 
         WebSettings webSettings = webView.getSettings();
-        //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
+        //如果访问的页面中要与Javascript交互，则webView必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
         //网页在app内打开
         if(isOpenInWebView) {

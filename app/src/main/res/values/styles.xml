@@ -22,4 +22,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NewSetStyle" parent="AppThemeNoBar" >
+
+    </style>
+
 </resources>

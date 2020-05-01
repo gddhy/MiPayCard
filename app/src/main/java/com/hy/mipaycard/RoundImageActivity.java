@@ -29,7 +29,6 @@ import java.io.File;
 import java.util.Objects;
 
 import static com.by_syk.lib.uri.UriAnalyser.getRealPath;
-import static com.hy.mipaycard.Config.debug_Api;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
@@ -97,7 +96,7 @@ public class RoundImageActivity extends AppCompatActivity {
             Uri uri = intent.getData();
             String data = intent.getDataString();
             String str = null;
-            if(Build.VERSION.SDK_INT>=debug_Api) {
+            if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api) {
                 try {
                     if (!data.contains("file://")) {
                         File f = MainActivity.saveFileFromSAF(this, uri);
@@ -134,7 +133,7 @@ public class RoundImageActivity extends AppCompatActivity {
             if (bundle != null) {
                 Uri uri = (Uri) bundle.get(Intent.EXTRA_STREAM);
                 if (uri != null) {
-                    if (Build.VERSION.SDK_INT >= debug_Api) {
+                    if (Build.VERSION.SDK_INT >=Config.AndroidQ_Api) {
                         String u = uri.toString();
                         Log.d("URI: ", "" + u);
                         try {
@@ -170,7 +169,7 @@ public class RoundImageActivity extends AppCompatActivity {
     public void onClick(View v){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        if(Build.VERSION.SDK_INT>=debug_Api){
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             startActivityForResult(intent, 2);
         } else {
             startActivityForResult(intent, 1);
@@ -284,7 +283,7 @@ public class RoundImageActivity extends AppCompatActivity {
             fileName = fileName.substring(0,fileName.lastIndexOf("."));
         }
         File file ;
-        if(Build.VERSION.SDK_INT>=debug_Api){
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             file = new File(fileWork(context),fileName+"_round.png");
         } else if(filePath.contains(new File(context.getExternalCacheDir(),"SAF").getPath())) {
             file = new File(fileWork(context),fileName+"_round.png");

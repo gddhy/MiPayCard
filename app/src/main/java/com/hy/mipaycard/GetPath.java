@@ -14,15 +14,13 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import static com.hy.mipaycard.Config.debug_Api;
-
 public class GetPath extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if(Build.VERSION.SDK_INT>=debug_Api){
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             //TODO
             Toast.makeText(this,"该功能暂不支持Q及以上系统",Toast.LENGTH_LONG).show();
             finish();

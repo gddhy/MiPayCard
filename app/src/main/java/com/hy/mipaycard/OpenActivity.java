@@ -17,17 +17,14 @@ import com.by_syk.lib.uri.UriAnalyser;
 
 import java.io.File;
 
-import static com.hy.mipaycard.Config.debug_Api;
-
 public class OpenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if(Build.VERSION.SDK_INT>=debug_Api){
+        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             //TODO
-            //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
             String str = null;
             Intent intent = getIntent();
             if (Intent.ACTION_VIEW.equals(intent.getAction())) {
