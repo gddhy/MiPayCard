@@ -796,6 +796,18 @@
         "CardFile":"6bb8765913e73d35072af30619678e33459cdaf51fa594840eb8f8e9a2d93803.0"
     },
     {
+        "CardName":"岭南通•羊城通 交通联合",
+        "CardFile":"0ffaa7cf048babcea4e3710d25510c62a87137c0aaf15fe54f0994923bf15e9a.0"
+    },
+    {
+        "CardName":"岭南通•羊城通 交通联合",
+        "CardFile":"481065a6ac7c5ad5a5d9091ad6cdbce50953e0b529917e185bbd2c32ac4a59b6.0"
+    },
+    {
+        "CardName":"中国光大银行 阳光借记卡",
+        "CardFile":"b58f4077188f22c36316c12fd1d50387a4c5df87dfec873e316dbc7259fe8a1f.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
