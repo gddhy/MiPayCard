@@ -796,6 +796,86 @@
         "CardFile":"6bb8765913e73d35072af30619678e33459cdaf51fa594840eb8f8e9a2d93803.0"
     },
     {
+        "CardName":"岭南通•羊城通 交通联合",
+        "CardFile":"0ffaa7cf048babcea4e3710d25510c62a87137c0aaf15fe54f0994923bf15e9a.0"
+    },
+    {
+        "CardName":"岭南通•羊城通 交通联合",
+        "CardFile":"481065a6ac7c5ad5a5d9091ad6cdbce50953e0b529917e185bbd2c32ac4a59b6.0"
+    },
+    {
+        "CardName":"中国光大银行 阳光借记卡",
+        "CardFile":"b58f4077188f22c36316c12fd1d50387a4c5df87dfec873e316dbc7259fe8a1f.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"0d292b0edcb2464cc30275fdd37787a970dcaeb83df64834d50e1739c532d560.0"
+    },
+    {
+        "CardName":"招商银行 哔哩哔哩花嫁联名卡",
+        "CardFile":"1ad5b69fe6470afd7dd6eebd86da2b945d8753ccb8aa9e1e748ecef50501bfe6.0"
+    },
+    {
+        "CardName":"中国银行 洛天依小柠檬联名卡",
+        "CardFile":"215aca22a4dd6bead09cc683935e0771dde10164ae729eda996482b07948a47d.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"38ed4635a16a42ccf62b0e84e8c9ac007514a7b4e1c1ad8aaa6a702c0d5968f0.0"
+    },
+    {
+        "CardName":"岭南通•深圳通 交通联合",
+        "CardFile":"3fabcd32c4935b7417cb2b54a08e1d36ac5e9e591064152502749c3bea630553.0"
+    },
+    {
+        "CardName":"厦门e通卡",
+        "CardFile":"499072d8b74bf571a5119f24d0c19b74d6b356f1a1842bb8689f6def0a4c8769.0"
+    },
+    {
+        "CardName":"岭南通",
+        "CardFile":"54ee16ca30ea98de6338644ae41130a4a46e73aea26419ab66900d33dc833d47.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"8421b01805da3a70622067358b0b50ec4e058fb68365aa84be3db570c0867675.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"9c2d53cb8b8c630a004ef0234dc23300b14a4247aaade85acc58e1e0f4bf7ed8.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"9d0edd34f1d63d00f7622a5b8c1c3730320c89eec143c9e7d093244aabb1189f.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"a7c4bb95da4d99a2c00f97a6de7d110dd0f8bfad73d22067a08b686abed4720c.0"
+    },
+    {
+        "CardName":"岭南通•深圳通 交通联合",
+        "CardFile":"a889415d93961805b516971d080a320b5a3d2315e1f50335900eae08818ea51b.0"
+    },
+    {
+        "CardName":"岭南通•深圳通 交通联合",
+        "CardFile":"bf9da5418732ff56518e16c81682c39fa71b1eae804ced4af84df3693a09c726.0"
+    },
+    {
+        "CardName":"中国邮政储蓄银行 绿卡通 腾讯联名卡",
+        "CardFile":"c45f08d19cdfd2d6840184594ee5d36d90fee733c3fc3b3cce14902a074c39b2.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"c4800b0caea85162079e0eb20ccf5a3c63a306c8b5d092dcd6a3e95610580c21.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"d2c4347ecddad10b0d18d9203950cd580c6033159148b57d88ab8c8643446211.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"e5b37582bf369d998d18d1448e66ded3ae4279a0105af826800de4f3becbbf6a.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri",
         "CardFile":"关于信息"
     }
