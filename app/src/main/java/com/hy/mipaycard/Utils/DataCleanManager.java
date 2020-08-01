@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import android.content.Context;
 import android.text.TextUtils;
 
+import static com.hy.mipaycard.Config.getExternalCache;
+
 /** * 本应用数据清除管理器 */
 public class DataCleanManager {
     /**
@@ -122,12 +124,12 @@ public class DataCleanManager {
 
     //包含内置储存缓存
     public static String getCacheSize(Context context) throws Exception {
-        return getFormatSize(getFolderSize(context.getCacheDir())+getFolderSize(context.getExternalCacheDir()));
+        return getFormatSize(getFolderSize(context.getCacheDir())+getFolderSize(getExternalCache(context)));
     }
 
     public static void cleanInternalCacheAll(Context context) {
         deleteFolderFile(String.valueOf(context.getCacheDir()),false);
-        deleteFolderFile(String.valueOf(context.getExternalCacheDir()),false);
+        deleteFolderFile(String.valueOf(getExternalCache(context)),false);
     }
 
 }

@@ -5,6 +5,7 @@
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
         tools:ignore="ManifestOrder" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -124,6 +125,18 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+
+        <provider
+            android:name=".CardListProvider"
+            android:authorities="${applicationId}.documents"
+            android:grantUriPermissions="true"
+            android:exported="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+
         <activity
             android:name=".shortcuts.CardDefaultActivity"
             android:theme="@style/AppTheme" />
@@ -132,4 +145,8 @@
             android:theme="@style/AppTheme" />
     </application>
 
+    <!--适配安卓11软件包可见性-->
+    <queries>
+        <package android:name="com.miui.tsmclient" />
+    </queries>
 </manifest>

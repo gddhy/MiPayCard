@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,9 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.os.Build;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -407,4 +406,10 @@ public class MainUtils {
         return stringUrl;
     }*/
 
+
+    //miui12无法获取主题状态，原生（魔趣）可以正常使用
+    public static boolean isDarkTheme(Context context) {
+        final int flag = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK ;
+        return flag == Configuration.UI_MODE_NIGHT_YES ;
+    }
 }

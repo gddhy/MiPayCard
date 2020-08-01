@@ -38,6 +38,7 @@ import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
+import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.copyToClipboard;
 import static com.hy.mipaycard.MainUtils.toSelfSetting;
@@ -174,7 +175,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                 fileWork(mContext).mkdirs();
             }
         }
-        File file = new File((isSaveToFile?fileWork(mContext):mContext.getExternalCacheDir()),card2.getFileName());
+        File file = new File((isSaveToFile?fileWork(mContext):getExternalCache(mContext)),card2.getFileName());
         File tmpFile = getGlideCacheFile(mContext,card2.getLink());
         if(tmpFile!=null&&tmpFile.exists()) {
             CardList.copyFile(tmpFile.getPath(),file.getPath());

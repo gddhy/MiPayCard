@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
@@ -55,6 +56,7 @@ import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
+import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.EmailActivity.joinQQGroup;
 import static com.hy.mipaycard.MainUtils.getCard;
 import static com.hy.mipaycard.MainUtils.getMiWalletVersion;
@@ -227,10 +229,12 @@ public class MainActivity extends AppCompatActivity {
         if (!fileWork(MainActivity.this).exists()) {
             fileWork(MainActivity.this).mkdirs();
         }
-        String[] userList = fileWork(MainActivity.this).list();
+        File[] userList = fileWork(MainActivity.this).listFiles();
         if (userList != null && userList.length != 0) {
             for (int i = 0; i < userList.length; i++) {
-                cardList.add(new Card(new File(fileWork(MainActivity.this), userList[i])));
+                if(userList[i].isFile())
+                    if(CardListProvider.getTypeForName(userList[i].getName()).contains("image"))
+                        cardList.add(new Card(userList[i]));
             }
         }
 
@@ -309,15 +313,22 @@ public class MainActivity extends AppCompatActivity {
                     Uri uri = data.getData();
                     String path = UriAnalyser.getRealPath(this, uri);
                     int type = pref.getInt("isUseNew", defaultSet);
-                    if(type != 2) {
-                        Intent i = new Intent(MainActivity.this, BitmapCropActivity.class);
-                        i.putExtra(Config.open_Crop, path);
-                        startActivity(i);
+                    if(path != null) {
+                        if (type != 2) {
+                            Intent i = new Intent(MainActivity.this, BitmapCropActivity.class);
+                            i.putExtra(Config.open_Crop, path);
+                            startActivity(i);
+                        } else {
+                            Intent intent = new Intent(this, NewSetActivity.class);
+                            intent.putExtra(Config.file_Path, path);
+                            intent.putExtra(Config.is_Auto, false);
+                            startActivity(intent);
+                        }
                     } else {
-                        Intent intent = new Intent(this, NewSetActivity.class);
-                        intent.putExtra(Config.file_Path, path);
-                        intent.putExtra(Config.is_Auto, false);
-                        startActivity(intent);
+                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N)
+                            newSetCard(data);
+                        else
+                            Toast.makeText(this,"文件获取失败",Toast.LENGTH_LONG).show();
                     }
 
                     break;
@@ -340,26 +351,30 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case NEW_SAF_CHOOSE_IMG:
                     //TODO
-                    try {
-                        String path2 = saveFileFromSAF(MainActivity.this, data.getData()).getPath();
-                        int type2 = pref.getInt("isUseNew", defaultSet);
-                        if(type2 != 2) {
-                            Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
-                            i_saf.putExtra(Config.open_Crop, path2);
-                            startActivity(i_saf);
-                        } else {
-                            Intent intent = new Intent(this, NewSetActivity.class);
-                            intent.putExtra(Config.file_Path, path2);
-                            intent.putExtra(Config.is_Auto, false);
-                            startActivity(intent);
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                        Toast.makeText(this,"文件获取失败",Toast.LENGTH_LONG).show();
-                    }
+                    newSetCard(data);
                     break;
                 default:
             }
+        }
+    }
+
+    private void newSetCard(Intent data){
+        try {
+            String path2 = saveFileFromSAF(MainActivity.this, data.getData()).getPath();
+            int type2 = pref.getInt("isUseNew", defaultSet);
+            if(type2 != 2) {
+                Intent i_saf = new Intent(MainActivity.this, BitmapCropActivity.class);
+                i_saf.putExtra(Config.open_Crop, path2);
+                startActivity(i_saf);
+            } else {
+                Intent intent = new Intent(this, NewSetActivity.class);
+                intent.putExtra(Config.file_Path, path2);
+                intent.putExtra(Config.is_Auto, false);
+                startActivity(intent);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this,"文件获取失败",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -592,7 +607,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static File saveFileFromSAF(Context context,Uri safUri){
         DocumentFile documentFile = DocumentFile.fromSingleUri(context,safUri);
-        File dir = new File(context.getExternalCacheDir(),"SAF");
+        File dir = new File(getExternalCache(context),"SAF");
         if(!dir.exists()){
             dir.mkdirs();
         }
@@ -630,4 +645,36 @@ public class MainActivity extends AppCompatActivity {
         parcelFileDescriptor.close();
         return image;
     }
+/*
+    int Ti = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            Timer timer = null;
+            if(Ti<2){
+                Ti++;
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Ti = 0;
+                    }
+                },6000);
+            } else {
+                Snackbar.make(fab_menu,"实验功能开启",Snackbar.LENGTH_LONG).setAction("关闭", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(fab_menu,"已关闭",Snackbar.LENGTH_LONG).show();
+                        editor = pref.edit();
+                        editor.putBoolean("devSet",false);
+                        editor.apply();
+                    }
+                }).show();
+                editor = pref.edit();
+                editor.putBoolean("devSet",true);
+                editor.apply();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
 }

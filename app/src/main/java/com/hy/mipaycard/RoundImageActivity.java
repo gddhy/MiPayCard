@@ -30,6 +30,7 @@ import java.util.Objects;
 
 import static com.by_syk.lib.uri.UriAnalyser.getRealPath;
 import static com.hy.mipaycard.Config.fileWork;
+import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.MainActivity.ref_media;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
 import static com.hy.mipaycard.MainUtils.toRoundCorner;
@@ -285,7 +286,7 @@ public class RoundImageActivity extends AppCompatActivity {
         File file ;
         if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
             file = new File(fileWork(context),fileName+"_round.png");
-        } else if(filePath.contains(new File(context.getExternalCacheDir(),"SAF").getPath())) {
+        } else if(filePath.contains(new File(getExternalCache(context),"SAF").getPath())) {
             file = new File(fileWork(context),fileName+"_round.png");
         } else {
             file = new File(new File( filePath).getParentFile(),fileName+"_round.png");

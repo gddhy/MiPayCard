@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
+import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.Config.getTempFile;
 import static com.hy.mipaycard.Config.mi_wallet;
 import static com.hy.mipaycard.Config.pay_pic;
@@ -94,10 +95,10 @@ public class NewSetActivity extends AppCompatActivity {
         File file;
         if(isSetMipay) {
             list = getTsmclient();
-            file = new File(getExternalCacheDir(),"mi_pay");
+            file = new File(getExternalCache(this),"mi_pay");
         } else {
             list = getMiWallet();
-            file = new File(getExternalCacheDir(),"mi_wallet");
+            file = new File(getExternalCache(this),"mi_wallet");
         }
         if(!file.exists()){
             file.mkdirs();
@@ -111,8 +112,10 @@ public class NewSetActivity extends AppCompatActivity {
         String log = runRootShell(cmdList.toArray(new String[cmdList.size()]));
         delTmpFile(file,list);
         final File[] files_list = file.listFiles();
-        for(int i = 0;i<files_list.length;i++){
-            cardList.add(new List_card((isSetMipay?getCardName(files_list[i].getName()):files_list[i].getName()),files_list[i]));
+        if (files_list != null) {
+            for(int i = 0;i<files_list.length;i++){
+                cardList.add(new List_card((isSetMipay?getCardName(files_list[i].getName()):files_list[i].getName()),files_list[i]));
+            }
         }
         ArrayAdapter adapter = new List_Adapter(this, R.layout.list_item,cardList);
         listView.setAdapter(adapter);
@@ -122,8 +125,8 @@ public class NewSetActivity extends AppCompatActivity {
             filePath = tmp_file.getPath();
         }
         File[] listFiles = file.listFiles();
-        if(listFiles.length==0){
-            if(!isRooted()) {
+        if (listFiles == null || listFiles.length == 0) {
+            if (!isRooted()) {
                 Toast.makeText(this, "请授予软件root权限后再使用该功能", Toast.LENGTH_LONG).show();
                 finish();
             } else {
@@ -230,9 +233,11 @@ public class NewSetActivity extends AppCompatActivity {
 
     private void delTmpFile(File workDir,String[] names){
         File[] files = workDir.listFiles();
-        for(int i = 0 ;i < files.length ; i++){
-            if (isMoreFile(files[i],names))
-                files[i].delete();
+        if (files != null) {
+            for(int i = 0 ;i < files.length ; i++){
+                if (isMoreFile(files[i],names))
+                    files[i].delete();
+            }
         }
     }
 

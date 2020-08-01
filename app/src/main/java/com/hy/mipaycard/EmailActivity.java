@@ -27,13 +27,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.hy.mipaycard.Config.getExternalCache;
+
 public class EmailActivity extends AppCompatActivity {
     private File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        file = new File(EmailActivity.this.getExternalCacheDir(),"Card2");
+        file = new File(getExternalCache(EmailActivity.this),"Card2");
         init();
     }
 

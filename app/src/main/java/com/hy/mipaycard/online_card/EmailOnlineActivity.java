@@ -148,13 +148,13 @@ public class EmailOnlineActivity extends AppCompatActivity {
                 .show();
     }
 
-
-    public static Bitmap getTmpBitmap() {
+    public Bitmap getTmpBitmap() {
         String text = "直链图片预览";
         Bitmap bitmap = Bitmap.createBitmap(605, 960, Bitmap.Config.ARGB_8888);
         Canvas mCanvas = new Canvas(bitmap);
         Paint mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.GRAY);
+        //mPaint.setColor(isDarkTheme(EmailOnlineActivity.this)?Color.WHITE:Color.BLACK);
         mPaint.setTextSize(72);
         Typeface font = Typeface.create(Typeface.SANS_SERIF,Typeface.BOLD);
         mPaint.setTypeface(font);

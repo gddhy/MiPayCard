@@ -24,13 +24,34 @@ public class Config {
     @SuppressLint("SdCardPath")
     public static String mi_wallet = "/data/data/com.mipay.wallet/cache/image_manager_disk_cache";
     public static File getTempFile(Context context){
-        return new File(context.getExternalCacheDir(), "temp_MiPayCard.png");
+        return new File(getExternalCache(context), "temp_MiPayCard.png");
+    }
+
+    public static File getExternalCache(Context context){
+        if(Build.VERSION.SDK_INT>=30){
+            File tmp = new File(context.getExternalFilesDir(null),"cache");
+            if(!tmp.exists()){
+                tmp.mkdir();
+            }
+            return tmp;
+        } else {
+            return context.getExternalCacheDir();
+        }
     }
 
     public static String localAction = "com.hy.mipaycard.ref_ui";
     public static String localAction_online = "com.hy.mipaycard.ref_flag_online";
 
-    public static String git_url = "https://gddhy.github.io/MiPayCard/"; //"https://raw.githubusercontent.com/gddhy/MiPayCard/master/"
+    public static String git_url = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/";
+    /**
+     * 请求在线卡面链接
+     * https://raw.githubusercontent.com/gddhy/MiPayCard/master/
+     * https://gddhy.github.io/MiPayCard/
+     * https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/
+     *
+     * 国内网络原因，暂时使用最后一个
+     */
+
     public static int defaultSet = 1;
 
     public static int AndroidQ_Api = Build.VERSION_CODES.Q;
