@@ -3,13 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hy.mipaycard">
 
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"
-        tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
@@ -20,8 +15,8 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
-            android:theme="@style/NewSetStyle"
-            android:name=".new_set.NewSetActivity" />
+            android:name=".new_set.NewSetActivity"
+            android:theme="@style/NewSetStyle" />
         <activity
             android:name=".RoundImageActivity"
             android:icon="@drawable/ic_round"
@@ -35,9 +30,9 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
             </intent-filter>
@@ -54,6 +49,7 @@
             android:label="@string/card_online_email"
             android:theme="@style/AppThemeActBar" />
         <activity
+            android:launchMode="singleTop"
             android:name=".online_card.OnlineCardActivity"
             android:label="@string/card_online"
             android:theme="@style/AppThemeNoBar" />
@@ -79,9 +75,9 @@
             android:label="@string/set_card"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
             </intent-filter>
@@ -90,6 +86,7 @@
             android:name=".SetCardActivity"
             android:theme="@style/AppTheme" />
         <activity
+            android:launchMode="singleTop"
             android:name=".MainActivity"
             android:theme="@style/AppThemeNoBar">
             <intent-filter>
@@ -115,6 +112,35 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".shortcuts.CardDefaultActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".EmailActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- https://www.jianshu.com/p/7f6f98da691e -->
+        <activity
+            android:documentLaunchMode="intoExisting"
+            android:excludeFromRecents="true"
+            android:maxRecents="3"
+
+            android:enabled="false"
+            android:theme="@style/AppThemeActBar"
+            android:label="测试工具"
+            android:icon="@mipmap/ic_launcher"
+            android:name=".TestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.FileProvider"
@@ -124,29 +150,28 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
         <provider
             android:name=".CardListProvider"
             android:authorities="${applicationId}.documents"
-            android:grantUriPermissions="true"
             android:exported="true"
+            android:grantUriPermissions="true"
             android:permission="android.permission.MANAGE_DOCUMENTS">
             <intent-filter>
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
-
-        <activity
-            android:name=".shortcuts.CardDefaultActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".EmailActivity"
-            android:theme="@style/AppTheme" />
     </application>
-
-    <!--适配安卓11软件包可见性-->
     <queries>
         <package android:name="com.miui.tsmclient" />
-    </queries>
+        <package android:name="com.mipay.wallet" />
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="bin.mt.plus" />
+    </queries> <!-- 适配安卓11软件包可见性 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ManifestOrder" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>

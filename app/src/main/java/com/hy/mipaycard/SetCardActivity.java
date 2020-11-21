@@ -61,7 +61,7 @@ public class SetCardActivity extends AppCompatActivity {
 
     private void setCard(String path, final boolean isAuto){
         if(CardList.checkChinese(path)){
-            File file = getTempFile(SetCardActivity.this);
+            File file = getTempFile();
             CardList.copyFile(path,file.getPath());
             path = file.getPath();
         }
@@ -97,7 +97,7 @@ public class SetCardActivity extends AppCompatActivity {
                             } else {
                                 name = cardName[i];
                             }
-                            File file = getTempFile(SetCardActivity.this);
+                            File file = getTempFile();
                             Bitmap bmpBackground = PhotoUtils.getBitmapFromUri(Uri.fromFile(new File(finalPath)), SetCardActivity.this);
                             if(!cardName[i].contains("门禁卡")) {
                                 bmpBackground = BitmapUtils.mergeBitmap(bmpBackground, bitmap);

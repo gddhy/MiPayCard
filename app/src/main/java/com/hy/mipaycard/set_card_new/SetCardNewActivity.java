@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
+import static com.hy.mipaycard.Config.default_PKILL;
 import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.Config.getTempFile;
 import static com.hy.mipaycard.Config.mi_wallet;
@@ -65,10 +66,10 @@ public class SetCardNewActivity extends AppCompatActivity {
         File file;
         if(isSetMipay) {
             list = getTsmclient();
-            file = new File(getExternalCache(this),"mi_pay");
+            file = new File(getExternalCache(),"mi_pay");
         } else {
             list = getMiWallet();
-            file = new File(getExternalCache(this),"mi_wallet");
+            file = new File(getExternalCache(),"mi_wallet");
         }
         if(!file.exists()){
             file.mkdirs();
@@ -91,7 +92,7 @@ public class SetCardNewActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         if(CardList.checkChinese(filePath)){
-            File tmp_file = getTempFile(SetCardNewActivity.this);
+            File tmp_file = getTempFile();
             CardList.copyFile(filePath,tmp_file.getPath());
             filePath = tmp_file.getPath();
         }
@@ -125,7 +126,7 @@ public class SetCardNewActivity extends AppCompatActivity {
                     } else {
                         name = cardName;
                     }
-                    File file = getTempFile(SetCardNewActivity.this);
+                    File file = getTempFile();
                     Bitmap bmpBackground = PhotoUtils.getBitmapFromUri(Uri.fromFile(files_list[position]), SetCardNewActivity.this);
                     if(!cardName.contains("门禁卡")) {
                         bmpBackground = BitmapUtils.mergeBitmap(bmpBackground, bitmap);
@@ -216,7 +217,7 @@ public class SetCardNewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case R.id.menu_set_pkill:
-                boolean isChecked = !pref.getBoolean("pkill",false);
+                boolean isChecked = !pref.getBoolean("pkill",default_PKILL);
                 //Toast.makeText(this,"checked="+isChecked,Toast.LENGTH_LONG).show();
                 editor = pref.edit();
                 editor.putBoolean("pkill",isChecked);
@@ -230,13 +231,13 @@ public class SetCardNewActivity extends AppCompatActivity {
     //刷新menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_set_pkill).setChecked(pref.getBoolean("pkill",false));
+        menu.findItem(R.id.menu_set_pkill).setChecked(pref.getBoolean("pkill",default_PKILL));
         return true;
     }
 
     public static void pKillServer(SharedPreferences pref){
         boolean isSetMiWallet = pref.getInt("isUseNew",defaultSet)<0;
-        boolean isChecked = pref.getBoolean("pkill",false);
+        boolean isChecked = pref.getBoolean("pkill",default_PKILL);
         if(isChecked){
             runRootShell(new String[]{"pkill -f "+(isSetMiWallet?"com.mipay.wallet":"com.miui.tsmclient")});
         }

@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
@@ -29,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +53,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.fileWork;
@@ -62,6 +64,7 @@ import static com.hy.mipaycard.MainUtils.getCard;
 import static com.hy.mipaycard.MainUtils.getMiWalletVersion;
 import static com.hy.mipaycard.MainUtils.getTsm;
 import static com.hy.mipaycard.MainUtils.initOther;
+import static com.hy.mipaycard.MainUtils.isInstallApp;
 import static com.hy.mipaycard.MainUtils.showAboutDialog;
 import static com.hy.mipaycard.MainUtils.toSelfSetting;
 import static com.hy.mipaycard.WebBrowserActivity.openBrowser;
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fab_menu.close(true);
-                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
                     getCard(MainActivity.this);
                 } else {
                     if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -161,7 +164,9 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Config.localAction);
         LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(localBroadcast, intentFilter);
-        //参照https://blog.csdn.net/look_Future/article/details/79672760
+        //参照 https://blog.csdn.net/look_Future/article/details/79672760
+
+        showDialogForR();
     }
 
     private class LocalBroadcast extends BroadcastReceiver {
@@ -179,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChoosePicClick(View view) {
-        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             //todo new choose
             //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
             openAlbum(NEW_SAF_CHOOSE_IMG);
@@ -213,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         cardList.clear();
         cardList.add(new Card("招行初音卡",new File(getFilesDir(),"miku.png")));
         cardList.add(new Card("天依柠檬卡",new File(getFilesDir(),"luotianyi.png")));
-        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
             initItems();
         } else {
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -518,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
                 openBrowser(MainActivity.this,"https://github.com/gddhy/MiPayCard/blob/master/README.md",0xff24292d,false);
                 break;
             case 7:
-                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
                     //TODO
                     //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, RoundImageActivity.class));
@@ -578,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void ref_media(Context context,File file){
-        if(Build.VERSION.SDK_INT<Config.AndroidQ_Api)
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q)
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
     }
 
@@ -607,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static File saveFileFromSAF(Context context,Uri safUri){
         DocumentFile documentFile = DocumentFile.fromSingleUri(context,safUri);
-        File dir = new File(getExternalCache(context),"SAF");
+        File dir = new File(getExternalCache(),"SAF");
         if(!dir.exists()){
             dir.mkdirs();
         }
@@ -645,7 +650,43 @@ public class MainActivity extends AppCompatActivity {
         parcelFileDescriptor.close();
         return image;
     }
-/*
+
+    private void showDialogForR(){
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.R)
+            return;
+        boolean isShowDialogForR = pref.getBoolean("isShowDialogForR",false);
+        if(isShowDialogForR)
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Root权限提示")
+                .setMessage(".您的设备已升级到Android11，Magisk的Root权限需要您多做一步设置，开发版Root直接使用即可\n"+
+                        ".打开Magisk设置，找到\"挂载命名空间模式\"，选择\"全局命名空间\"即可")
+                .setPositiveButton("知道了，不再提示", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        editor = pref.edit();
+                        editor.putBoolean("isShowDialogForR",true);
+                        editor.apply();
+                    }
+                });
+        if(isInstallApp(this,"com.topjohnwu.magisk")){
+            builder.setNegativeButton("打开Magisk", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = getPackageManager().getLaunchIntentForPackage("com.topjohnwu.magisk");
+                    try {
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        builder.show();
+    }
+
     int Ti = 0;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -661,20 +702,40 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },6000);
             } else {
-                Snackbar.make(fab_menu,"实验功能开启",Snackbar.LENGTH_LONG).setAction("关闭", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Snackbar.make(fab_menu,"已关闭",Snackbar.LENGTH_LONG).show();
-                        editor = pref.edit();
-                        editor.putBoolean("devSet",false);
-                        editor.apply();
-                    }
-                }).show();
-                editor = pref.edit();
-                editor.putBoolean("devSet",true);
-                editor.apply();
+                final boolean b = TestActivity.changeTestActivityIcon(pref);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setTitle("测试工具")
+                        .setMessage("已"+(b?"添加":"移除")+"测试工具桌面图标")
+                        .setPositiveButton(b ? "打开" : "知道了", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(b) {
+                                    Intent intent = new Intent(MainActivity.this,TestActivity.class);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                                    }
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                if(b){
+                    builder.setNegativeButton("移除", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            TestActivity.changeTestActivityIcon(pref);
+                        }
+                    });
+                }
+
+                        builder.show();
+
+                //Toast.makeText(this, "已"+(b?"添加":"移除")+"测试工具桌面图标", Toast.LENGTH_LONG).show();
+
             }
         }
         return super.onKeyDown(keyCode, event);
-    }*/
+    }
 }

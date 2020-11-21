@@ -35,7 +35,7 @@ public class EmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        file = new File(getExternalCache(EmailActivity.this),"Card2");
+        file = new File(getExternalCache(),"Card2");
         init();
     }
 

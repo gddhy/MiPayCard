@@ -124,12 +124,12 @@ public class DataCleanManager {
 
     //包含内置储存缓存
     public static String getCacheSize(Context context) throws Exception {
-        return getFormatSize(getFolderSize(context.getCacheDir())+getFolderSize(getExternalCache(context)));
+        return getFormatSize(getFolderSize(context.getCacheDir())+getFolderSize(getExternalCache()));
     }
 
     public static void cleanInternalCacheAll(Context context) {
         deleteFolderFile(String.valueOf(context.getCacheDir()),false);
-        deleteFolderFile(String.valueOf(getExternalCache(context)),false);
+        deleteFolderFile(String.valueOf(getExternalCache()),false);
     }
 
 }

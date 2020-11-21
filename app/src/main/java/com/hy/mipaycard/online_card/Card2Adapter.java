@@ -29,7 +29,6 @@ import com.hy.mipaycard.BitmapCropActivity;
 import com.hy.mipaycard.Config;
 import com.hy.mipaycard.MainUtils;
 import com.hy.mipaycard.R;
-import com.hy.mipaycard.SetCardActivity;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.new_set.NewSetActivity;
 
@@ -92,7 +91,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                                 getCard(card2,false);
                                 break;
                             case R.id.online_menu_add:
-                                if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+                                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
                                     getCard(card2,true);
                                 } else {
                                     if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -175,7 +174,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
                 fileWork(mContext).mkdirs();
             }
         }
-        File file = new File((isSaveToFile?fileWork(mContext):getExternalCache(mContext)),card2.getFileName());
+        File file = new File((isSaveToFile?fileWork(mContext):getExternalCache()),card2.getFileName());
         File tmpFile = getGlideCacheFile(mContext,card2.getLink());
         if(tmpFile!=null&&tmpFile.exists()) {
             CardList.copyFile(tmpFile.getPath(),file.getPath());

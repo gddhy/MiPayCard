@@ -208,7 +208,7 @@ public class OnlineCardActivity extends AppCompatActivity {
         menu.add(0, 1, 1, "提交在线卡面");
         if(pref.getBoolean("showOnlineCardType",false)){
             menu.add( 0, 2, 2,"在线卡面来源");
-            if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 menu.add( 0, 3, 3, "保存在线卡面");
             }
         }

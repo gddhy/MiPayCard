@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.Utils.PhotoUtils;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
@@ -83,11 +84,19 @@ public class BitmapCropActivity extends AppCompatActivity {
                         if(editText.getText().toString().length()>0){
                             saveName=editText.getText().toString();
                         }
-                        Uri cropImageUri = Uri.fromFile(getTempFile(BitmapCropActivity.this));
-                        Uri newUri = Uri.parse(PhotoUtils.getPath(BitmapCropActivity.this, Uri.fromFile(new File(filePath))));
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            newUri = FileProvider.getUriForFile(BitmapCropActivity.this, getPackageName()+".FileProvider", new File(newUri.getPath()));
-                        PhotoUtils.cropImageUri(BitmapCropActivity.this, newUri, cropImageUri, 192, 121, 960, 605, 1);
+                        Uri cropImageUri = Uri.fromFile(getTempFile());
+                        //Todo test
+                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                            UCrop.of(Uri.fromFile(new File(filePath)), cropImageUri)
+                                    .withAspectRatio(192, 121)
+                                    .withMaxResultSize(960, 605)
+                                    .start(BitmapCropActivity.this);
+                        } else {
+                            Uri newUri = Uri.parse(PhotoUtils.getPath(BitmapCropActivity.this, Uri.fromFile(new File(filePath))));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                newUri = FileProvider.getUriForFile(BitmapCropActivity.this, getPackageName() + ".FileProvider", new File(newUri.getPath()));
+                            PhotoUtils.cropImageUri(BitmapCropActivity.this, newUri, cropImageUri, 192, 121, 960, 605, 1);
+                        }
                     }
                 })
                 .setCancelable(false)
@@ -112,7 +121,8 @@ public class BitmapCropActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1:
-                    File file = getTempFile(BitmapCropActivity.this);
+                case UCrop.REQUEST_CROP:
+                    File file = getTempFile();
                     Bitmap bmp = PhotoUtils.getBitmapFromUri(Uri.fromFile(file), BitmapCropActivity.this);
                     bmp = toRoundCorner(bmp, 40);
                     saveBitmapAsPng(bmp, file);

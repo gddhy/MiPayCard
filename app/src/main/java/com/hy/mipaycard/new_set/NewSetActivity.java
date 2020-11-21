@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
+import static com.hy.mipaycard.Config.default_PKILL;
 import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.Config.getTempFile;
 import static com.hy.mipaycard.Config.mi_wallet;
@@ -95,10 +96,10 @@ public class NewSetActivity extends AppCompatActivity {
         File file;
         if(isSetMipay) {
             list = getTsmclient();
-            file = new File(getExternalCache(this),"mi_pay");
+            file = new File(getExternalCache(),"mi_pay");
         } else {
             list = getMiWallet();
-            file = new File(getExternalCache(this),"mi_wallet");
+            file = new File(getExternalCache(),"mi_wallet");
         }
         if(!file.exists()){
             file.mkdirs();
@@ -120,7 +121,7 @@ public class NewSetActivity extends AppCompatActivity {
         ArrayAdapter adapter = new List_Adapter(this, R.layout.list_item,cardList);
         listView.setAdapter(adapter);
         if(CardList.checkChinese(filePath)){
-            File tmp_file = getTempFile(NewSetActivity.this);
+            File tmp_file = getTempFile();
             CardList.copyFile(filePath,tmp_file.getPath());
             filePath = tmp_file.getPath();
         }
@@ -154,7 +155,7 @@ public class NewSetActivity extends AppCompatActivity {
                     } else {
                         name = cardName;
                     }
-                    File file = getTempFile(NewSetActivity.this);
+                    File file = getTempFile();
                     Bitmap bmpBackground = PhotoUtils.getBitmapFromUri(Uri.fromFile(files_list[position]), NewSetActivity.this);
                     if(!cardName.contains("门禁卡")) {
                         bmpBackground = BitmapUtils.mergeBitmap(bmpBackground, bitmap);
@@ -204,7 +205,7 @@ public class NewSetActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_set_pkill:
-                boolean isChecked = !pref.getBoolean("pkill",false);
+                boolean isChecked = !pref.getBoolean("pkill",default_PKILL);
                 //Toast.makeText(this,"checked="+isChecked,Toast.LENGTH_LONG).show();
                 editor = pref.edit();
                 editor.putBoolean("pkill",isChecked);
@@ -259,7 +260,7 @@ public class NewSetActivity extends AppCompatActivity {
     //刷新menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_set_pkill).setChecked(pref.getBoolean("pkill",false));
+        menu.findItem(R.id.menu_set_pkill).setChecked(pref.getBoolean("pkill",default_PKILL));
         return true;
     }
 }

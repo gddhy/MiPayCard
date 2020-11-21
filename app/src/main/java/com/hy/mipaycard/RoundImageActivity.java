@@ -97,7 +97,7 @@ public class RoundImageActivity extends AppCompatActivity {
             Uri uri = intent.getData();
             String data = intent.getDataString();
             String str = null;
-            if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api) {
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
                 try {
                     if (!data.contains("file://")) {
                         File f = MainActivity.saveFileFromSAF(this, uri);
@@ -134,7 +134,7 @@ public class RoundImageActivity extends AppCompatActivity {
             if (bundle != null) {
                 Uri uri = (Uri) bundle.get(Intent.EXTRA_STREAM);
                 if (uri != null) {
-                    if (Build.VERSION.SDK_INT >=Config.AndroidQ_Api) {
+                    if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.Q) {
                         String u = uri.toString();
                         Log.d("URI: ", "" + u);
                         try {
@@ -170,7 +170,7 @@ public class RoundImageActivity extends AppCompatActivity {
     public void onClick(View v){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             startActivityForResult(intent, 2);
         } else {
             startActivityForResult(intent, 1);
@@ -284,9 +284,9 @@ public class RoundImageActivity extends AppCompatActivity {
             fileName = fileName.substring(0,fileName.lastIndexOf("."));
         }
         File file ;
-        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             file = new File(fileWork(context),fileName+"_round.png");
-        } else if(filePath.contains(new File(getExternalCache(context),"SAF").getPath())) {
+        } else if(filePath.contains(new File(getExternalCache(),"SAF").getPath())) {
             file = new File(fileWork(context),fileName+"_round.png");
         } else {
             file = new File(new File( filePath).getParentFile(),fileName+"_round.png");

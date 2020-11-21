@@ -97,7 +97,7 @@ public class CardListProvider extends DocumentsProvider {
 
         // If user is not logged in, return an empty root cursor.  This removes our provider from
         // the list entirely.
-        if (Build.VERSION.SDK_INT<Config.AndroidQ_Api) {
+        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.Q) {
             if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 return result;
         }

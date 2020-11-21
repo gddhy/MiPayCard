@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    //noinspection GradleCompatible
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.hy.mipaycard"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 39
-        versionName "1.2.7"
+        versionCode 42
+        versionName "1.2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -39,4 +38,8 @@ dependencies {
     implementation 'androidx.documentfile:documentfile:1.0.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+    //https://github.com/Yalantis/uCrop
+    implementation 'com.github.yalantis:ucrop:2.2.6'
+    //implementation 'com.github.yalantis:ucrop:2.2.6-native'
 }

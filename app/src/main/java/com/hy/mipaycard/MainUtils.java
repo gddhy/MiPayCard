@@ -49,7 +49,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.Config.git_url;
 import static com.hy.mipaycard.Config.pay_pic;
@@ -89,7 +88,7 @@ public class MainUtils {
             return file.getPath();
         } else {
             int i=0;
-            Boolean bool = true;
+            boolean bool = true;
             do{
                 i++;
                 file = new File(filePath,fileName+"_"+i+".png");

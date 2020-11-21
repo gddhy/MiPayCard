@@ -58,7 +58,8 @@ public class PhotoUtils
     public static void cropImageUri(Activity activity, Uri orgUri, Uri desUri, int aspectX, int aspectY, int width, int height, int requestCode) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//允许临时的读
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//允许临时的读和写
         }
         intent.setDataAndType(orgUri, "image/*");
         intent.putExtra("crop", "true");

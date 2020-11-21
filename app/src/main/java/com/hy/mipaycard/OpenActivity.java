@@ -23,7 +23,7 @@ public class OpenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if(Build.VERSION.SDK_INT>=Config.AndroidQ_Api){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             //TODO
             String str = null;
             Intent intent = getIntent();

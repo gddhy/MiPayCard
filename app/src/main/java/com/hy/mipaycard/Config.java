@@ -7,13 +7,15 @@ import android.os.Environment;
 
 import java.io.File;
 
+import static com.hy.mipaycard.BaseApplication.getContext;
+
 public class Config {
     public static String file_Path = "filePath";
     public static String is_Auto = "isAuto";
     public static String open_Crop = "openCrop";
     public static String Get_path_key = "PATH_KEY";
     public static File fileWork(Context context){
-        if(Build.VERSION.SDK_INT>=AndroidQ_Api){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             return new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"MiPayCard/List");
         } else {
             return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MiPayCard/List");
@@ -23,12 +25,13 @@ public class Config {
     public static String pay_pic = "/data/data/com.miui.tsmclient/cache/image_manager_disk_cache";
     @SuppressLint("SdCardPath")
     public static String mi_wallet = "/data/data/com.mipay.wallet/cache/image_manager_disk_cache";
-    public static File getTempFile(Context context){
-        return new File(getExternalCache(context), "temp_MiPayCard.png");
+    public static File getTempFile(){
+        return new File(getExternalCache(), "temp_MiPayCard.png");
     }
 
-    public static File getExternalCache(Context context){
-        if(Build.VERSION.SDK_INT>=30){
+    public static File getExternalCache(){
+        Context context = getContext();
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
             File tmp = new File(context.getExternalFilesDir(null),"cache");
             if(!tmp.exists()){
                 tmp.mkdir();
@@ -53,8 +56,7 @@ public class Config {
      */
 
     public static int defaultSet = 1;
-
-    public static int AndroidQ_Api = Build.VERSION_CODES.Q;
+    public static boolean default_PKILL = true;
 
     public static String getOnlineGitLink(boolean isUseCDN){
         final String CDNLink = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard-onlineCard/";
