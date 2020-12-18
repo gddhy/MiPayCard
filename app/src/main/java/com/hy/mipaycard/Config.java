@@ -46,6 +46,9 @@ public class Config {
     public static String localAction_online = "com.hy.mipaycard.ref_flag_online";
 
     public static String git_url = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/";
+
+    //注册域名gddhy.cyou
+    public static String WEBSITE = "https://gddhy.cyou/";
     /**
      * 请求在线卡面链接
      * https://raw.githubusercontent.com/gddhy/MiPayCard/master/
@@ -60,7 +63,7 @@ public class Config {
 
     public static String getOnlineGitLink(boolean isUseCDN){
         final String CDNLink = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard-onlineCard/";
-        final String link = "https://gddhy.github.io/MiPayCard-onlineCard/";
+        final String link = WEBSITE+"MiPayCard-onlineCard/";
         return isUseCDN ? CDNLink : link;
     }
 }

@@ -91,7 +91,7 @@ public class SetCardNewActivity extends AppCompatActivity {
         ArrayAdapter adapter = new List_Adapter(this, R.layout.list_item,cardList);
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        if(CardList.checkChinese(filePath)){
+        if(filePath.contains(" ") || CardList.checkChinese(filePath)){
             File tmp_file = getTempFile();
             CardList.copyFile(filePath,tmp_file.getPath());
             filePath = tmp_file.getPath();

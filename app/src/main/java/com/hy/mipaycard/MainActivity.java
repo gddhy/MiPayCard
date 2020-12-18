@@ -702,35 +702,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },6000);
             } else {
-                final boolean b = TestActivity.changeTestActivityIcon(pref);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                if(!TestActivity.getTestActivityType(pref)){
+                    TestActivity.changeTestActivityIcon(pref);
+                }
+                new AlertDialog.Builder(this)
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle("测试工具")
-                        .setMessage("已"+(b?"添加":"移除")+"测试工具桌面图标")
-                        .setPositiveButton(b ? "打开" : "知道了", new DialogInterface.OnClickListener() {
+                        .setMessage("已添加测试工具桌面图标")
+                        .setPositiveButton("打开", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                if(b) {
-                                    Intent intent = new Intent(MainActivity.this,TestActivity.class);
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                                    }
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                                    startActivity(intent);
+                                Intent intent = new Intent(MainActivity.this,TestActivity.class);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
                                 }
+                                intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                startActivity(intent);
                             }
-                        });
-                if(b){
-                    builder.setNegativeButton("移除", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("移除", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             TestActivity.changeTestActivityIcon(pref);
                         }
-                    });
-                }
-
-                        builder.show();
+                    }).show();
 
                 //Toast.makeText(this, "已"+(b?"添加":"移除")+"测试工具桌面图标", Toast.LENGTH_LONG).show();
 

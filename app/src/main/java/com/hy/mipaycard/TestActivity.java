@@ -146,7 +146,7 @@ public class TestActivity extends AppCompatActivity {
         String link = "";
         switch (getCheckedId()){
             case R.id.test_link:
-                link = "https://gddhy.github.io/MiPayCard/";
+                link = Config.WEBSITE + "MiPayCard/";
                 break;
             case R.id.test_raw:
                 link = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/";
@@ -318,6 +318,10 @@ public class TestActivity extends AppCompatActivity {
         } catch (Exception e){
             addText(e.toString());
         }
+    }
+
+    public static boolean getTestActivityType(SharedPreferences pref){
+        return pref.getBoolean("isShowTestIcon",false);
     }
 
     public static boolean changeTestActivityIcon(SharedPreferences pref){

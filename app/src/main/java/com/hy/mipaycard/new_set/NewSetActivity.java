@@ -53,7 +53,6 @@ import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
 public class NewSetActivity extends AppCompatActivity {
     private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
     private boolean isSetMipay;
     private List<List_card> cardList = new ArrayList<>();
 
@@ -120,7 +119,7 @@ public class NewSetActivity extends AppCompatActivity {
         }
         ArrayAdapter adapter = new List_Adapter(this, R.layout.list_item,cardList);
         listView.setAdapter(adapter);
-        if(CardList.checkChinese(filePath)){
+        if(filePath.contains(" ") || CardList.checkChinese(filePath)){
             File tmp_file = getTempFile();
             CardList.copyFile(filePath,tmp_file.getPath());
             filePath = tmp_file.getPath();
@@ -203,14 +202,16 @@ public class NewSetActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                return true;
+                //return true;
+                break;
             case R.id.menu_set_pkill:
                 boolean isChecked = !pref.getBoolean("pkill",default_PKILL);
                 //Toast.makeText(this,"checked="+isChecked,Toast.LENGTH_LONG).show();
-                editor = pref.edit();
+                SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("pkill",isChecked);
                 editor.apply();
                 pKillServer(pref);
+                break;
             default:
         }
         return super.onOptionsItemSelected(item);

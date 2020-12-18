@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.hy.mipaycard.Config;
 import com.hy.mipaycard.R;
 
 import static com.hy.mipaycard.online_card.online_utils.sendEmail;
@@ -81,7 +82,7 @@ public class EmailOnlineActivity extends AppCompatActivity {
     }
 
     public void onimgchrClick(View view) {
-        openUrl(EmailOnlineActivity.this,"https://imgse.com/");
+        openUrl(EmailOnlineActivity.this,"https://imgchr.com/");
     }
 
     public static void openUrl(Context context, String url){
@@ -166,6 +167,6 @@ public class EmailOnlineActivity extends AppCompatActivity {
     }
 
     public void onImgBedClick(View view) {
-        openUrl(EmailOnlineActivity.this,"https://gddhy.github.io/img/");
+        openUrl(EmailOnlineActivity.this, Config.WEBSITE+"img/");
     }
 }

@@ -351,7 +351,7 @@ public class OnlineCardActivity extends AppCompatActivity {
 
     private void setOnlineCardType(){
         int choose = pref.getInt("onlineCardType",0);
-        String[] items = {"图床  默认","Github CDN","Github"};
+        String[] items = {"图床  默认","Github CDN"};//,"直链"};
         new AlertDialog.Builder(this)
                 .setTitle("选择在线卡面数据来源")
                 .setSingleChoiceItems(items,choose,new DialogInterface.OnClickListener() {

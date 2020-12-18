@@ -60,7 +60,7 @@ public class SetCardActivity extends AppCompatActivity {
     }
 
     private void setCard(String path, final boolean isAuto){
-        if(CardList.checkChinese(path)){
+        if(path.contains(" ") || CardList.checkChinese(path)){
             File file = getTempFile();
             CardList.copyFile(path,file.getPath());
             path = file.getPath();

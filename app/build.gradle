@@ -6,8 +6,8 @@ android {
         applicationId "com.hy.mipaycard"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 42
-        versionName "1.2.8"
+        versionCode 45
+        versionName "1.2.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
