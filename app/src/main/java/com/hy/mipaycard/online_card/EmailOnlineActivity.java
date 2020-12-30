@@ -23,18 +23,29 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputLayout;
 import com.hy.mipaycard.Config;
 import com.hy.mipaycard.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static com.hy.mipaycard.online_card.online_utils.sendEmail;
 
-public class EmailOnlineActivity extends AppCompatActivity {
+public class EmailOnlineActivity extends AppCompatActivity implements TextWatcher {
     private EditText card_name;
     private EditText img_link;
     private EditText user_name;
     private EditText about_text;
     private EditText email;
     private ImageView imageView;
+    private TextInputLayout[] textInputLayout;
+    private EditText[] editText;
+
+    public EmailOnlineActivity() {
+        this.textInputLayout = new TextInputLayout[5] ;
+        this.editText = new EditText[5];
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +58,24 @@ public class EmailOnlineActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         imageView = findViewById(R.id.bmp);
         imageView.setImageBitmap(getTmpBitmap());
-        img_link.addTextChangedListener(new TextWatcher() {
+
+        textInputLayout[0] = findViewById(R.id.card_name_layout);
+        textInputLayout[1] = findViewById(R.id.pic_link_layout);
+        textInputLayout[2] = findViewById(R.id.user_name_layout);
+        textInputLayout[3] = findViewById(R.id.about_layout);
+        textInputLayout[4] = findViewById(R.id.email_layout);
+
+        editText[0] = card_name;
+        editText[1] = img_link;
+        editText[2] = user_name;
+        editText[3] = about_text;
+        editText[4] = email;
+
+        for (int i = 0;i<editText.length;i++){
+            editText[i].addTextChangedListener(this);
+        }
+
+        /*img_link.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -62,22 +90,54 @@ public class EmailOnlineActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 // 输入后的监听
                 String link = img_link.getText().toString();
-                if (link.length()!=0)
+                if (link.contains("http://") || link.contains("https://")) {
                     Glide.with(EmailOnlineActivity.this).load(link).into(imageView);
+                    textInputLayout[1].setError(null);
+                } else {
+                    textInputLayout[1].setError("请检查链接是否填写正确");
+                }
+
             }
-        });
+        });*/
         //https://blog.csdn.net/sinat_35241409/article/details/53709537
     }
 
     public static String makeJsonData(String cardName,String link,String userName,String about,String email){
-        return "{\"cardName\":\""+cardName+"\",\"link\":\""+link+"\",\"userName\":\""+userName+"\",\"about\":\""+about+"\",\"email\":\""+email+"\"}";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("cardName",cardName);
+            jsonObject.put("link",link);
+            jsonObject.put("userName",userName);
+            jsonObject.put("about",about);
+            jsonObject.put("email",email);
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{\"cardName\":\""+cardName+"\",\"link\":\""+link+"\",\"userName\":\""+userName+"\",\"about\":\""+about+"\",\"email\":\""+email+"\"}";
+        }
     }
 
     public void onEmailClick(View view) {
-        if (card_name.getText().toString().length()==0||img_link.getText().toString().length()==0||user_name.getText().toString().length()==0||about_text.getText().toString().length()==0||email.getText().toString().length()==0){
-            Toast.makeText(EmailOnlineActivity.this,"有项目未填写",Toast.LENGTH_LONG).show();
+        boolean type = false;
+        for (int i = 0;i<editText.length;i++){
+            if(editText[i].getText().toString().isEmpty()){
+                textInputLayout[i].setError("请正确填写该项");
+                type = true;
+            } else {
+                textInputLayout[i].setError(null);
+            }
+        }
+
+        //card_name.getText().toString().length()==0||img_link.getText().toString().length()==0||user_name.getText().toString().length()==0||about_text.getText().toString().length()==0||email.getText().toString().length()==0
+        if (type){
+            Toast.makeText(EmailOnlineActivity.this,"请检查上方内容",Toast.LENGTH_LONG).show();
         } else {
-            sendEmail(EmailOnlineActivity.this,makeJsonData(card_name.getText().toString(),img_link.getText().toString(),user_name.getText().toString(),about_text.getText().toString(),email.getText().toString()));
+            try {
+                sendEmail(EmailOnlineActivity.this, makeJsonData(card_name.getText().toString(), img_link.getText().toString(), user_name.getText().toString(), about_text.getText().toString(), email.getText().toString()));
+            } catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(this,"您手机未安装邮箱类应用，无法使用提交卡面",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -168,5 +228,36 @@ public class EmailOnlineActivity extends AppCompatActivity {
 
     public void onImgBedClick(View view) {
         openUrl(EmailOnlineActivity.this, Config.WEBSITE+"img/");
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        // 输入的内容变化的监听
+    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count,
+                                  int after) {
+        // 输入前的监听
+    }
+    @Override
+    public void afterTextChanged(Editable editable) {
+        // 输入后的监听
+        for (int i = 0;i<editText.length;i++){
+            if(i != 1){
+                if(editText[i].getText().toString().isEmpty()){
+                    textInputLayout[i].setError("请正确填写该项");
+                } else {
+                    textInputLayout[i].setError(null);
+                }
+            }
+        }
+
+        String link = img_link.getText().toString();
+        if (link.contains("http://") || link.contains("https://")) {
+            Glide.with(EmailOnlineActivity.this).load(link).into(imageView);
+            textInputLayout[1].setError(null);
+        } else {
+            textInputLayout[1].setError("请检查链接是否填写正确");
+        }
     }
 }

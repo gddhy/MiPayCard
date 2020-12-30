@@ -26,4 +26,7 @@
 
     </style>
 
+    <style name="EmailOnlineStyle" parent="Theme.MaterialComponents.DayNight" >
+</style>
+
 </resources>

@@ -27,7 +27,7 @@ public class SetMenuPermissionActivity extends AppCompatActivity {
         checkBox.setChecked(pref.getBoolean("setAuto",false));
         checkBox.setText("临时恢复默认");
         new AlertDialog.Builder(SetMenuPermissionActivity.this)
-                .setCancelable(false)
+                //.setCancelable(false)
                 .setTitle("设置权限")
                 .setMessage(".将卡面目录权限设为只读，可以防止卡面被系统替换为默认卡面\n.此操作不影响本app修改卡面，需要在MiPay添加卡片时请先恢复默认权限，以保证卡面可以正常添加"
                         +"\n.临时恢复默认会在下次更换卡面时自动设为只读权限")
@@ -55,6 +55,12 @@ public class SetMenuPermissionActivity extends AppCompatActivity {
                 .setNeutralButton("返回", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
                         finish();
                     }
                 })

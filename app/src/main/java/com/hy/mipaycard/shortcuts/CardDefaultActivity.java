@@ -39,7 +39,7 @@ public class CardDefaultActivity extends AppCompatActivity {
                         setCardDefault();
                     }
                 })
-                .setCancelable(false)
+                //.setCancelable(false)
                 .setPositiveButton("全部默认",new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog,int i){
@@ -51,6 +51,12 @@ public class CardDefaultActivity extends AppCompatActivity {
                 .setNegativeButton("返回", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
                         finish();
                     }
                 })

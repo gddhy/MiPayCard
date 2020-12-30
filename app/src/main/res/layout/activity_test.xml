@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,11 +50,12 @@
         </RadioGroup>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ToggleButton
+                android:layout_weight="1"
                 android:id="@+id/test_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +63,7 @@
                 android:textOff="卡面信息"/>
 
             <ToggleButton
+                android:layout_weight="1"
                 android:id="@+id/test_online"
                 android:checked="true"
                 android:layout_width="wrap_content"
@@ -72,6 +73,7 @@
 
 
             <Button
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="在线卡面有效性"
                 android:onClick="onTestOnline"
@@ -82,7 +84,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -92,6 +94,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="/data"
                 android:onClick="onTestRoot"
@@ -99,12 +102,36 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="/data/data"
                 android:onClick="onTestRootData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/test_online_card_test_view"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:id="@+id/test_online_card_test"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/test_online_card_test_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/textColor" />
 
         </LinearLayout>
 

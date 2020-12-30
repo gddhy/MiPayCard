@@ -5,6 +5,7 @@ import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,10 +22,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.hy.mipaycard.Utils.HttpUtil;
@@ -62,13 +65,17 @@ public class TestActivity extends AppCompatActivity {
     private LocalBroadcast localBroadcast;
     private static String LocalAction = "local_Test";
     TextView textView ;
-    //ProgressBar progressBar;
     SharedPreferences pref;
     //弃用ProgressBar，改为SwipeRefreshLayout
     SwipeRefreshLayout swipeRefresh;
     RadioGroup radioGroup;
     ToggleButton cardButton;
     ToggleButton onlineButton;
+
+    //有效性测试进度条
+    LinearLayout test_LinearLayout;
+    ProgressBar test_ProgressBar;
+    TextView test_TextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,9 @@ public class TestActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.test_radio_group);
         cardButton = findViewById(R.id.test_card);
         onlineButton = findViewById(R.id.test_online);
+        test_LinearLayout = findViewById(R.id.test_online_card_test_view);
+        test_ProgressBar = findViewById(R.id.test_online_card_test);
+        test_TextView = findViewById(R.id.test_online_card_test_text);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         localBroadcast = new LocalBroadcast();
         IntentFilter intentFilter = new IntentFilter();
@@ -93,7 +103,11 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cardButton.setChecked(true);
                 onlineButton.setChecked(false);
-                getData(getLink());
+                if(swipeRefresh.isRefreshing()){
+                    Toast.makeText(TestActivity.this,"请等待当前任务执行完再操作",Toast.LENGTH_LONG).show();
+                } else {
+                    getData(getLink());
+                }
             }
         });
         onlineButton.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +115,21 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cardButton.setChecked(false);
                 onlineButton.setChecked(true);
-                getData(getLink());
+                if(swipeRefresh.isRefreshing()){
+                    Toast.makeText(TestActivity.this,"请等待当前任务执行完再操作",Toast.LENGTH_LONG).show();
+                } else {
+                    getData(getLink());
+                }
             }
         });
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                getData(getLink());
+                if(swipeRefresh.isRefreshing()){
+                    Toast.makeText(TestActivity.this,"请等待当前任务执行完再操作",Toast.LENGTH_LONG).show();
+                } else {
+                    getData(getLink());
+                }
             }
         });
     }
@@ -152,7 +174,7 @@ public class TestActivity extends AppCompatActivity {
                 link = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/";
                 break;
             case R.id.test_cdn:
-                link = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/";
+                link = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
                 break;
             default:
         }
@@ -173,7 +195,11 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void onTestOnline(View view) {
-        testOnlineCard();
+        if(swipeRefresh.isRefreshing()){
+            Toast.makeText(TestActivity.this,"请等待当前任务执行完再操作",Toast.LENGTH_LONG).show();
+        } else {
+            testOnlineCard();
+        }
     }
 
     private class LocalBroadcast extends BroadcastReceiver {
@@ -363,6 +389,7 @@ public class TestActivity extends AppCompatActivity {
 
     private void testOnlineCard(){
         addText("开始读取文件",ProgressBar_Show);
+        test_LinearLayout.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -370,13 +397,24 @@ public class TestActivity extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray("["+data+"]");
                     int fail = 0;
+                    test_ProgressBar.setMax(jsonArray.length());
                     for (int i = 0; i < jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String cardName = jsonObject.getString("cardName");
+                        final String cardName = jsonObject.getString("cardName");
                         String link = jsonObject.getString("link");
-                        String userName = jsonObject.getString("userName");
+                        final String userName = jsonObject.getString("userName");
                         String about = jsonObject.getString("about");
                         String email = jsonObject.getString("email");
+                        final int tmp = i;
+                        runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                test_ProgressBar.setProgress(tmp);
+                                test_TextView.setText(cardName + " - " + userName);
+                            }
+                        });
+
                         boolean b = isValid(link);
                         //addText(cardName+" - "+userName + " : "+(b?"有效":"失效"));
                         if(!b){
@@ -386,9 +424,21 @@ public class TestActivity extends AppCompatActivity {
 
                     }
                     addText("请求完成，共计"+fail+"张卡面图片失效",ProgressBar_Gone);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            test_LinearLayout.setVisibility(View.GONE);
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                     addText("json解析失败\n请在本页面成功获取一次在线卡面后重试",ProgressBar_Gone);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            test_LinearLayout.setVisibility(View.GONE);
+                        }
+                    });
                 }
             }
         }).start();

@@ -13,41 +13,65 @@
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <EditText
-            android:id="@+id/card_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/card_name_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="图片名称"
-            android:maxLines="2" />
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="图片名称"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/pic_link"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pic_link_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="图片直链"
-            android:maxLines="2" />
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/pic_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="图片直链"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/user_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_name_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="您的昵称"
-            android:maxLines="2" />
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="您的昵称"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/about"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/about_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="图片简介"
-            android:maxLines="2" />
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="图片简介"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/email"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="联系方式"
-            android:maxLines="2" />
-
+            android:layout_height="wrap_content" >
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="联系方式"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:layout_width="match_parent"

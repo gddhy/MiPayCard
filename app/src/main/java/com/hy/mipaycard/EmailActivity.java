@@ -97,8 +97,15 @@ public class EmailActivity extends AppCompatActivity {
                             intent.setType("*/*");
                             intent.setType("message/rfc882");
                             Intent.createChooser(intent, "请选择邮箱应用");
-                            Toast.makeText(EmailActivity.this,"请选择邮箱应用",Toast.LENGTH_LONG).show();
-                            EmailActivity.this.startActivity(intent);
+
+                            try {
+                                EmailActivity.this.startActivity(intent);
+                                Toast.makeText(EmailActivity.this,"请选择邮箱应用",Toast.LENGTH_LONG).show();
+                            } catch (Exception e){
+                                e.printStackTrace();
+                                Toast.makeText(EmailActivity.this,"您手机未安装邮箱类应用，无法使用提交卡面",Toast.LENGTH_LONG).show();
+                            }
+
                             finish();
                         }
                     });
@@ -118,7 +125,13 @@ public class EmailActivity extends AppCompatActivity {
                                 finish();
                             }
                         })
-                        .setCancelable(false)
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                finish();
+                            }
+                        })
+                        //.setCancelable(false)
                         .show();
 
     }

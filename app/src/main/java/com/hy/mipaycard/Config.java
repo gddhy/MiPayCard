@@ -45,15 +45,17 @@ public class Config {
     public static String localAction = "com.hy.mipaycard.ref_ui";
     public static String localAction_online = "com.hy.mipaycard.ref_flag_online";
 
-    public static String git_url = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/";
+    //注册域名
+    public static String WEBSITE = "https://gddhy.net/";
 
-    //注册域名gddhy.cyou
-    public static String WEBSITE = "https://gddhy.cyou/";
+    public static String git_url = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
     /**
      * 请求在线卡面链接
      * https://raw.githubusercontent.com/gddhy/MiPayCard/master/
      * https://gddhy.github.io/MiPayCard/
      * https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/
+     *
+     * https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/
      *
      * 国内网络原因，暂时使用最后一个
      */

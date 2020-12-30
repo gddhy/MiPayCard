@@ -37,6 +37,7 @@ import com.hy.mipaycard.Config;
 import com.hy.mipaycard.R;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.Utils.HttpUtil;
+import com.hy.mipaycard.shortcuts.LauncherShortcut;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -206,6 +207,7 @@ public class OnlineCardActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "在线图片说明");
         menu.add(0, 1, 1, "提交在线卡面");
+        menu.add(0, 4, 4,"添加快捷方式");
         if(pref.getBoolean("showOnlineCardType",false)){
             menu.add( 0, 2, 2,"在线卡面来源");
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
@@ -239,6 +241,9 @@ public class OnlineCardActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("取消",null)
                         .show();
+                break;
+            case 4:
+                LauncherShortcut.addOnlineCard(this);
                 break;
             default:
                 break;

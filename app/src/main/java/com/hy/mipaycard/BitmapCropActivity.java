@@ -86,7 +86,7 @@ public class BitmapCropActivity extends AppCompatActivity {
                         }
                         Uri cropImageUri = Uri.fromFile(getTempFile());
                         //Todo test
-                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R) {
                             UCrop.of(Uri.fromFile(new File(filePath)), cropImageUri)
                                     .withAspectRatio(192, 121)
                                     .withMaxResultSize(960, 605)
@@ -108,6 +108,13 @@ public class BitmapCropActivity extends AppCompatActivity {
                         finish();
                     }
                 })
+                /*
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                })*/
                 .show();
 
         if(isSave){

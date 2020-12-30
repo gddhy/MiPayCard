@@ -121,7 +121,7 @@ public class MainUtils {
             public void run() {
                 copyCard(context);
                 final String str = CardList.initLocalCardList(context);
-                HttpUtil.sendOkHttpRequest(git_url+"card_list.json", new Callback() {
+                HttpUtil.sendOkHttpRequest(git_url+" ", new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         e.printStackTrace();

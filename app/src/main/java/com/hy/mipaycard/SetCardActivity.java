@@ -126,7 +126,13 @@ public class SetCardActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setCancelable(false)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                })
+                //.setCancelable(false)
                 .setPositiveButton("返回", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

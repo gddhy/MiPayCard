@@ -43,6 +43,7 @@ import com.hy.mipaycard.new_set.NewSetActivity;
 import com.hy.mipaycard.online_card.EmailOnlineActivity;
 import com.hy.mipaycard.online_card.OnlineCardActivity;
 import com.hy.mipaycard.shortcuts.CardDefaultActivity;
+import com.hy.mipaycard.shortcuts.LauncherShortcut;
 import com.hy.mipaycard.shortcuts.SetMenuPermissionActivity;
 
 import java.io.File;
@@ -108,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
                 openMiPay(MainActivity.this);
             }
         });
+        fab_button1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                fab_menu.close(true);
+                LauncherShortcut.addMiPay(MainActivity.this);
+                return true;
+            }
+        });
         FloatingActionButton fab_button2 = (FloatingActionButton)findViewById(R.id.fab_exp2);
         fab_button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +155,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 fab_menu.close(true);
                 openOnlineCard();
+            }
+        });
+        fab_button5.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                fab_menu.close(true);
+                LauncherShortcut.addOnlineCard(MainActivity.this);
+                return true;
             }
         });
 
