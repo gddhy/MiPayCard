@@ -876,6 +876,10 @@
         "CardFile":"e5b37582bf369d998d18d1448e66ded3ae4279a0105af826800de4f3becbbf6a.0"
     },
     {
+        "CardName":"宁波甬城通公交卡",
+        "CardFile":"208b62afb15b65e19924121b1e89c8d98b47325cfde06362ca5324a3c6d047ff.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
