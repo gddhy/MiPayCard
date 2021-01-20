@@ -932,6 +932,10 @@
         "CardFile":"f5dc7cdccf8aabac38369d81ec4c315ad7f4d9632be5f58b57a81274e28e5cfd.0"
     },
     {
+        "CardName":"长安通",
+        "CardFile":"201c93b070cc2863614494752bc5d9937c0d542499ca81313f0f00f59ac8b950.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
