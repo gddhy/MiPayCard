@@ -876,6 +876,66 @@
         "CardFile":"e5b37582bf369d998d18d1448e66ded3ae4279a0105af826800de4f3becbbf6a.0"
     },
     {
+        "CardName":"宁波甬城通公交卡",
+        "CardFile":"208b62afb15b65e19924121b1e89c8d98b47325cfde06362ca5324a3c6d047ff.0"
+    },
+    {
+        "CardName":"中国工商银行 福农卡",
+        "CardFile":"164a28cbb13bb5837e0e35aa70cc7e0eb989797949a2f5c0c158fbc3bfc3f986.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"260c49488b2fb352048dd41dedc60c2ebc2d55abb510356b4f6cf95f1e4f73d8.0"
+    },
+    {
+        "CardName":"招商银行 宝可梦联名储蓄卡（皮卡丘）",
+        "CardFile":"2f1eed8a38fe956bde17649b71c2cddda5a7ce76df6d375ec2e265ad456db529.0"
+    },
+    {
+        "CardName":"eID公民网络电子身份标识",
+        "CardFile":"4a3b7529d16eec3de67faab4b5e6ff1fc9b70e76a526fe329c62d30662a7114b.0"
+    },
+    {
+        "CardName":"中国工商银行储蓄卡",
+        "CardFile":"8622bedbe911f18a482c7c625f4014b6bf690f883f0e8a2a5350b99bd8755e38.0"
+    },
+    {
+        "CardName":"哈尔滨城市通",
+        "CardFile":"b668d88ed6e0a3cff8b2e28f7520d3558cebe311d00e4303225a0dd03724565a.0"
+    },
+    {
+        "CardName":"平安银行互联网账户",
+        "CardFile":"de716e787468f70f28b141a227d60ab7c2273aad33537678fd47b227c56e4742.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"c30dbbad91bf4929a798f95a7712e39c5731548a51fa838e66fd8cbe3e2009f5.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"15522924038a206f4f1c46689900813fa4dbb01455b2e369ab0ec344401b284d.0"
+    },
+    {
+        "CardName":"琴岛通",
+        "CardFile":"bf2523bf1c5ee8620811e4616bff3b2e8b5f3af3de183850ec696a89e7db2103.0"
+    },
+    {
+        "CardName":"中国农业银行 金穗网购卡",
+        "CardFile":"ac7a5d9e0eb5fb1a3f0fc86232688a48ac1100258d9885ae9e13c38970a71034.0"
+    },
+    {
+        "CardName":"招商银行 宝可梦联名储蓄卡（皮卡丘）",
+        "CardFile":"b502f62759bb41289c7b463422eb635bc53ec243cde23f5862352882015c0ee3.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"f5dc7cdccf8aabac38369d81ec4c315ad7f4d9632be5f58b57a81274e28e5cfd.0"
+    },
+    {
+        "CardName":"长安通",
+        "CardFile":"201c93b070cc2863614494752bc5d9937c0d542499ca81313f0f00f59ac8b950.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
