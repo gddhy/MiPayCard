@@ -1,16 +1,22 @@
 package com.hy.mipaycard.shortcuts;
 
 import android.annotation.SuppressLint;
+import android.app.AppOpsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
+import android.os.Binder;
 import android.os.Build;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.hy.mipaycard.MainUtils;
 import com.hy.mipaycard.R;
 import com.hy.mipaycard.online_card.OnlineCardActivity;
 
@@ -25,19 +31,48 @@ public class LauncherShortcut {
 
     public static void addOnlineCard(Context context){
         showToast(context);
-        createLauncherShortcut(context, OnlineCardActivity.class,"openOnlineCard","在线卡面",BitmapFactory.decodeResource(context.getResources(),R.drawable.online));
+        createLauncherShortcut(context, OnlineCardActivity.class,"openOnlineCard","在线卡面",BitmapFactory.decodeResource(context.getResources(), R.drawable.online));
     }
 
-    private static void showToast(Context context){
+    private static void showToast(final Context context){
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.N){
-            Toast.makeText(context,"当前版本系统不支持此功能",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"当前版本系统可能不支持此功能",Toast.LENGTH_LONG).show();
         }
         if(getPropInfo().length()!=0){
-            Toast.makeText(context,"MIUI需要使用添加快捷方式权限才能使用该功能",Toast.LENGTH_LONG).show();
+            boolean b = canInstallShortcut(context);
+            if(!b){
+                new AlertDialog.Builder(context)
+                        .setTitle("缺少必要权限（MIUI）")
+                        .setMessage("程序当前缺少添加桌面快捷方式权限，请前往权限管理授予权限")
+                        .setPositiveButton("应用管理", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                MainUtils.toSelfSetting(context);
+                            }
+                        })
+                        .show();
+            } else {
+                Toast.makeText(context,"已尝试添加，请前往桌面查看",Toast.LENGTH_LONG).show();
+            }
         }
     }
+    public static boolean canInstallShortcut(Context context) {
+        AppOpsManager ops = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        try {
+            int op = 10017; // >= 23
+            // ops.checkOpNoThrow(op, uid, packageName)
+            Method method = ops.getClass().getMethod("checkOpNoThrow",
+                    int.class, int.class, String.class);
+            Integer result = (Integer) method.invoke(ops, op, Binder.getCallingUid(), context.getPackageName());
+            return result == AppOpsManager.MODE_ALLOWED;
+        } catch (Exception e) {
+            //Log.e(TAG, "not support", e);
+        }
+        return false;
+    }
 
-    private static String getPropInfo(){
+
+        private static String getPropInfo(){
         String info = "";
         try {
             @SuppressLint("PrivateApi") Class<?> c =Class.forName("android.os.SystemProperties");

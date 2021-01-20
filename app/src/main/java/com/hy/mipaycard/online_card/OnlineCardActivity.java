@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -72,6 +73,8 @@ public class OnlineCardActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private int onlineCardType;
+    private SearchView searchView;
+    private static String SearchAction = "SearchAction";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +118,16 @@ public class OnlineCardActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-                initCardList(jsonData);
+                String searchText = intent.getStringExtra(SearchAction);
+                try {
+                    if (searchText.length()!=0) {
+                        initCardList(jsonData,searchText);
+                    } else {
+                        initCardList(jsonData);
+                    }
+                } catch (Exception e){
+                    initCardList(jsonData);
+                }
                 adapter.notifyDataSetChanged();
         }
     }
@@ -127,6 +139,10 @@ public class OnlineCardActivity extends AppCompatActivity {
     }
 
     private void initCardList(String jsonData){
+        initCardList(jsonData,"");
+    }
+
+    private void initCardList(String jsonData,final String searchText){
         card2List.clear();
         try {
             JSONArray jsonArray = new JSONArray("["+jsonData+"]");
@@ -154,7 +170,14 @@ public class OnlineCardActivity extends AppCompatActivity {
                     name = name.replaceAll("%2520","%20");
                     link = getOnlineGitLink(onlineCardType == 1) + name;
                 }
-                card2List.add(new Card2(cardName,link,userName,about,email));
+                if(searchText.length()==0) {
+                    card2List.add(new Card2(cardName, link, userName, about, email));
+                } else {
+                    //不区分大小写比较
+                    if(cardName.toLowerCase().contains(searchText.toLowerCase())||userName.toLowerCase().contains(searchText.toLowerCase())){
+                        card2List.add(new Card2(cardName, link, userName, about, email));
+                    }
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -173,8 +196,12 @@ public class OnlineCardActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(OnlineCardActivity.this, "获取失败", Toast.LENGTH_LONG).show();
-                                if (isRef)
+                                if (isRef) {
                                     swipeRefresh.setRefreshing(false);
+                                    //下拉刷新后隐藏搜索
+                                    searchView.clearFocus();
+                                    searchView.onActionViewCollapsed();
+                                }
                             }
                         });
                     }
@@ -187,12 +214,15 @@ public class OnlineCardActivity extends AppCompatActivity {
                         if (net > local)
                             saveJsonData(OnlineCardActivity.this, data);
                         jsonData = data;
-                        LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online));//发送本地广播
+                        LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online).putExtra(SearchAction,""));//发送本地广播
                         if (isRef) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     swipeRefresh.setRefreshing(false);
+                                    //下拉刷新后隐藏搜索
+                                    searchView.clearFocus();
+                                    searchView.onActionViewCollapsed();
                                 }
                             });
                         }
@@ -205,6 +235,7 @@ public class OnlineCardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.online_toolbar,menu);
         menu.add(0, 0, 0, "在线图片说明");
         menu.add(0, 1, 1, "提交在线卡面");
         menu.add(0, 4, 4,"添加快捷方式");
@@ -214,7 +245,22 @@ public class OnlineCardActivity extends AppCompatActivity {
                 menu.add( 0, 3, 3, "保存在线卡面");
             }
         }
-        return true;
+        MenuItem searchItem = menu.findItem(R.id.online_menu_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online).putExtra(SearchAction,query));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online).putExtra(SearchAction,newText));
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

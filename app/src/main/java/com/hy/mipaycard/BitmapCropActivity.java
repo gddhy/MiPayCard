@@ -37,6 +37,7 @@ public class BitmapCropActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private String saveName;
     private boolean isSave;
+    private boolean isFinish =true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class BitmapCropActivity extends AppCompatActivity {
                 .setNegativeButton("裁剪", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        isFinish = false;
                         savePref(checkBox,checkBox2);
                         if(!checkBox.isChecked()){
                             checkSave(checkBox,file);
@@ -99,7 +101,7 @@ public class BitmapCropActivity extends AppCompatActivity {
                         }
                     }
                 })
-                .setCancelable(false)
+                //.setCancelable(false)
                 .setNeutralButton("返回", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -108,13 +110,13 @@ public class BitmapCropActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                /*
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        finish();
+                        if(isFinish)
+                            finish();
                     }
-                })*/
+                })
                 .show();
 
         if(isSave){
