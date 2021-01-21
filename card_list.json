@@ -936,6 +936,42 @@
         "CardFile":"201c93b070cc2863614494752bc5d9937c0d542499ca81313f0f00f59ac8b950.0"
     },
     {
+        "CardName":"琴岛通",
+        "CardFile":"56b02b062f547ecbe57fb43c2aeb890baf46d96893055e6cf66431d2f660cfbb.0"
+    },
+    {
+        "CardName":"招商银行 宝可梦联名卡（皮卡丘）",
+        "CardFile":"3c1d4d2d4844d56890ba0d5a66482c632688a9498d74d171a3d7ca694e7bbcc9.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"f472cf4c755a67e886fc3b9f98e00c418a4476671653e66a1387aa39e25edd52.0"
+    },
+    {
+        "CardName":"中国银行 长城环球通信用卡",
+        "CardFile":"72bc0c3dacf6a95186abf437ca5fa8cf248c6ef5c13b178fcda9f419687fbf89.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"aad36cd47c9c3ca4eb598286892870edee9407e31f0760e76bc8693a77ce8e8c.0"
+    },
+    {
+        "CardName":"招商银行 bilibili花嫁联名卡",
+        "CardFile":"df5d3b3aa16f02aa797354cd9f0991e85a34eb4fd5ba63add8af56eade1970ce.0"
+    },
+    {
+        "CardName":"中国农业银行 金穗网购卡",
+        "CardFile":"491a1c85f1ae2e0a9f69cb5fb8d9db208ad16be5841361ddda3d331fbb40ab2e.0"
+    },
+    {
+        "CardName":"京东闪付",
+        "CardFile":"2135587998ca0ab9cad1027cb842b658f3188cdf143cc1871b52916c04720574.0"
+    },
+    {
+        "CardName":"中国银行 洛天依小柠檬联名卡",
+        "CardFile":"707e0369798e04b0d195568c50f2a74ab1c0a7c3764ee7d2bfefc51109402075.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
