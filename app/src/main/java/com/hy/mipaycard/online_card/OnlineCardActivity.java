@@ -58,7 +58,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hy.mipaycard.Config.getOnlineGitLink;
-import static com.hy.mipaycard.Config.git_url;
 import static com.hy.mipaycard.Utils.CardList.getJsonLine;
 import static com.hy.mipaycard.online_card.EmailOnlineActivity.showAbout;
 import static com.hy.mipaycard.online_card.online_utils.readJsonFromFile;
@@ -111,6 +110,7 @@ public class OnlineCardActivity extends AppCompatActivity {
             }
         });
 
+        getOnlineCardCDN();
         getOnlineCard(false);
     }
 
@@ -184,8 +184,41 @@ public class OnlineCardActivity extends AppCompatActivity {
         }
     }
 
+    private void getOnlineCardCDN(){
+        final String online_link = Config.git_cdn_jsdelivr+"online_card.json";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpUtil.sendOkHttpRequest(online_link, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(OnlineCardActivity.this, "获取失败", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String data = response.body().string();
+                        int local = getJsonLine("[" + jsonData + "]");
+                        int net = getJsonLine("[" + data + "]");
+                        if (net > local) {
+                            saveJsonData(OnlineCardActivity.this, data);
+                            jsonData = data;
+                            LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online).putExtra(SearchAction, ""));//发送本地广播
+                        }
+                    }
+                });
+            }
+        }).run();
+
+    }
+
     private void getOnlineCard(final boolean isRef){
-        final String online_link = git_url+"online_card.json";
+        final String online_link = Config.git_raw+"online_card.json";
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -303,45 +336,34 @@ public class OnlineCardActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    JSONArray jsonArray = new JSONArray("["+jsonData+"]");
-                    for (int i = 0; i < jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String cardName = jsonObject.getString("cardName");
-                        String link = jsonObject.getString("link");
-                        String userName = jsonObject.getString("userName");
-                        String about = jsonObject.getString("about");
-                        String email = jsonObject.getString("email");
-                        String type = "";
-                        String tmp = link.substring(link.lastIndexOf("/")+1);
-                        if(tmp.contains(".")){
-                            type = tmp.substring(tmp.lastIndexOf("."));
-                        }
-                        final String name = cardName + " _ " +userName + type;
-                        if(onlineCardType != 0){
-                            String name_url = name.replaceAll(" ","%20");
-                            try {
-                                name_url = URLEncoder.encode(name_url,"UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                                continue;
+                for(int i = 0;i<card2List.size();i++){
+                    String type = ".png";
+                    String link = card2List.get(i).getLink();
+                    String cardName = card2List.get(i).getCardName();
+                    String userName = card2List.get(i).getUserName();
+                    String tmp = link.substring(link.lastIndexOf("/")+1);
+                    if(tmp.contains(".")){
+                        type = tmp.substring(tmp.lastIndexOf("."));
+                    }
+                    final String name = cardName + " _ " +userName + type;
+                    File file = new File(Config.fileWork(OnlineCardActivity.this).getParentFile(),"OnlineCard");
+                    if(!file.exists()){
+                        file.mkdirs();
+                    }
+                    File saveFile = new File(file, name);
+                    if(saveFile.exists()){
+                        for(int j = 1;saveFile.exists();j++){
+                            if(saveFile.getName().contains(".")){
+                                saveFile = new File(saveFile.getPath().substring(0,saveFile.getPath().lastIndexOf("."))+"-"+j+type);
                             }
-                            name_url = name_url.replaceAll("%2520","%20");
-                            link = getOnlineGitLink(onlineCardType == 1) + name_url;
-                        }
-                        File file = new File(Config.fileWork(OnlineCardActivity.this).getParentFile(),"OnlineCard");
-                        if(!file.exists()){
-                            file.mkdirs();
-                        }
-                        try {
-                            CardList.copyFile(getGlideCacheFile(OnlineCardActivity.this, link).getPath(), new File(file, name).getPath());
-                        } catch (Exception e){
-                            e.printStackTrace();
-                            Log.d("获取失败：", "link: "+link);
                         }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    try {
+                        CardList.copyFile(getGlideCacheFile(OnlineCardActivity.this, link).getPath(), saveFile.getPath());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Log.d("获取失败：", "link: "+link);
+                    }
                 }
                 runOnUiThread(new Runnable() {
                     @Override

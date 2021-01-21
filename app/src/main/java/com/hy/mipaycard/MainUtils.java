@@ -50,7 +50,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.hy.mipaycard.Config.fileWork;
-import static com.hy.mipaycard.Config.git_url;
 import static com.hy.mipaycard.Config.pay_pic;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
 
@@ -120,26 +119,31 @@ public class MainUtils {
             @Override
             public void run() {
                 copyCard(context);
-                final String str = CardList.initLocalCardList(context);
-                HttpUtil.sendOkHttpRequest(git_url+"card_list.json", new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String data = response.body().string();
-                        CardList.getListFromJson(data);
-                        int local = CardList.getJsonLine(str);
-                        int netWork = CardList.getJsonLine(data);
-                        if(netWork>local){
-                            CardList.saveJsonData(context, data);
-                        }
-                    }
-                });
+                getNetWorkData(context,Config.git_cdn_jsdelivr);
+                getNetWorkData(context,Config.git_raw);
             }
         }).run();
+    }
+
+    private static void getNetWorkData(final Context context, String link){
+        final String str = CardList.initLocalCardList(context);
+        HttpUtil.sendOkHttpRequest(link+"card_list.json", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String data = response.body().string();
+                CardList.getListFromJson(data);
+                int local = CardList.getJsonLine(str);
+                int netWork = CardList.getJsonLine(data);
+                if(netWork>local){
+                    CardList.saveJsonData(context, data);
+                }
+            }
+        });
     }
 
     public static void copyToClipboard(Context context, String text) {

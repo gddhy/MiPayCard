@@ -48,7 +48,9 @@ public class Config {
     //注册域名
     public static String WEBSITE = "https://gddhy.net/";
 
-    public static String git_url = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
+    //数据请求两次，使用cdn优先加载，使用raw补充，数据及时更新
+    public static String git_cdn_jsdelivr = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
+    public static String git_raw = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/";
     /**
      * 请求在线卡面链接
      * https://raw.githubusercontent.com/gddhy/MiPayCard/master/
