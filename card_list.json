@@ -972,6 +972,30 @@
         "CardFile":"707e0369798e04b0d195568c50f2a74ab1c0a7c3764ee7d2bfefc51109402075.0"
     },
     {
+        "CardName":"哈尔滨城市通",
+        "CardFile":"64d8c11fc2c5cb31f6d484592dab61ce2e120d0ce97dd82a2d078c35445eb46c.0"
+    },
+    {
+        "CardName":"中国工商银行 储蓄卡",
+        "CardFile":"d6b8f3a0f240324b885c88fa2a6c4a76663bc6653ac62a13f2f487efc6eb6d8b.0"
+    },
+    {
+        "CardName":"eID公民网络电子身份标识",
+        "CardFile":"dcbb2b61a05f132c727983ec081e0097a30a957524c0f93358734c4d7a520ecc.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"1de2f2672c22e9dce53e69b2c2d925cb72ae48313b7bc568efa66c4e2c934249.0"
+    },
+    {
+        "CardName":"平安银行互联网账户",
+        "CardFile":"0882e1399c115b5c42554e86ec1465bcaeea849079d7bc3c69c00fbb3bcfb9cb.0"
+    },
+    {
+        "CardName":"中国工商银行 福农卡",
+        "CardFile":"0395611b5fb934c28fadd300e903785828381d62e22dbfe78dbc750be1649b5f.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
