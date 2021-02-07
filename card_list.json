@@ -996,6 +996,18 @@
         "CardFile":"0395611b5fb934c28fadd300e903785828381d62e22dbfe78dbc750be1649b5f.0"
     },
     {
+        "CardName":"中国建设银行借记卡",
+        "CardFile":"4fb3091a1d879f471290f6db11d2c5b2851b3a5c07d40416279adaf904a82f3d.0"
+    },
+    {
+        "CardName":"模拟门禁卡",
+        "CardFile":"a6e968a4e3cb061f1b82056d373040d4fd83d94dfdd13a62dfa85b0434d7b5be.0"
+    },
+    {
+        "CardName":"京津冀互联互通卡",
+        "CardFile":"f4a285577158561521dffc5930735fe69c94d44c202c628372c20618e3c98639.0"
+    },
+    {
         "CardName":".本程序可以快速修改卡面,需要root权限\n.MiPay卡面储存在/data/data/com.miui.tsmclient/cache/image_manager_disk_cache\n.自定义卡面建议自行处理960x605圆角图片\n.图片放到Pictures/MiPayCard/List可以在程序首页展示\n.若读取到的系统卡面列表为空，请打开一次MiPay后重试\n.使用By_syk的UriAnalyser处理uri\n.使用Yalantis的uCrop裁剪图片（11系统）",
         "CardFile":"关于信息"
     }
