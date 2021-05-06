@@ -1,12 +1,12 @@
 package com.hy.mipaycard;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AlertDialog;
@@ -42,7 +42,7 @@ public class BitmapCropActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = PreferenceManager.getDefaultSharedPreferences(BitmapCropActivity.this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         Intent intent = getIntent();
         final String filePath = intent.getStringExtra(Config.open_Crop);

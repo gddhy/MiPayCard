@@ -1,8 +1,8 @@
 package com.hy.mipaycard.shortcuts;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ public class SetMenuPermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        pref = PreferenceManager.getDefaultSharedPreferences(SetMenuPermissionActivity.this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         final CheckBox checkBox = new CheckBox(SetMenuPermissionActivity.this);
         checkBox.setChecked(pref.getBoolean("setAuto",false));
         checkBox.setText("临时恢复默认");

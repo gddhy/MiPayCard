@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -114,36 +115,40 @@ public class MainUtils {
         }
     }
 
-    public static void initOther(final Context context){
+    public static void initOther(final Context context, final SharedPreferences pref){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 copyCard(context);
-                getNetWorkData(context,Config.git_cdn_jsdelivr);
-                getNetWorkData(context,Config.git_raw);
+                //TODO
+                final String str = CardList.initLocalCardList(context);
+                HttpUtil.sendOkHttpRequest(Config.getApiLink(false,!pref.getBoolean("ApiStatus",true)), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("ApiStatus",false);
+                        editor.apply();
+                        initOther(context,pref);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String data = response.body().string();
+                        CardList.getListFromJson(data);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("ApiStatus",true);
+                        editor.apply();
+                        int local = CardList.getJsonLine(str);
+                        int netWork = CardList.getJsonLine(data);
+                        if(netWork>local){
+                            CardList.saveJsonData(context, data);
+                        }
+                    }
+                });
+
             }
         }).run();
-    }
-
-    private static void getNetWorkData(final Context context, String link){
-        final String str = CardList.initLocalCardList(context);
-        HttpUtil.sendOkHttpRequest(link+"card_list.json", new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String data = response.body().string();
-                CardList.getListFromJson(data);
-                int local = CardList.getJsonLine(str);
-                int netWork = CardList.getJsonLine(data);
-                if(netWork>local){
-                    CardList.saveJsonData(context, data);
-                }
-            }
-        });
     }
 
     public static void copyToClipboard(Context context, String text) {

@@ -16,7 +16,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -83,7 +82,6 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         textView=findViewById(R.id.test_text_view);
         textView.setMovementMethod(ScrollingMovementMethod.getInstance());
-        //progressBar = findViewById(R.id.progress_bar);
         swipeRefresh = findViewById(R.id.test_refresh);
         swipeRefresh.setEnabled(false);
         radioGroup = findViewById(R.id.test_radio_group);
@@ -92,7 +90,7 @@ public class TestActivity extends AppCompatActivity {
         test_LinearLayout = findViewById(R.id.test_online_card_test_view);
         test_ProgressBar = findViewById(R.id.test_online_card_test);
         test_TextView = findViewById(R.id.test_online_card_test_text);
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         localBroadcast = new LocalBroadcast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocalAction);
@@ -168,19 +166,16 @@ public class TestActivity extends AppCompatActivity {
         String link = "";
         switch (getCheckedId()){
             case R.id.test_link:
-                link = Config.WEBSITE + "MiPayCard/";
+                link = Config.getApiLink(onlineButton.isChecked(),false);
                 break;
             case R.id.test_raw:
-                link = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/";
+                link = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/" + (onlineButton.isChecked() ? "online_card.json" : "card_list.json");
                 break;
             case R.id.test_cdn:
-                link = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
+                link = Config.getApiLink(onlineButton.isChecked(),true);
                 break;
             default:
         }
-
-        link = link + (onlineButton.isChecked() ? "online_card.json" : "card_list.json");
-
         return link;
     }
 

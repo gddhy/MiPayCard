@@ -4,13 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +28,6 @@ import com.hy.mipaycard.R;
 import com.hy.mipaycard.Utils.BitmapUtils;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.Utils.PhotoUtils;
-import com.hy.mipaycard.set_card_new.List_Adapter;
-import com.hy.mipaycard.set_card_new.List_card;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +58,7 @@ public class NewSetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_set);
-        pref = PreferenceManager.getDefaultSharedPreferences(NewSetActivity.this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         final Intent intent = getIntent();
         String filePath = intent.getStringExtra(Config.file_Path);
         final boolean isAuto = intent.getBooleanExtra(Config.is_Auto,false);

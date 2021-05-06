@@ -78,7 +78,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                int position = holder.getAdapterPosition();
+                int position = holder.getAbsoluteAdapterPosition();
                 final Card2 card2 = mCard2List.get(position);
                 PopupMenu popupMenu = new PopupMenu(mContext, view);
                 popupMenu.getMenuInflater().inflate(R.menu.online_popup_menu, popupMenu.getMenu());

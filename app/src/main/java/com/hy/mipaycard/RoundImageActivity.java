@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -49,7 +48,7 @@ public class RoundImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_image);
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         imageView = (ImageView)findViewById(R.id.mainImageView);
         editText = (EditText)findViewById(R.id.mainEditText);
         textView = (TextView)findViewById(R.id.mainTextView);

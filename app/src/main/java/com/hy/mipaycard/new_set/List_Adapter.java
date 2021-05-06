@@ -37,7 +37,7 @@ public class List_Adapter extends ArrayAdapter<List_card> {
             viewHolder = (ViewHolder) view.getTag();
         }
         Glide.with(getContext()).load(list_card.getImageFile()).into(viewHolder.cardImage);
-        //viewHolder.caedImage.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
+        //viewHolder.cardImage.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
         viewHolder.cardName.setText(list_card.getName());
         return view;
     }

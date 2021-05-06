@@ -1,11 +1,11 @@
 package com.hy.mipaycard.set_card_new;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -52,7 +52,7 @@ public class SetCardNewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_card_new);
-        pref = PreferenceManager.getDefaultSharedPreferences(SetCardNewActivity.this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         final Intent intent = getIntent();
         String filePath = intent.getStringExtra(Config.file_Path);
         final boolean isAuto = intent.getBooleanExtra(Config.is_Auto,false);

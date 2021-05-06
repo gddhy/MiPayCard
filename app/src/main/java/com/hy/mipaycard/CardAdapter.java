@@ -64,7 +64,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                final int position = holder.getAdapterPosition();
+                final int position = holder.getAbsoluteAdapterPosition();
                 final Card card = mCardList.get(position);
                 //final File file = card.getImageFile();
                 if (position > 1){

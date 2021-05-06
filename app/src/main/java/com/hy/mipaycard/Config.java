@@ -45,22 +45,27 @@ public class Config {
     public static String localAction = "com.hy.mipaycard.ref_ui";
     public static String localAction_online = "com.hy.mipaycard.ref_flag_online";
 
-    //注册域名
+    //域名
     public static String WEBSITE = "https://gddhy.net/";
 
-    //数据请求两次，使用cdn优先加载，使用raw补充，数据及时更新
-    public static String git_cdn_jsdelivr = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
-    public static String git_raw = "https://raw.githubusercontent.com/gddhy/MiPayCard/master/";
-    /**
-     * 请求在线卡面链接
-     * https://raw.githubusercontent.com/gddhy/MiPayCard/master/
-     * https://gddhy.github.io/MiPayCard/
-     * https://cdn.jsdelivr.net/gh/gddhy/MiPayCard/
-     *
-     * https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/
-     *
-     * 国内网络原因，暂时使用最后一个
-     */
+    //优先从mi-pay-card-api请求数据，如果失败该用jsdelivr，轮换使用
+    public static String getApiLink(boolean isOnlineLink,boolean isUseJsDelivr){
+        String api = "https://mi-pay-card-api.gddhy.net";
+        String cdn_jsdelivr = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
+        if(isUseJsDelivr){
+            if(isOnlineLink){
+                return cdn_jsdelivr + "online_card.json";
+            } else {
+                return cdn_jsdelivr + "card_list.json";
+            }
+        } else{
+            if(isOnlineLink){
+                return api + "?online=true";
+            } else {
+                return api + "?list=true";
+            }
+        }
+    }
 
     public static int defaultSet = 1;
     public static boolean default_PKILL = true;

@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
@@ -88,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        initOther(MainActivity.this);
+        initOther(MainActivity.this,pref);
         fab_menu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         fab_menu.setClosedOnTouchOutside(true);        //点空白处关闭菜单
         initCardList();

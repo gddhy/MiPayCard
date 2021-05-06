@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -79,7 +78,7 @@ public class OnlineCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_card);
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        pref = getSharedPreferences("set", Context.MODE_PRIVATE);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_online);
         Toolbar toolbar = findViewById(R.id.online_toolbar);
         setSupportActionBar(toolbar);
@@ -110,7 +109,6 @@ public class OnlineCardActivity extends AppCompatActivity {
             }
         });
 
-        getOnlineCardCDN();
         getOnlineCard(false);
     }
 
@@ -184,41 +182,8 @@ public class OnlineCardActivity extends AppCompatActivity {
         }
     }
 
-    private void getOnlineCardCDN(){
-        final String online_link = Config.git_cdn_jsdelivr+"online_card.json";
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpUtil.sendOkHttpRequest(online_link, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(OnlineCardActivity.this, "获取失败", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String data = response.body().string();
-                        int local = getJsonLine("[" + jsonData + "]");
-                        int net = getJsonLine("[" + data + "]");
-                        if (net > local) {
-                            saveJsonData(OnlineCardActivity.this, data);
-                            jsonData = data;
-                            LocalBroadcastManager.getInstance(OnlineCardActivity.this).sendBroadcast(new Intent(Config.localAction_online).putExtra(SearchAction, ""));//发送本地广播
-                        }
-                    }
-                });
-            }
-        }).run();
-
-    }
-
     private void getOnlineCard(final boolean isRef){
-        final String online_link = Config.git_raw+"online_card.json";
+        final String online_link = Config.getApiLink(true,!pref.getBoolean("ApiStatus",true));
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -235,6 +200,10 @@ public class OnlineCardActivity extends AppCompatActivity {
                                     searchView.clearFocus();
                                     searchView.onActionViewCollapsed();
                                 }
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putBoolean("ApiStatus",false);
+                                editor.apply();
+                                getOnlineCard(isRef);
                             }
                         });
                     }
@@ -259,6 +228,9 @@ public class OnlineCardActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("ApiStatus",true);
+                        editor.apply();
                     }
                 });
             }

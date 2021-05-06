@@ -25,7 +25,6 @@ public class ShareActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
-            //TODO
             Intent intent = getIntent();
             if (Intent.ACTION_SEND.equals(intent.getAction())) {
                 Bundle bundle = intent.getExtras();
