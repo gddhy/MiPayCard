@@ -1,0 +1,3 @@
+部署在Cloudflare Workers上
+
+用于解决raw.githubusercontent.com在国内无法直接访问的问题
