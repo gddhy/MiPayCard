@@ -1,4 +1,4 @@
-package com.hy.mipaycard.new_set;
+package com.hy.mipaycard.SetCard.set_card_img_title;
 
 import android.content.Context;
 import android.view.LayoutInflater;

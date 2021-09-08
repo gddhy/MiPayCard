@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,7 +29,7 @@ import com.hy.mipaycard.Config;
 import com.hy.mipaycard.MainUtils;
 import com.hy.mipaycard.R;
 import com.hy.mipaycard.Utils.CardList;
-import com.hy.mipaycard.new_set.NewSetActivity;
+import com.hy.mipaycard.SetCard.set_card_img_title.SetCardImgActivity;
 
 import java.io.File;
 import java.util.List;
@@ -144,7 +143,7 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = holder.getAdapterPosition();
+                int position = holder.getAbsoluteAdapterPosition();
                 final Card2 card2 = mCard2List.get(position);
                 getCard(card2,false);
             }
@@ -191,18 +190,13 @@ public class Card2Adapter extends RecyclerView.Adapter<Card2Adapter.ViewHolder>{
     }
 
     private void setCard(String path){
-        int type = PreferenceManager.getDefaultSharedPreferences(mContext).getInt("isUseNew", defaultSet);
+        int type = mContext.getSharedPreferences("set", Context.MODE_PRIVATE).getInt("isUseNew", defaultSet);
         if(type==2) {
-            Intent intent = new Intent(mContext, NewSetActivity.class);
+            Intent intent = new Intent(mContext, SetCardImgActivity.class);
             intent.putExtra(Config.file_Path, path);
             intent.putExtra(Config.is_Auto, false);
             mContext.startActivity(intent);
         } else {
-            //Intent intent = new Intent(mContext, SetCardActivity.class);
-            //intent.putExtra(Config.file_Path, path);
-            //intent.putExtra(Config.is_Auto, isAutoLogo);
-            //mContext.startActivity(intent);
-
             Intent i = new Intent(mContext, BitmapCropActivity.class);
             i.putExtra(Config.open_Crop, path);
             mContext.startActivity(i);

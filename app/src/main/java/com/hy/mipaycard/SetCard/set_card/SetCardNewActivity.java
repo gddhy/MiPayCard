@@ -1,4 +1,4 @@
-package com.hy.mipaycard.set_card_new;
+package com.hy.mipaycard.SetCard.set_card;
 
 import android.content.Context;
 import android.content.Intent;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".new_set.NewSetActivity">
+    tools:context=".SetCard.set_card_img_title.SetCardImgActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"

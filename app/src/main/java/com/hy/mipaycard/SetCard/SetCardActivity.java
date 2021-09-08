@@ -1,4 +1,4 @@
-package com.hy.mipaycard;
+package com.hy.mipaycard.SetCard;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,11 +13,13 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.hy.mipaycard.Config;
+import com.hy.mipaycard.R;
 import com.hy.mipaycard.Utils.BitmapUtils;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.Utils.PhotoUtils;
 import com.hy.mipaycard.Utils.cmdUtil;
-import com.hy.mipaycard.set_card_new.SetCardNewActivity;
+import com.hy.mipaycard.SetCard.set_card.SetCardNewActivity;
 
 import java.io.File;
 
@@ -28,7 +30,7 @@ import static com.hy.mipaycard.MainUtils.AddTextToBitmap;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
 import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
-import static com.hy.mipaycard.set_card_new.SetCardNewActivity.pKillServer;
+import static com.hy.mipaycard.SetCard.set_card.SetCardNewActivity.pKillServer;
 import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
 public class SetCardActivity extends AppCompatActivity {

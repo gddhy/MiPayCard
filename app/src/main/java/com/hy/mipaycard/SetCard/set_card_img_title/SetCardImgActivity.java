@@ -1,9 +1,10 @@
-package com.hy.mipaycard.new_set;
+package com.hy.mipaycard.SetCard.set_card_img_title;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,10 +47,10 @@ import static com.hy.mipaycard.Utils.cmdUtil.getMiWallet;
 import static com.hy.mipaycard.Utils.cmdUtil.getTsmclient;
 import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
-import static com.hy.mipaycard.set_card_new.SetCardNewActivity.pKillServer;
+import static com.hy.mipaycard.SetCard.set_card.SetCardNewActivity.pKillServer;
 import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
-public class NewSetActivity extends AppCompatActivity {
+public class SetCardImgActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private boolean isSetMipay;
     private List<List_card> cardList = new ArrayList<>();
@@ -73,7 +74,7 @@ public class NewSetActivity extends AppCompatActivity {
         }
         assert filePath != null;
         if (!new File(filePath).exists()) {
-            Toast.makeText(NewSetActivity.this, "图片不存在", Toast.LENGTH_LONG).show();
+            Toast.makeText(SetCardImgActivity.this, "图片不存在", Toast.LENGTH_LONG).show();
             finish();
         }
         Glide.with(this).load(filePath).into(imageView);
@@ -87,7 +88,7 @@ public class NewSetActivity extends AppCompatActivity {
         }
         collapsingToolbar.setTitle(name);
         isSetMipay = pref.getInt("isUseNew",defaultSet) >= 0;
-        CardList.initLocalCardList(NewSetActivity.this);
+        CardList.initLocalCardList(SetCardImgActivity.this);
 
         String[] list;
         File file;
@@ -153,7 +154,7 @@ public class NewSetActivity extends AppCompatActivity {
                         name = cardName;
                     }
                     File file = getTempFile();
-                    Bitmap bmpBackground = PhotoUtils.getBitmapFromUri(Uri.fromFile(files_list[position]), NewSetActivity.this);
+                    Bitmap bmpBackground = PhotoUtils.getBitmapFromUri(Uri.fromFile(files_list[position]), SetCardImgActivity.this);
                     if(!cardName.contains("门禁卡")) {
                         bmpBackground = BitmapUtils.mergeBitmap(bmpBackground, bitmap);
                     }
@@ -174,7 +175,7 @@ public class NewSetActivity extends AppCompatActivity {
                     cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath };
                 }
                 runRootShell(cmd);
-                Toast.makeText(NewSetActivity.this,"已替换",Toast.LENGTH_LONG).show();
+                Toast.makeText(SetCardImgActivity.this,"已替换",Toast.LENGTH_LONG).show();
                         /*File tmpFile = getTempFile(SetCardActivity.this);
                         if (tempPath.equals(tmpFile.getPath())){
                             tmpFile.delete();
@@ -195,6 +196,7 @@ public class NewSetActivity extends AppCompatActivity {
         invalidateOptionsMenu();//通知系统刷新Menu
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

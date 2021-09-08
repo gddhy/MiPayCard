@@ -1,6 +1,7 @@
 package com.hy.mipaycard;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,7 +39,7 @@ import com.by_syk.lib.uri.UriAnalyser;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hy.mipaycard.Utils.DataCleanManager;
-import com.hy.mipaycard.new_set.NewSetActivity;
+import com.hy.mipaycard.SetCard.set_card_img_title.SetCardImgActivity;
 import com.hy.mipaycard.online_card.EmailOnlineActivity;
 import com.hy.mipaycard.online_card.OnlineCardActivity;
 import com.hy.mipaycard.shortcuts.CardDefaultActivity;
@@ -202,25 +203,7 @@ public class MainActivity extends AppCompatActivity {
     public void onChoosePicClick(View view) {
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             //todo new choose
-            //Toast.makeText(this,"未适配当前安卓版本",Toast.LENGTH_LONG).show();
             openAlbum(NEW_SAF_CHOOSE_IMG);
-            /*
-            部分设备SAF可能闪退
-            try {
-                //SAF
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                // 只显示可以打开的文件
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                // 可选择所有文件类型
-                intent.setType("image/*");
-                startActivityForResult(intent, NEW_SAF_CHOOSE_IMG);
-            } catch (Exception e){
-                e.printStackTrace();
-                //若不支持SAF，尝试使用旧方法，并改换文件解析方式
-                Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                intent.setType("image/*");
-                startActivityForResult(intent,NEW_SAF_CHOOSE_IMG);
-            }*/
         } else {
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -293,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -324,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -340,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
                             i.putExtra(Config.open_Crop, path);
                             startActivity(i);
                         } else {
-                            Intent intent = new Intent(this, NewSetActivity.class);
+                            Intent intent = new Intent(this, SetCardImgActivity.class);
                             intent.putExtra(Config.file_Path, path);
                             intent.putExtra(Config.is_Auto, false);
                             startActivity(intent);
@@ -388,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
                 i_saf.putExtra(Config.open_Crop, path2);
                 startActivity(i_saf);
             } else {
-                Intent intent = new Intent(this, NewSetActivity.class);
+                Intent intent = new Intent(this, SetCardImgActivity.class);
                 intent.putExtra(Config.file_Path, path2);
                 intent.putExtra(Config.is_Auto, false);
                 startActivity(intent);
@@ -604,6 +589,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("WrongConstant")
     private boolean hasSAFPermission(){
         SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         String uriStr = sharedPreferences.getString("uri", "");

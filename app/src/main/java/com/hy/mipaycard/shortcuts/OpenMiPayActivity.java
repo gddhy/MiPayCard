@@ -21,6 +21,7 @@ public class OpenMiPayActivity extends AppCompatActivity {
         //runRootShell(new String[]{"am start -n com.miui.tsmclient/com.miui.tsmclient.ui.quick.DoubleClickActivity"});
         if(isInstallApp(context,"com.miui.tsmclient")) {
             Intent i = new Intent();
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.setClassName("com.miui.tsmclient", "com.miui.tsmclient.ui.quick.DoubleClickActivity");
             context.startActivity(i);
         } else {

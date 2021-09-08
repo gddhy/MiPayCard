@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.hy.mipaycard.new_set.NewSetActivity;
+import com.hy.mipaycard.SetCard.SetCardActivity;
+import com.hy.mipaycard.SetCard.set_card_img_title.SetCardImgActivity;
 
 import java.io.File;
 import java.util.List;
@@ -216,7 +216,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int position = holder.getAdapterPosition();
+                final int position = holder.getAbsoluteAdapterPosition();
                 final Card card = mCardList.get(position);
                 if(card.isFile()) {
                     final File file = card.getImageFile();
@@ -253,8 +253,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>{
     }
 
     private void setCard(String path,boolean isAutoLogo){
-        int type = PreferenceManager.getDefaultSharedPreferences(mContext).getInt("isUseNew", defaultSet);
-        Intent intent = new Intent(mContext,type==2? NewSetActivity.class:  SetCardActivity.class);
+        int type = mContext.getSharedPreferences("set", Context.MODE_PRIVATE).getInt("isUseNew", defaultSet);
+        Intent intent = new Intent(mContext,type==2 ? SetCardImgActivity.class :  SetCardActivity.class);
         intent.putExtra(Config.file_Path, path);
         intent.putExtra(Config.is_Auto, isAutoLogo);
         mContext.startActivity(intent);

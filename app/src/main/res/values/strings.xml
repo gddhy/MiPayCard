@@ -20,4 +20,6 @@
     <string name="online_add_list">添加到卡面列表</string>
     <string name="online_card_info">图片信息</string>
     <string name="online_card_save">保存到相册</string>
+
+    <string name="title_mi_pay">MiPay</string>
 </resources>
