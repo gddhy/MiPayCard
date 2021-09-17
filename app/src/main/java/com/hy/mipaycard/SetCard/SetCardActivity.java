@@ -10,6 +10,7 @@ import android.net.Uri;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -22,12 +23,17 @@ import com.hy.mipaycard.Utils.cmdUtil;
 import com.hy.mipaycard.SetCard.set_card.SetCardNewActivity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
 import static com.hy.mipaycard.Config.getTempFile;
+import static com.hy.mipaycard.Config.mi_wallet;
 import static com.hy.mipaycard.Config.pay_pic;
 import static com.hy.mipaycard.MainUtils.AddTextToBitmap;
 import static com.hy.mipaycard.MainUtils.saveBitmapAsPng;
+import static com.hy.mipaycard.Utils.CardList.getCardName;
 import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
 import static com.hy.mipaycard.SetCard.set_card.SetCardNewActivity.pKillServer;
@@ -111,19 +117,35 @@ public class SetCardActivity extends AppCompatActivity {
                             tempPath = finalPath;
                         }
 
-                        String filePath = pay_pic+"/"+cardList[i];
                         String[] cmd ;
-                        if (pref.getBoolean("setAuto",false)){
-                            cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath , onlyRead };
+                        String tips = "";
+                        if(CardList.checkChinese(cardName[i])&&pref.getBoolean("AssociativeReplacement",false)){
+                            List<String> stringList = new ArrayList<String>();
+                            int times = 0;
+                            for(int j=0;j<cardList.length;j++){
+                                String chineseName = cardName[j];
+                                if(cardName[i].equals(chineseName)){
+                                    String filePath2 = pay_pic+"/"+cardList[j];
+                                    stringList.add("cp "+ tempPath +" "+filePath2);
+                                    stringList.add("chmod 444 "+filePath2);
+                                    times++;
+                                }
+                            }
+                            if (pref.getBoolean("setAuto",false)){
+                                stringList.add(onlyRead);
+                            }
+                            cmd = stringList.toArray(new String[0]);
+                            tips= "\n关联替换"+(--times)+"次";
                         } else {
-                            cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath };
+                            String filePath2 = pay_pic+"/"+cardList[i];
+                            if (pref.getBoolean("setAuto",false)){
+                                cmd = new String[]{"cp "+ tempPath +" "+filePath2,"chmod 444 "+filePath2 , onlyRead };
+                            } else {
+                                cmd = new String[]{"cp "+ tempPath +" "+filePath2,"chmod 444 "+filePath2 };
+                            }
                         }
                         runRootShell(cmd);
-                        Toast.makeText(SetCardActivity.this,"已替换",Toast.LENGTH_LONG).show();
-                        /*File tmpFile = getTempFile(SetCardActivity.this);
-                        if (tempPath.equals(tmpFile.getPath())){
-                            tmpFile.delete();
-                        }*/
+                        Toast.makeText(SetCardActivity.this,"已替换"+tips,Toast.LENGTH_LONG).show();
                         pKillServer(pref);
                         finish();
                     }

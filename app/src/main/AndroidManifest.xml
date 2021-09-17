@@ -3,6 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hy.mipaycard">
 
+    <queries>
+        <package android:name="com.miui.tsmclient" />
+        <package android:name="com.mipay.wallet" />
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="bin.mt.plus" />
+    </queries> <!-- 适配安卓11软件包可见性 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ManifestOrder" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 添加快捷方式8.0及以上 -->
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" /> <!-- 添加快捷方式8.0以下 必须加maxSdkVersion，否则不生效 -->
+    <uses-permission
+        android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
+        android:maxSdkVersion="25" /> <!-- 通知栏磁贴 收起状态栏权限 -->
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -14,6 +31,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity
+            android:label="@string/app_settings"
+            android:theme="@style/AppThemeActBar"
+            android:name=".setting.SettingsActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category
+                    android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SetCard.set_card_img_title.SetCardImgActivity"
             android:theme="@style/NewSetStyle" />
@@ -49,9 +78,9 @@
             android:label="@string/card_online_email"
             android:theme="@style/AppThemeActBar" />
         <activity
-            android:launchMode="singleTop"
             android:name=".online_card.OnlineCardActivity"
             android:label="@string/card_online"
+            android:launchMode="singleTop"
             android:theme="@style/AppThemeNoBar" />
         <activity
             android:name=".GetPath"
@@ -86,8 +115,8 @@
             android:name=".SetCard.SetCardActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:launchMode="singleTop"
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppThemeNoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -112,39 +141,36 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".shortcuts.CardDefaultActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".EmailActivity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <!-- https://www.jianshu.com/p/7f6f98da691e -->
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- https://www.jianshu.com/p/7f6f98da691e -->
         <activity
+            android:name=".TestActivity"
             android:documentLaunchMode="intoExisting"
-            android:excludeFromRecents="true"
-            android:maxRecents="3"
-
             android:enabled="false"
-            android:theme="@style/AppThemeActBar"
-            android:label="测试工具"
+            android:excludeFromRecents="true"
             android:icon="@mipmap/ic_launcher"
-            android:name=".TestActivity">
+            android:label="测试工具"
+            android:maxRecents="3"
+            android:theme="@style/AppThemeActBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.FileProvider"
@@ -164,9 +190,10 @@
                 <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
             </intent-filter>
         </provider>
+
         <service
             android:name=".Service.MiPayTitleService"
-            android:icon="@drawable/mi_pay"
+            android:icon="@drawable/title_mi_pay"
             android:label="@string/title_mi_pay"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
@@ -174,23 +201,5 @@
             </intent-filter>
         </service>
     </application>
-    <queries>
-        <package android:name="com.miui.tsmclient" />
-        <package android:name="com.mipay.wallet" />
-        <package android:name="com.topjohnwu.magisk" />
-        <package android:name="bin.mt.plus" />
-    </queries> <!-- 适配安卓11软件包可见性 -->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"
-        tools:ignore="ManifestOrder" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 添加快捷方式8.0及以上 -->
-    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
-    <!-- 添加快捷方式8.0以下 必须加maxSdkVersion，否则不生效-->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
-        android:maxSdkVersion="25"/>
-    <!--通知栏磁贴 收起状态栏权限-->
-    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
 
 </manifest>

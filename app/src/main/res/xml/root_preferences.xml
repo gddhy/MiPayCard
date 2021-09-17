@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="卡面修改">
+        <ListPreference
+            app:key="set_type_key"
+            app:title="修改方式"
+            app:entries="@array/card_set"
+            app:entryValues="@array/card_set_value"
+            app:defaultValue="1" />
+
+        <ListPreference
+            app:isPreferenceVisible="false"
+            app:key="set_type_pay_key"
+            app:title="修改方式"
+            app:entries="@array/card_set_pay"
+            app:entryValues="@array/card_set_pay_value"
+            app:defaultValue="1" />
+
+
+        <SwitchPreferenceCompat
+            app:key="pkill"
+            app:defaultValue="true"
+            app:summaryOff="修改可能会存在部分延迟生效"
+            app:summaryOn="打开MiPay即可看到修改"
+            app:title="立即生效" />
+
+        <SwitchPreferenceCompat
+            app:key="AssociativeReplacement"
+            app:defaultValue="false"
+            app:summaryOff="仅修改选中的卡面"
+            app:summaryOn="修改卡面时会同时修改同名卡面"
+            app:title="关联替换" />
+
+        <Preference
+            app:title="阻止替换"
+            app:summary="可阻止卡面被替换成系统默认图片"
+            app:key="PreventReplacement" />
+
+        <Preference
+            app:title="恢复默认"
+            app:summary="将卡面恢复为系统默认图片"
+            app:key="CardReset" />
+
+        <Preference
+            app:title="说明"
+            app:key="ShowAbout" />
+
+        <Preference
+            app:isPreferenceVisible="false"
+            app:title="重要提示"
+            app:summary="前往Magisk-挂载命名空间-选择全局命名空间"
+            app:key="tips11" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="快捷方式">
+
+        <Preference
+            app:title="MiPay"
+            app:summary="添加MiPay快捷方式到桌面"
+            app:key="shortcuts_mipay" />
+
+        <Preference
+            app:title="在线卡面"
+            app:summary="添加在线卡面快捷方式到桌面"
+            app:key="shortcut_online" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="通知栏磁贴">
+
+        <CheckBoxPreference
+            app:key="TileStatus"
+            app:title="磁贴状态"
+            app:defaultValue="false"
+            app:summaryOff="未选中状态"
+            app:summaryOn="选中状态" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="图片选择">
+        <SwitchPreferenceCompat
+            app:key="CropAutoSave"
+            app:summary="选择的图片会同时保存到应用首页列表"
+            app:title="保存到列表" />
+
+        <SwitchPreferenceCompat
+            app:key="isAuto"
+            app:summary="自动添加银联或交通联合水印"
+            app:title="裁剪后自动添加水印" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="在线卡面">
+        <ListPreference
+            app:key="online_type_key"
+            app:title="数据来源"
+            app:entries="@array/online_data"
+            app:entryValues="@array/online_data_value"
+            app:defaultValue="0" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="缓存相关">
+
+        <Preference
+            app:title="在线卡面缓存"
+            app:key="cacheOnline" />
+
+        <Preference
+            app:title="其他缓存"
+            app:key="cacheOther" />
+
+        <Preference
+            app:title="应用设置"
+            app:key="systemSettings" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

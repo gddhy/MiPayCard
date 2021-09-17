@@ -3,12 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/activity_new_set.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/activity_set_card_new.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/activity_settings.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/card_item.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/card_item_online.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/dialog_add.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/menu/main_toolbar.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/menu/menu_set.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/menu/menu_test.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/menu/online_popup_menu.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/menu/online_toolbar.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/MiPayCard/app/src/main/res/xml/root_preferences.xml" value="0.1" />
       </map>
     </option>
   </component>

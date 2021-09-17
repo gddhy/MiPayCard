@@ -1,6 +1,7 @@
 package com.hy.mipaycard.SetCard.set_card;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,8 @@ public class List_Adapter extends ArrayAdapter<List_card> {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        Glide.with(getContext()).load(list_card.getImageFile()).into(viewHolder.cardImage);
-        //viewHolder.cardImage.setImageBitmap(BitmapFactory.decodeStream(fileInputStream));
+        //Glide.with(getContext()).load(list_card.getImageFile()).into(viewHolder.cardImage);
+        viewHolder.cardImage.setImageBitmap(BitmapFactory.decodeFile(list_card.getImageFile().getPath()));
         viewHolder.cardName.setText(list_card.getName());
         return view;
     }

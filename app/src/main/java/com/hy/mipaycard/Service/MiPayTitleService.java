@@ -39,7 +39,8 @@ public class MiPayTitleService extends TileService {
     @Override
     public void onStartListening () {
         super.onStartListening();
-        setQuickSettingColor();
+        boolean status = getSharedPreferences("set", Context.MODE_PRIVATE).getBoolean("TileStatus",false);
+        setQuickSettingColor(status);
     }
 
     //通知栏关闭
@@ -50,11 +51,14 @@ public class MiPayTitleService extends TileService {
 
     //设置磁贴颜色
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setQuickSettingColor(){
-        //更改成非活跃状态(灰色)
-        //getQsTile().setState(Tile.STATE_ACTIVE);
-        //更改成活跃状态(白色)
-        getQsTile().setState(Tile.STATE_INACTIVE);
+    public void setQuickSettingColor(boolean status){
+        if(status) {
+            //更改成非活跃状态(灰色)
+            getQsTile().setState(Tile.STATE_ACTIVE);
+        } else {
+            //更改成活跃状态(白色)
+            getQsTile().setState(Tile.STATE_INACTIVE);
+        }
         getQsTile().updateTile();
     }
 

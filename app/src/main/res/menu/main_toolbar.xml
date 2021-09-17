@@ -6,10 +6,11 @@
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/card_online"
         app:showAsAction="ifRoom" />
-
+    <!--
     <item
         android:id="@+id/main_menu_set"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/menu_card_set_tool"
         app:showAsAction="always" />
+    -->
 </menu>

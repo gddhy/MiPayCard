@@ -38,13 +38,11 @@ import android.widget.Toast;
 import com.by_syk.lib.uri.UriAnalyser;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.hy.mipaycard.Utils.DataCleanManager;
 import com.hy.mipaycard.SetCard.set_card_img_title.SetCardImgActivity;
 import com.hy.mipaycard.online_card.EmailOnlineActivity;
 import com.hy.mipaycard.online_card.OnlineCardActivity;
-import com.hy.mipaycard.shortcuts.CardDefaultActivity;
+import com.hy.mipaycard.setting.SettingsActivity;
 import com.hy.mipaycard.shortcuts.LauncherShortcut;
-import com.hy.mipaycard.shortcuts.SetMenuPermissionActivity;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -62,12 +60,10 @@ import static com.hy.mipaycard.Config.fileWork;
 import static com.hy.mipaycard.Config.getExternalCache;
 import static com.hy.mipaycard.EmailActivity.joinQQGroup;
 import static com.hy.mipaycard.MainUtils.getCard;
-import static com.hy.mipaycard.MainUtils.getMiWalletVersion;
 import static com.hy.mipaycard.MainUtils.getTsm;
 import static com.hy.mipaycard.MainUtils.initOther;
 import static com.hy.mipaycard.MainUtils.isInstallApp;
 import static com.hy.mipaycard.MainUtils.showAboutDialog;
-import static com.hy.mipaycard.MainUtils.toSelfSetting;
 import static com.hy.mipaycard.WebBrowserActivity.openBrowser;
 import static com.hy.mipaycard.shortcuts.OpenMiPayActivity.openMiPay;
 
@@ -117,14 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        FloatingActionButton fab_button2 = (FloatingActionButton)findViewById(R.id.fab_exp2);
-        fab_button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fab_menu.close(true);
-                startActivity(new Intent(MainActivity.this, CardDefaultActivity.class));
-            }
-        });
         FloatingActionButton fab_button3 = (FloatingActionButton)findViewById(R.id.fab_exp3);
         fab_button3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,14 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        FloatingActionButton fab_button4 = (FloatingActionButton)findViewById(R.id.fab_exp4);
-        fab_button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fab_menu.close(true);
-                startActivity(new Intent(MainActivity.this, SetMenuPermissionActivity.class));
-            }
-        });
         FloatingActionButton fab_button5 = (FloatingActionButton)findViewById(R.id.fab_online);
         fab_button5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
                 fab_menu.close(true);
                 LauncherShortcut.addOnlineCard(MainActivity.this);
                 return true;
+            }
+        });
+        FloatingActionButton fab_settings = (FloatingActionButton)findViewById(R.id.fab_settings);
+        fab_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fab_menu.close(true);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -411,14 +400,15 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, 1, 1, "提交在线卡面");
         menu.add(0, 2, 2,"关于");
         menu.add(0, 3, 3,"加群交流");
-        menu.add(0, 4, 4, "缓存信息");
-        menu.add(0, 5 , 5, "卡面设置方式");
+        //menu.add(0, 4, 4, "缓存信息");
+        //menu.add(0, 5 , 5, "卡面设置方式");
         menu.add(0, 6, 6,"使用帮助");
         menu.add(0, 7, 7,"圆角图片");
         menu.add(0, 8, 8,"选择外部卡面目录");
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
@@ -436,6 +426,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"请安装或升级QQ",Toast.LENGTH_LONG).show();
                 }
                 break;
+                /*
             case 4:
                 String cacheText;
                 try {
@@ -465,7 +456,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.main_menu_set:
             case 5:
-                //todo dialog
                 final int version = getMiWalletVersion(this);
                 int choose ;
                 final String[] items ;
@@ -501,6 +491,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 editor = pref.edit();
                                 editor.putInt("isUseNew",tmp);
+                                editor.putString("set_type_key", String.valueOf(tmp));
+                                editor.putString("set_type_pay_key", String.valueOf(tmp));
                                 editor.apply();
                                 Toast.makeText(MainActivity.this,"已选择："+items[i],Toast.LENGTH_LONG).show();
                             }
@@ -516,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                         builder.show();
-                break;
+                break;*/
             case R.id.main_menu_online_card:
                 openOnlineCard();
                 break;

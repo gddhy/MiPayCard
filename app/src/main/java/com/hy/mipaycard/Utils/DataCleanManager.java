@@ -132,6 +132,34 @@ public class DataCleanManager {
         deleteFolderFile(String.valueOf(getExternalCache()),false);
     }
 
+    //获取相关缓存信息
+    public static String getOnlineCacheSize(Context context){
+        String str = "0MB";
+        try {
+            str = getFormatSize(getFolderSize(new File(context.getCacheDir(),"image_manager_disk_cache")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static String getExternalCacheSize(Context context){
+        String str = "0MB";
+        try {
+            str = getFormatSize(getFolderSize(getExternalCache()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static void cleanOnlineCache(Context context) {
+        deleteFolderFile(String.valueOf(new File(context.getCacheDir(),"image_manager_disk_cache")),false);
+    }
+
+    public static void cleanOtherCache(Context context) {
+        deleteFolderFile(String.valueOf(getExternalCache()),false);
+    }
 }
 //https://blog.csdn.net/Awangzhanqin/article/details/82983457
 //https://blog.csdn.net/qq_31546677/article/details/75635492

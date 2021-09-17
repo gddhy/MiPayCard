@@ -406,6 +406,7 @@ public class OnlineCardActivity extends AppCompatActivity {
                         onlineCardType = i;
                         editor = pref.edit();
                         editor.putInt("onlineCardType",i);
+                        editor.putString("online_type_key", String.valueOf(i));
                         editor.apply();
                         swipeRefresh.setRefreshing(true);
                         getOnlineCard(true);

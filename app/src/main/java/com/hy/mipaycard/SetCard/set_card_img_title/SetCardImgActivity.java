@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,12 +27,14 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.hy.mipaycard.Config;
 import com.hy.mipaycard.R;
+import com.hy.mipaycard.SetCard.set_card.SetCardNewActivity;
 import com.hy.mipaycard.Utils.BitmapUtils;
 import com.hy.mipaycard.Utils.CardList;
 import com.hy.mipaycard.Utils.PhotoUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
@@ -166,20 +169,36 @@ public class SetCardImgActivity extends AppCompatActivity {
                     tempPath = finalPath;
                 }
 
-                String filePath = (isSetMipay? pay_pic : mi_wallet)+"/"+files_list[position].getName();
                 String[] cmd ;
-                if (pref.getBoolean("setAuto",false)&&isSetMipay){
-                    //TOdo
-                    cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath , onlyRead };
+                String tips = "";
+                if(CardList.checkChinese(cardName)&&pref.getBoolean("AssociativeReplacement",false)){
+                    List<String> stringList = new ArrayList<String>();
+                    int times = 0;
+                    for(int i=0;i<files_list.length;i++){
+                        String chineseName = getCardName(files_list[i].getName());
+                        if(cardName.equals(chineseName)){
+                            String filePath = (isSetMipay? pay_pic : mi_wallet)+"/"+files_list[i].getName();
+                            stringList.add("cp "+ tempPath +" "+filePath);
+                            stringList.add("chmod 444 "+filePath);
+                            times++;
+                        }
+                    }
+                    if (pref.getBoolean("setAuto",false)&&isSetMipay){
+                        stringList.add(onlyRead);
+                    }
+                    cmd = stringList.toArray(new String[0]);
+                    tips= "\n关联替换"+(--times)+"次";
                 } else {
-                    cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath };
+                    String filePath = (isSetMipay? pay_pic : mi_wallet)+"/"+files_list[position].getName();
+                    if (pref.getBoolean("setAuto",false)&&isSetMipay){
+                        //TOdo
+                        cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath , onlyRead };
+                    } else {
+                        cmd = new String[]{"cp "+ tempPath +" "+filePath,"chmod 444 "+filePath };
+                    }
                 }
                 runRootShell(cmd);
-                Toast.makeText(SetCardImgActivity.this,"已替换",Toast.LENGTH_LONG).show();
-                        /*File tmpFile = getTempFile(SetCardActivity.this);
-                        if (tempPath.equals(tmpFile.getPath())){
-                            tmpFile.delete();
-                        }*/
+                Toast.makeText(SetCardImgActivity.this,"已替换"+tips,Toast.LENGTH_LONG).show();
                 pKillServer(pref);
                 finish();
             }

@@ -91,17 +91,7 @@
             android:src="@android:drawable/ic_menu_gallery"
             app:fab_colorNormal="@color/colorLty"
             app:fab_colorPressed="@color/colorLty"
-            app:fab_label="在线卡面"
-            app:fab_size="mini" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_exp2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_delete"
-            app:fab_colorNormal="@color/colorLty"
-            app:fab_colorPressed="@color/colorLty"
-            app:fab_label="恢复默认卡面"
+            app:fab_label="@string/card_online"
             app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -115,13 +105,13 @@
             app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_exp4"
+            android:id="@+id/fab_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_rotate"
+            android:src="@android:drawable/ic_menu_manage"
             app:fab_colorNormal="@color/colorLty"
             app:fab_colorPressed="@color/colorLty"
-            app:fab_label="@string/shortcut_prevent"
+            app:fab_label="@string/app_settings"
             app:fab_size="mini" />
 
 

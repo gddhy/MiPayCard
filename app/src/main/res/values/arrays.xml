@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="online_data" >
+        <item>图床</item>
+        <item>Github(JsDelivr)</item>
+    </string-array>
+    <string-array name="online_data_value" >
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="card_set">
+        <item>默认</item>
+        <item>MiPay</item>
+        <item>新-MiPay</item>
+    </string-array>
+    <string-array name="card_set_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="card_set_pay">
+        <item>默认</item>
+        <item>MiPay</item>
+        <item>新-MiPay</item>
+        <item>新-小米钱包</item>
+    </string-array>
+    <string-array name="card_set_pay_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>-1</item>
+    </string-array>
+</resources>
