@@ -14,6 +14,8 @@ public class Config {
     public static String is_Auto = "isAuto";
     public static String open_Crop = "openCrop";
     public static String Get_path_key = "PATH_KEY";
+    public static String CDN_Domain = "fastly.jsdelivr.net";
+
     public static File fileWork(Context context){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
             return new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),"MiPayCard/List");
@@ -51,7 +53,7 @@ public class Config {
     //优先从mi-pay-card-api请求数据，如果失败该用jsdelivr，轮换使用
     public static String getApiLink(boolean isOnlineLink,boolean isUseJsDelivr){
         String api = "https://mi-pay-card-api.gddhy.net";
-        String cdn_jsdelivr = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard@master/";
+        String cdn_jsdelivr = "https://" + CDN_Domain + "/gh/gddhy/MiPayCard@master/";
         if(isUseJsDelivr){
             if(isOnlineLink){
                 return cdn_jsdelivr + "online_card.json";
@@ -71,7 +73,7 @@ public class Config {
     public static boolean default_PKILL = true;
 
     public static String getOnlineGitLink(boolean isUseCDN){
-        final String CDNLink = "https://cdn.jsdelivr.net/gh/gddhy/MiPayCard-onlineCard/";
+        final String CDNLink = "https://" + CDN_Domain + "/gh/gddhy/MiPayCard-onlineCard/";
         final String link = WEBSITE+"MiPayCard-onlineCard/";
         return isUseCDN ? CDNLink : link;
     }
