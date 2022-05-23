@@ -331,13 +331,21 @@ public class TestActivity extends AppCompatActivity {
             uri = Uri.fromFile(file);
         }
         intent.setData(uri);
-        intent.setClassName("bin.mt.plus","bin.mt.edit.TextEditor");
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//允许临时的读
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION| Intent.FLAG_GRANT_WRITE_URI_PERMISSION);//允许临时的读和写
         try {
-            startActivity(intent);
+            Intent tmp = new Intent(intent);
+            tmp.setClassName("bin.mt.plus","bin.mt.edit.TextEditor");
+            startActivity(tmp);
         } catch (Exception e){
-            addText(e.toString());
+            //addText(e.toString());
+            try {
+                Intent tmp2 = new Intent(intent);
+                tmp2.setClassName("bin.mt.plus","bin.mt.edit2.TextEditor");
+                startActivity(tmp2);
+            } catch (Exception e2){
+                addText(e2.toString());
+            }
         }
     }
 
