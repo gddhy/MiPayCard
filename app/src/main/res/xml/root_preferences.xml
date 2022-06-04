@@ -127,4 +127,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:title="政策相关">
+
+        <Preference
+            app:title="用户协议"
+            app:key="yhxy" />
+
+        <Preference
+            app:title="隐私政策"
+            app:key="yszc" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

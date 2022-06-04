@@ -6,6 +6,7 @@ import static com.hy.mipaycard.Utils.DataCleanManager.cleanOnlineCache;
 import static com.hy.mipaycard.Utils.DataCleanManager.cleanOtherCache;
 import static com.hy.mipaycard.Utils.DataCleanManager.getExternalCacheSize;
 import static com.hy.mipaycard.Utils.DataCleanManager.getOnlineCacheSize;
+import static com.hy.mipaycard.WebBrowserActivity.openBrowser;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -124,6 +125,20 @@ public class SettingsFragment extends BasePreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 toSelfSetting(getContext());
+                return true;
+            }
+        });
+        findPreference("yhxy").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                openBrowser(getContext(),"https://gddhy.net/mipaycard/license",0xff24292d,true);
+                return true;
+            }
+        });
+        findPreference("yszc").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                openBrowser(getContext(),"https://gddhy.net/mipaycard/privacy",0xff24292d,true);
                 return true;
             }
         });
