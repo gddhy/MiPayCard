@@ -7,8 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,6 @@ import com.hy.mipaycard.Utils.PhotoUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.hy.mipaycard.Config.defaultSet;
@@ -42,6 +42,7 @@ import static com.hy.mipaycard.Utils.cmdUtil.getMiWallet;
 import static com.hy.mipaycard.Utils.cmdUtil.getTsmclient;
 import static com.hy.mipaycard.Utils.cmdUtil.isRooted;
 import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
+import static com.hy.mipaycard.Utils.cmdUtil.runWhoami;
 import static com.hy.mipaycard.shortcuts.SetMenuPermissionActivity.onlyRead;
 
 public class SetCardNewActivity extends AppCompatActivity {
@@ -81,6 +82,9 @@ public class SetCardNewActivity extends AppCompatActivity {
             File f = new File(file,list[i]);
             if(!f.exists())
                 cmdList.add("cp "+(isSetMipay?pay_pic:mi_wallet)+"/"+list[i]+" "+f.getPath());
+        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+            cmdList.add("chown -R " + runWhoami() + " "+file.getPath());
         }
         String log = runRootShell(cmdList.toArray(new String[cmdList.size()]));
         delTmpFile(file,list);

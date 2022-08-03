@@ -109,4 +109,66 @@ public class cmdUtil
 	public static String tiqu(String text,String textTop,String textLast){
 		return text.substring(text.indexOf(textTop)+textTop.length(),text.indexOf(textLast));
 	}
+
+    public static String runWhoami(){
+
+        String result = null;
+        int ret = -1;
+        java.lang.Process process;
+        try {
+            process = Runtime.getRuntime().exec("whoami");
+            DataOutputStream os = new DataOutputStream(process.getOutputStream());
+            os.writeBytes("exit\n");
+            os.flush();
+            try {
+                ret = process.waitFor();
+                Log.d("lx", "ret= " + ret);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            os.close();
+
+            ByteArrayOutputStream resultOutStream = new ByteArrayOutputStream();
+            InputStream errorInStream = new BufferedInputStream(process.getErrorStream());
+            InputStream processInStream = new BufferedInputStream(process.getInputStream());
+            int num = 0;
+
+            byte[] bs = new byte[1024];
+
+            while((num=errorInStream.read(bs))!=-1){
+
+                resultOutStream.write(bs,0,num);
+
+            }
+
+            while((num=processInStream.read(bs))!=-1){
+
+                resultOutStream.write(bs,0,num);
+
+            }
+
+            result = resultOutStream.toString();
+
+            //println( "result: " + result);
+
+            errorInStream.close();
+            errorInStream=null;
+
+            processInStream.close();
+            processInStream=null;
+
+            resultOutStream.close();
+            resultOutStream=null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //result =  "result code: " + ret + " details: \n" +result;
+        if (result != null) {
+            result = result.replace("\n","");
+        }
+        return result;
+    }
 }
