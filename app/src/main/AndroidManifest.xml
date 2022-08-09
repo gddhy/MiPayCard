@@ -4,10 +4,11 @@
     package="com.hy.mipaycard">
 
     <queries>
-        <package android:name="com.miui.tsmclient" />
-        <package android:name="com.mipay.wallet" />
+        <package android:name="com.miui.tsmclient" /><!--小米智能卡-->
+        <package android:name="com.mipay.wallet" /><!--小米钱包-->
         <package android:name="com.topjohnwu.magisk" />
         <package android:name="bin.mt.plus" />
+        <package android:name="com.finshell.wallet" /><!--一加-->
     </queries> <!-- 适配安卓11软件包可见性 -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -31,6 +32,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity
+            android:theme="@style/AppThemeActBar"
+            android:name=".SetCard.OnePlus.SetCardOnePlusActivity"
+            android:exported="false" />
         <activity
             android:name=".FirstActivity"
             android:exported="true">
@@ -124,8 +129,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
             android:enabled="false"
+            android:launchMode="singleTop"
             android:theme="@style/AppThemeNoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

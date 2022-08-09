@@ -24,9 +24,11 @@ public class Config {
         }
     }
     @SuppressLint("SdCardPath")
-    public static String pay_pic = "/data/data/com.miui.tsmclient/cache/image_manager_disk_cache";
+    public static final String pay_pic = "/data/data/com.miui.tsmclient/cache/image_manager_disk_cache";
     @SuppressLint("SdCardPath")
-    public static String mi_wallet = "/data/data/com.mipay.wallet/cache/image_manager_disk_cache";
+    public static final String mi_wallet = "/data/data/com.mipay.wallet/cache/image_manager_disk_cache";
+    public static final String OnePlusPath = "/storage/self/primary/Android/data/com.finshell.wallet/files/Finshell/Wallet/DownloadPics";
+
     public static File getTempFile(){
         return new File(getExternalCache(), "temp_MiPayCard.png");
     }

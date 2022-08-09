@@ -13,23 +13,27 @@
         <item>默认</item>
         <item>MiPay</item>
         <item>新-MiPay</item>
+        <item>一加卡面修改</item>
     </string-array>
     <string-array name="card_set_value">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string-array name="card_set_pay">
         <item>默认</item>
         <item>MiPay</item>
         <item>新-MiPay</item>
+        <item>一加卡面修改</item>
         <item>新-小米钱包</item>
     </string-array>
     <string-array name="card_set_pay_value">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
         <item>-1</item>
     </string-array>
 </resources>

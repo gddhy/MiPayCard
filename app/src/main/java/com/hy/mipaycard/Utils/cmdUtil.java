@@ -13,6 +13,8 @@ import java.util.List;
 import static com.hy.mipaycard.Config.mi_wallet;
 import static com.hy.mipaycard.Config.pay_pic;
 
+import com.hy.mipaycard.Config;
+
 public class cmdUtil
 {
 	public static String runRootShell(String[] cmds){    
@@ -98,6 +100,12 @@ public class cmdUtil
 
     public static String[] getMiWallet(){
         String str = runRootShell(new String[]{"cd "+mi_wallet,"ls"});
+        return makeLog(str);
+    }
+
+    //一加设备
+    public static String[] getOnePlusList(){
+        String str = runRootShell(new String[]{"cd "+ Config.OnePlusPath,"ls"});
         return makeLog(str);
     }
 

@@ -176,7 +176,7 @@ public class SettingsFragment extends BasePreferenceFragment {
                 keySummary = getResources().getStringArray(key.equals("set_type_key")?R.array.card_set:R.array.card_set_pay);
                 editor.putInt("isUseNew",keyValue);
                 if(keyValue == -1){
-                    keyValue = 3;
+                    keyValue = 4;
                 }
             }
             editor.apply();

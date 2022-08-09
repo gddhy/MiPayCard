@@ -57,7 +57,7 @@ import static com.hy.mipaycard.Utils.cmdUtil.runRootShell;
 public class MainUtils {
 
     public static void getTsm(Context context){
-        if(!isInstallApp(context,"com.miui.tsmclient")){
+        if(!isInstallApp(context,"com.miui.tsmclient")||!isInstallApp(context,"com.finshell.wallet")){
             Toast.makeText(context,"您的设备可能不支持本APP",Toast.LENGTH_LONG).show();
         }
     }
