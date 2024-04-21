@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:enabled="false"
+        android:visible="false"
         android:id="@+id/main_menu_online_card"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/card_online"

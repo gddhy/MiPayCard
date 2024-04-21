@@ -66,6 +66,7 @@
             app:key="shortcuts_mipay" />
 
         <Preference
+            app:isPreferenceVisible="false"
             app:title="在线卡面"
             app:summary="添加在线卡面快捷方式到桌面"
             app:key="shortcut_online" />
@@ -73,6 +74,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:isPreferenceVisible="false"
         app:title="通知栏磁贴">
 
         <CheckBoxPreference
@@ -114,6 +116,7 @@
         app:title="缓存相关">
 
         <Preference
+            app:isPreferenceVisible="false"
             app:title="在线卡面缓存"
             app:key="cacheOnline" />
 

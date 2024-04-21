@@ -101,6 +101,7 @@ public class MainUtils {
     }
 
     public static void copyCard(Context context){
+        /*
         File miku = new File(context.getFilesDir(),"miku.png");
         File lty = new File(context.getFilesDir(),"luotianyi.png");
         String mikuMd5 = "1912841bea156df9208609d05a85f390";
@@ -112,7 +113,7 @@ public class MainUtils {
             } catch (IOException e){
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     public static void initOther(final Context context, final SharedPreferences pref){

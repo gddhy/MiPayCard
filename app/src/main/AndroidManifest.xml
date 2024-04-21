@@ -37,6 +37,7 @@
             android:name=".SetCard.OnePlus.SetCardOnePlusActivity"
             android:exported="false" />
         <activity
+            android:enabled="false"
             android:name=".FirstActivity"
             android:exported="true">
             <intent-filter>
@@ -129,7 +130,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
-            android:enabled="false"
+            android:enabled="true"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeNoBar">
             <intent-filter>
@@ -206,6 +207,7 @@
         </provider>
 
         <service
+            android:enabled="false"
             android:name=".Service.MiPayTitleService"
             android:icon="@drawable/title_mi_pay"
             android:label="@string/title_mi_pay"

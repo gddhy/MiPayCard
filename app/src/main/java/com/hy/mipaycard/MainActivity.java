@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initCardList(){
         cardList.clear();
-        cardList.add(new Card("招行初音卡",new File(getFilesDir(),"miku.png")));
-        cardList.add(new Card("天依柠檬卡",new File(getFilesDir(),"luotianyi.png")));
+        //cardList.add(new Card("招行初音卡",new File(getFilesDir(),"miku.png")));
+        //cardList.add(new Card("天依柠檬卡",new File(getFilesDir(),"luotianyi.png")));
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
             initItems();
         } else {
@@ -396,8 +396,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_toolbar,menu);
-        menu.add(0, 0, 0, "提交卡面适配");
-        menu.add(0, 1, 1, "提交在线卡面");
+        //menu.add(0, 0, 0, "提交卡面适配");
+        //menu.add(0, 1, 1, "提交在线卡面");
         menu.add(0, 2, 2,"关于");
         menu.add(0, 3, 3,"加群交流");
         //menu.add(0, 4, 4, "缓存信息");
